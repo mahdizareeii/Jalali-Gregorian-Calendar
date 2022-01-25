@@ -20,16 +20,24 @@ data class MonthItem(
 
     fun generateDays(): List<DayItem> {
         if (days.isNullOrEmpty()) {
-            calendar.set(Calendar.MONTH, month)
-            val dayOfMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
-            for (day in 1..dayOfMonth) {
-                if (day == 1)
-                    repeat(calendar.firstDayPositionInWeek()) {
-                        days.add(DayItem(calendar, null))
-                    }
+            setMonth()
+            shiftDays()
+            for (day in 1..getCountOfDays()) {
                 days.add(DayItem(calendar, day))
             }
         }
         return days
     }
+
+    private fun setMonth() {
+        calendar.set(Calendar.MONTH, month)
+    }
+
+    private fun shiftDays() {
+        repeat(calendar.firstDayPositionInWeek()) {
+            days.add(DayItem(calendar, null))
+        }
+    }
+
+    private fun getCountOfDays() = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
 }
