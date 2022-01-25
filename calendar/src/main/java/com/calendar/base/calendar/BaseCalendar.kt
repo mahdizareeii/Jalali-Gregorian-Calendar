@@ -39,8 +39,8 @@ abstract class BaseCalendar : GregorianCalendar {
         return nameOfMonths.getOrNull(value) ?: "Unknown"
     }
 
-    /** you must set month with like this
-     *  calendar.set(Calendar.MONTH, month)
+    /** you must set month like this
+     *  'calendar.set(Calendar.MONTH, month)'
      *  before call this method
      */
     fun firstDayPositionInWeek(): Int {
