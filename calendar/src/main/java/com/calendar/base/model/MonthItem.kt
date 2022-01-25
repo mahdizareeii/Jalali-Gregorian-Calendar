@@ -9,6 +9,8 @@ data class MonthItem(
     val month: Int
 ) {
 
+    private val days = ArrayList<DayItem>()
+
     //TODO maybe remove this
     fun getYear() = calendar.get(Calendar.YEAR)
 
@@ -16,15 +18,18 @@ data class MonthItem(
         return calendar.getDisplayedMonthName(month)
     }
 
-    fun generateDays(): List<DayItem> = ArrayList<DayItem>().apply {
-        calendar.set(Calendar.MONTH, month)
-        val dayOfMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
-        for (day in 1..dayOfMonth) {
-            if (day == 1)
-                repeat(calendar.firstDayPositionInWeek()) {
-                    add(DayItem(calendar, null))
-                }
-            add(DayItem(calendar, day))
+    fun generateDays(): List<DayItem> {
+        if (days.isNullOrEmpty()) {
+            calendar.set(Calendar.MONTH, month)
+            val dayOfMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
+            for (day in 1..dayOfMonth) {
+                if (day == 1)
+                    repeat(calendar.firstDayPositionInWeek()) {
+                        days.add(DayItem(calendar, null))
+                    }
+                days.add(DayItem(calendar, day))
+            }
         }
+        return days
     }
 }
