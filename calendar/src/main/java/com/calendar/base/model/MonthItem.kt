@@ -9,24 +9,24 @@ data class MonthItem(
     val calendar: BaseCalendar,
     val month: Int
 ) {
+    val days = ArrayList<DayItem>()
     fun getDayOfMonths(): List<DayItem> {
-        val days = ArrayList<DayItem>()
+        if (days.isNullOrEmpty()) {
+            calendar.set(Calendar.MONTH, month)
+            val dayOfMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
 
-        calendar.set(Calendar.MONTH, month)
-        val dayOfMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
-
-        for (i in 1..dayOfMonth) {
-            if (i == 1) {
-                calendar.set(Calendar.DAY_OF_MONTH, i)
-                val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
-                Log.i("asdasd", "day of week: $dayOfWeek")
-                for (j in 1..dayOfWeek) {
-                    days.add(DayItem(calendar, null))
+            for (i in 1..dayOfMonth) {
+                if (i == 1) {
+                    calendar.set(Calendar.DAY_OF_MONTH, i)
+                    val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
+                    Log.i("asdasd", "day of week: $dayOfWeek")
+                    for (j in 1..dayOfWeek) {
+                        days.add(DayItem(calendar, null))
+                    }
                 }
+                days.add(DayItem(calendar, i))
             }
-            days.add(DayItem(calendar, i))
         }
-
         return days
     }
 
