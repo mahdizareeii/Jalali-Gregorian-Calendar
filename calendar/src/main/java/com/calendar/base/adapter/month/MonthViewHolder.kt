@@ -8,8 +8,8 @@ import com.calendar.base.adapter.day.DaysAdapter
 import com.calendar.base.model.MonthItem
 import com.google.android.flexbox.AlignItems
 import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
-import com.google.android.flexbox.JustifyContent
 
 class MonthViewHolder(
     view: View
@@ -20,16 +20,20 @@ class MonthViewHolder(
     private var adapter: DaysAdapter? = null
     fun bind(monthItem: MonthItem) {
         if (adapter == null) {
-            rvDays.layoutManager = FlexboxLayoutManager(context).apply {
-                flexDirection = FlexDirection.ROW_REVERSE
-                alignItems = AlignItems.CENTER
-                justifyContent = JustifyContent.FLEX_END
-            }
-            rvDays.setHasFixedSize(true)
-            adapter = DaysAdapter()
-            rvDays.adapter = adapter
+            initRecyclerView()
         }
         adapter?.submitList(monthItem.generateDays())
         txtMonth.text = String.format("${monthItem.getYear()} - ${monthItem.getDisplayedName()}")
+    }
+
+    private fun initRecyclerView() {
+        rvDays.layoutManager = FlexboxLayoutManager(context).apply {
+            flexDirection = FlexDirection.ROW_REVERSE
+            alignItems = AlignItems.CENTER
+            flexWrap = FlexWrap.WRAP
+        }
+        rvDays.setHasFixedSize(true)
+        adapter = DaysAdapter()
+        rvDays.adapter = adapter
     }
 }
