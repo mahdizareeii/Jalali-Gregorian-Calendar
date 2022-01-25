@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sunday">ی</string>
+    <string name="monday">د</string>
+    <string name="tuesday">س</string>
+    <string name="wednesday">چ</string>
+    <string name="thursday">پ</string>
+    <string name="friday">ج</string>
+    <string name="saturday">ش</string>
+</resources>
