@@ -34,7 +34,7 @@ class CalendarView @JvmOverloads constructor(
         inflate(context, R.layout.calendar, this)
         recyclerView = this.findViewById(R.id.rv_months)
 
-        initRecyclerView(LinearLayoutManager.HORIZONTAL)
+        initRecyclerView(LinearLayoutManager.VERTICAL)
 
         submitYears(
             listOf(
@@ -47,8 +47,7 @@ class CalendarView @JvmOverloads constructor(
         years.forEach {
             months.addAll(it.getMonthOfYear())
         }
-
-        adapter.submitItem(months)
+        adapter.submitList(months)
         adapter.notifyDataSetChanged()
     }
 

@@ -6,7 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.calendar.R
 import com.calendar.base.adapter.day.DaysAdapter
 import com.calendar.base.model.MonthItem
-import com.google.android.flexbox.*
+import com.google.android.flexbox.AlignItems
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
 
 class MonthViewHolder(
     view: View
@@ -20,13 +23,13 @@ class MonthViewHolder(
             rvDays.layoutManager = FlexboxLayoutManager(context).apply {
                 flexDirection = FlexDirection.ROW_REVERSE
                 alignItems = AlignItems.CENTER
-                flexWrap = FlexWrap.WRAP
+                justifyContent = JustifyContent.FLEX_END
             }
             rvDays.setHasFixedSize(true)
             adapter = DaysAdapter()
             rvDays.adapter = adapter
         }
-        adapter?.submitItem(monthItem.getDayOfMonths())
+        adapter?.submitList(monthItem.generateDays())
         txtMonth.text = String.format("${monthItem.getYear()} - ${monthItem.getDisplayedName()}")
     }
 }
