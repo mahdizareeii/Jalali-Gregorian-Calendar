@@ -27,13 +27,14 @@ class MonthViewHolder(
     }
 
     private fun initRecyclerView() {
+        adapter = DaysAdapter()
         rvDays.layoutManager = FlexboxLayoutManager(context).apply {
             flexDirection = FlexDirection.ROW_REVERSE
             alignItems = AlignItems.CENTER
             flexWrap = FlexWrap.WRAP
         }
         rvDays.setHasFixedSize(true)
-        adapter = DaysAdapter()
+        rvDays.itemAnimator = null
         rvDays.adapter = adapter
     }
 }
