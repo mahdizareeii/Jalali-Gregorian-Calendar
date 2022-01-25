@@ -46,7 +46,7 @@ class DaysAdapter : ListAdapter<DayItem, DayViewHolder>(DiffUtilCallBack()) {
 
     private class DiffUtilCallBack : DiffUtil.ItemCallback<DayItem>() {
         override fun areItemsTheSame(oldItem: DayItem, newItem: DayItem): Boolean {
-            return oldItem.day == oldItem.day
+            return oldItem.day == newItem.day
         }
 
         override fun areContentsTheSame(oldItem: DayItem, newItem: DayItem): Boolean {

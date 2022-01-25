@@ -25,7 +25,7 @@ class MonthAdapter : ListAdapter<MonthItem, MonthViewHolder>(DiffUtilCallBack())
 
     private class DiffUtilCallBack : DiffUtil.ItemCallback<MonthItem>() {
         override fun areItemsTheSame(oldItem: MonthItem, newItem: MonthItem): Boolean {
-            return oldItem.month == oldItem.month
+            return oldItem.month == newItem.month
         }
 
         override fun areContentsTheSame(oldItem: MonthItem, newItem: MonthItem): Boolean {
