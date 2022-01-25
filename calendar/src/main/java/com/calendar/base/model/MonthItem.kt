@@ -19,10 +19,9 @@ data class MonthItem(
     fun generateDays(): List<DayItem> = ArrayList<DayItem>().apply {
         calendar.set(Calendar.MONTH, month)
         val dayOfMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
-        val dayPositionInWeek = calendar.dayPositionInWeek(month)
         for (day in 1..dayOfMonth) {
             if (day == 1)
-                repeat(dayPositionInWeek) {
+                repeat(calendar.firstDayPositionInWeek()) {
                     add(DayItem(calendar, null))
                 }
             add(DayItem(calendar, day))

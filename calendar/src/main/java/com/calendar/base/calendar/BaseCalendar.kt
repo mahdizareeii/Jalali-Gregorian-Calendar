@@ -39,8 +39,12 @@ abstract class BaseCalendar : GregorianCalendar {
         return nameOfMonths.getOrNull(value) ?: "Unknown"
     }
 
-    fun dayPositionInWeek(month: Int): Int {
-        set(Calendar.DAY_OF_MONTH, month)
+    /** you must set month with like this
+     *  calendar.set(Calendar.MONTH, month)
+     *  before call this method
+     */
+    fun firstDayPositionInWeek(): Int {
+        set(Calendar.DAY_OF_MONTH, 1)
         val position = get(Calendar.DAY_OF_WEEK)
         return if (position == 7) 0 else position
     }
