@@ -12,7 +12,6 @@ import com.calendar.base.calendar.BaseCalendar
 import com.calendar.base.calendar.MyJalaliCalendar
 import com.calendar.base.model.MonthItem
 import com.calendar.base.model.YearItem
-import com.calendar.utils.DateUtil
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -44,14 +43,14 @@ class CalendarView @JvmOverloads constructor(
     }
 
     fun submitYears(years: List<YearItem>) {
-       /* years.forEach {
-            monthsList.addAll(it.getMonthOfYear())
-        }
-        adapter.submitList(monthsList)*/
+        /* years.forEach {
+             monthsList.addAll(it.getMonthOfYear())
+         }
+         adapter.submitList(monthsList)*/
     }
 
     fun submitNextDates(field: Int, value: Int) {
-        adapter.submitList(DateUtil.getNextDates(calendar, field, value))
+        adapter.submitList(calendar.getNextDates(field, value))
     }
 
     private fun initRecyclerView(orientation: Int) {

@@ -1,5 +1,7 @@
 package com.calendar.base.calendar
 
+import com.calendar.base.model.MonthItem
+
 abstract class BaseCalendar {
 
     abstract val nameOfMonths: List<String>
@@ -13,4 +15,6 @@ abstract class BaseCalendar {
     abstract fun firstDayPositionInWeek(): Int
     abstract fun generateDays(month: Int): List<Int>
     abstract fun getYearName(): String
+
+    abstract fun getNextDates(field: Int, value: Int): List<MonthItem>
 }

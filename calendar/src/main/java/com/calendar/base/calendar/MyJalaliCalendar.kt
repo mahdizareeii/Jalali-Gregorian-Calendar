@@ -1,5 +1,6 @@
 package com.calendar.base.calendar
 
+import com.calendar.base.model.MonthItem
 import java.util.*
 
 class MyJalaliCalendar : BaseCalendar() {
@@ -66,6 +67,21 @@ class MyJalaliCalendar : BaseCalendar() {
         calendar.get(Calendar.MONTH) + 1,
         calendar.get(Calendar.DAY_OF_MONTH)
     )[0].toString()
+
+    override fun getNextDates(field: Int, value: Int): List<MonthItem> {
+        val months = ArrayList<MonthItem>()
+        val today = Calendar.getInstance()
+        val next = Calendar.getInstance().apply {
+            set(field, get(field) + value)
+        }
+
+        val todayMonth = today.get(Calendar.MONTH)
+        val nextMonth = next.get(Calendar.MONTH)
+        for (month in todayMonth until nextMonth) {
+            months.add(MonthItem(MyJalaliCalendar(), month))
+        }
+        return months
+    }
 
     private fun gregorianToJalali(year: Int, month: Int, day: Int): IntArray {
         val g_d_m: IntArray = intArrayOf(0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334)

@@ -1,5 +1,6 @@
 package com.calendar.base.calendar
 
+import com.calendar.base.model.MonthItem
 import java.util.*
 
 class MyGregorianCalendar : BaseCalendar() {
@@ -40,5 +41,21 @@ class MyGregorianCalendar : BaseCalendar() {
     }
 
     override fun getYearName(): String = calendar.get(Calendar.YEAR).toString()
+
+    override fun getNextDates(field: Int, value: Int): List<MonthItem> {
+        val months = ArrayList<MonthItem>()
+        val today = Calendar.getInstance()
+        val next = Calendar.getInstance().apply {
+            set(field, get(field) + value)
+        }
+
+        val todayMonth = today.get(Calendar.MONTH)
+        val nextMonth = next.get(Calendar.MONTH)
+        for (month in todayMonth until nextMonth) {
+            months.add(MonthItem(MyGregorianCalendar(), month))
+        }
+        return months
+    }
+
 
 }
