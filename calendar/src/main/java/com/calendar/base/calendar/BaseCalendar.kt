@@ -19,6 +19,9 @@ abstract class BaseCalendar {
     abstract fun set(field: Int, value: Int)
     abstract fun get(field: Int): Int
 
+    /**
+     *  you can increase up month and year with set field and you will get next dates
+     */
     fun getNextDates(field: Int, value: Int): List<MonthItem> {
         val months = ArrayList<MonthItem>()
         val today = Calendar.getInstance()

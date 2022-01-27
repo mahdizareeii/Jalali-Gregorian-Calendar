@@ -164,18 +164,20 @@ class MyJalaliCalendar : BaseCalendar() {
             jalaliDay = 1 + ((days - 186) % 30)
         }
 
-        val leapYear: Int = jalaliYear % 33
-        val leapResults = arrayOf(1, 5, 9, 13, 17, 22, 26, 30)
-        val isLeapYear = leapResults.any { it == leapYear }
-
         return if (jalaliMonth <= 6) {
             31
         } else if (jalaliMonth in 7..11) {
             30
         } else {
-            if (isLeapYear)
+            if (isLeapYear(jalaliYear))
                 30
             else 29
+        }
+    }
+
+    private fun isLeapYear(year: Int): Boolean {
+        return arrayOf(1, 5, 9, 13, 17, 22, 26, 30).any {
+            it == year % 33
         }
     }
 }
