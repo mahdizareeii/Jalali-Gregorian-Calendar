@@ -142,6 +142,44 @@ class MyJalaliCalendar : BaseCalendar() {
         return intArrayOf(jalaliYear, jalaliMonth, jalaliDay)
     }
 
+    private fun jalaliToGregorian(year: Int, month: Int, day: Int): IntArray {
+        val yearTemp = year + 1595
+        var days =
+            -355668 + (365 * yearTemp) + ((yearTemp / 33) * 8) + (((yearTemp % 33) + 3) / 4) + day + (if (month < 7) ((month - 1) * 31) else (((month - 7) * 30) + 186))
+        var gregorianYear = 400 * (days / 146097)
+        days %= 146097
+        if (days > 36524) {
+            gregorianYear += 100 * (--days / 36524)
+            days %= 36524
+            if (days >= 365) days++
+        }
+        gregorianYear += 4 * (days / 1461)
+        days %= 1461
+        if (days > 365) {
+            gregorianYear += ((days - 1) / 365)
+            days = (days - 1) % 365
+        }
+        var gregorianDay: Int = days + 1
+        val sal_a: IntArray = intArrayOf(
+            0,
+            31,
+            if ((gregorianYear % 4 == 0 && gregorianYear % 100 != 0) || (gregorianYear % 400 == 0)) 29 else 28,
+            31,
+            30,
+            31,
+            30,
+            31,
+            31,
+            30,
+            31,
+            30,
+            31
+        )
+        var gregorianMonth = 0
+        while (gregorianMonth < 13 && gregorianDay > sal_a[gregorianMonth]) gregorianDay -= sal_a[gregorianMonth++]
+        return intArrayOf(gregorianYear, gregorianMonth, gregorianDay)
+    }
+
     private fun getJalaliMonthCount(year: Int, month: Int, day: Int): Int {
         val gregorianDayMonth =
             intArrayOf(0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334)
@@ -179,43 +217,5 @@ class MyJalaliCalendar : BaseCalendar() {
                 30
             else 29
         }
-    }
-
-    private fun jalaliToGregorian(year: Int, month: Int, day: Int): IntArray {
-        val yearTemp = year + 1595
-        var days =
-            -355668 + (365 * yearTemp) + ((yearTemp / 33) * 8) + (((yearTemp % 33) + 3) / 4) + day + (if (month < 7) ((month - 1) * 31) else (((month - 7) * 30) + 186))
-        var gregorianYear = 400 * (days / 146097)
-        days %= 146097
-        if (days > 36524) {
-            gregorianYear += 100 * (--days / 36524)
-            days %= 36524
-            if (days >= 365) days++
-        }
-        gregorianYear += 4 * (days / 1461)
-        days %= 1461
-        if (days > 365) {
-            gregorianYear += ((days - 1) / 365)
-            days = (days - 1) % 365
-        }
-        var gregorianDay: Int = days + 1
-        val sal_a: IntArray = intArrayOf(
-            0,
-            31,
-            if ((gregorianYear % 4 == 0 && gregorianYear % 100 != 0) || (gregorianYear % 400 == 0)) 29 else 28,
-            31,
-            30,
-            31,
-            30,
-            31,
-            31,
-            30,
-            31,
-            30,
-            31
-        )
-        var gregorianMonth = 0
-        while (gregorianMonth < 13 && gregorianDay > sal_a[gregorianMonth]) gregorianDay -= sal_a[gregorianMonth++]
-        return intArrayOf(gregorianYear, gregorianMonth, gregorianDay)
     }
 }
