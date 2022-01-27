@@ -1,6 +1,5 @@
 package com.calendar.base.calendar
 
-import com.calendar.base.model.MonthItem
 import java.util.*
 
 class MyJalaliCalendar : BaseCalendar() {
@@ -69,52 +68,13 @@ class MyJalaliCalendar : BaseCalendar() {
         calendar.get(Calendar.DAY_OF_MONTH)
     )[0].toString()
 
-    override fun getNextDates(field: Int, value: Int): List<MonthItem> {
-        val months = ArrayList<MonthItem>()
-        val today = Calendar.getInstance()
-        val next = Calendar.getInstance().apply {
-            set(field, get(field) + value)
-        }
-
-        val todayYear = today.get(Calendar.YEAR)
-        val todayMonth = today.get(Calendar.MONTH)
-        val nextYear = next.get(Calendar.YEAR)
-        val nextMonth = next.get(Calendar.MONTH)
-
-        if (todayYear == nextYear) {
-            if (field == Calendar.MONTH)
-                for (month in todayMonth..nextMonth) {
-                    months.add(MonthItem(MyJalaliCalendar(), month, todayYear))
-                }
-        } else {
-            if (field == Calendar.YEAR)
-                for (year in todayYear..nextYear) {
-                    for (month in 0..11)
-                        months.add(MonthItem(MyJalaliCalendar(), month, year))
-                }
-            else if (field == Calendar.MONTH) {
-                var temp = value
-                var tempYear = todayYear
-                while (temp >= 12) {
-                    for (month in 0..11)
-                        months.add(MonthItem(MyJalaliCalendar(), month, tempYear))
-                    temp -= 12
-                    tempYear++
-                }
-
-                if (temp != 0)
-                    for (month in 0..temp)
-                        months.add(MonthItem(MyJalaliCalendar(), month, tempYear))
-            }
-        }
-        return months
-    }
-
     override fun set(field: Int, value: Int) {
         calendar.set(field, value)
     }
 
     override fun get(field: Int) = calendar.get(field)
+
+    override fun getNewInstanceOfCalendar(): BaseCalendar = MyJalaliCalendar()
 
     private fun gregorianToJalali(year: Int, month: Int, day: Int): IntArray {
         val gregorianDayMonth: IntArray =
