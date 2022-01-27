@@ -41,22 +41,23 @@ class MyJalaliCalendar : BaseCalendar() {
 
     override fun generateDays(month: Int): List<Int> {
         val days = ArrayList<Int>()
-        calendar.set(Calendar.MONTH, month)
+        /*calendar.set(Calendar.MONTH, month)
         val countOfDays = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
+*/
+        val countOfDays = getJalaliMonthCount(
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH) + 1,
+            calendar.get(Calendar.DAY_OF_MONTH)
+        )
 
+        //TODO shift days
         //shift days
-        repeat(firstDayPositionInWeek()) {
+        /*repeat(firstDayPositionInWeek()) {
             days.add(-1)
-        }
+        }*/
 
         for (day in 1..countOfDays) {
-            days.add(
-                gregorianToJalali(
-                    calendar.get(Calendar.YEAR),
-                    calendar.get(Calendar.MONTH) + 1,
-                    day
-                )[2]
-            )
+            days.add(day)
         }
 
         return days
@@ -75,13 +76,36 @@ class MyJalaliCalendar : BaseCalendar() {
             set(field, get(field) + value)
         }
 
-        //TODO refactor here like gregorian
         val todayYear = today.get(Calendar.YEAR)
         val todayMonth = today.get(Calendar.MONTH)
         val nextYear = next.get(Calendar.YEAR)
         val nextMonth = next.get(Calendar.MONTH)
-        for (month in todayMonth until nextMonth) {
-            months.add(MonthItem(MyJalaliCalendar(), month,todayYear))
+
+        if (todayYear == nextYear) {
+            if (field == Calendar.MONTH)
+                for (month in todayMonth..nextMonth) {
+                    months.add(MonthItem(MyJalaliCalendar(), month, todayYear))
+                }
+        } else {
+            if (field == Calendar.YEAR)
+                for (year in todayYear..nextYear) {
+                    for (month in 0..11)
+                        months.add(MonthItem(MyJalaliCalendar(), month, year))
+                }
+            else if (field == Calendar.MONTH) {
+                var temp = value
+                var tempYear = todayYear
+                while (temp >= 12) {
+                    for (month in 0..11)
+                        months.add(MonthItem(MyJalaliCalendar(), month, tempYear))
+                    temp -= 12
+                    tempYear++
+                }
+
+                if (temp != 0)
+                    for (month in 0..temp)
+                        months.add(MonthItem(MyJalaliCalendar(), month, tempYear))
+            }
         }
         return months
     }
@@ -90,11 +114,14 @@ class MyJalaliCalendar : BaseCalendar() {
         calendar.set(field, value)
     }
 
+    override fun get(field: Int) = calendar.get(field)
+
     private fun gregorianToJalali(year: Int, month: Int, day: Int): IntArray {
-        val g_d_m: IntArray = intArrayOf(0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334)
+        val gregorianDayMonth: IntArray =
+            intArrayOf(0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334)
         val gy2 = if (month > 2) (year + 1) else year
         var days =
-            355666 + (365 * year) + ((gy2 + 3) / 4) - ((gy2 + 99) / 100) + ((gy2 + 399) / 400) + day + g_d_m[month - 1]
+            355666 + (365 * year) + ((gy2 + 3) / 4) - ((gy2 + 99) / 100) + ((gy2 + 399) / 400) + day + gregorianDayMonth[month - 1]
         var jalaliYear = -1595 + (33 * (days / 12053))
         days %= 12053
         jalaliYear += 4 * (days / 1461)
@@ -103,7 +130,7 @@ class MyJalaliCalendar : BaseCalendar() {
             jalaliYear += ((days - 1) / 365)
             days = (days - 1) % 365
         }
-        val jalaliMonth: Int;
+        val jalaliMonth: Int
         val jalaliDay: Int
         if (days < 186) {
             jalaliMonth = 1 + (days / 31)
@@ -113,6 +140,45 @@ class MyJalaliCalendar : BaseCalendar() {
             jalaliDay = 1 + ((days - 186) % 30)
         }
         return intArrayOf(jalaliYear, jalaliMonth, jalaliDay)
+    }
+
+    private fun getJalaliMonthCount(year: Int, month: Int, day: Int): Int {
+        val gregorianDayMonth =
+            intArrayOf(0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334)
+        val gy2 = if (month > 2) (year + 1) else year
+        var days =
+            355666 + (365 * year) + ((gy2 + 3) / 4) - ((gy2 + 99) / 100) + ((gy2 + 399) / 400) + day + gregorianDayMonth[month - 1]
+        var jalaliYear = -1595 + (33 * (days / 12053))
+        days %= 12053
+        jalaliYear += 4 * (days / 1461)
+        days %= 1461
+        if (days > 365) {
+            jalaliYear += ((days - 1) / 365)
+            days = (days - 1) % 365
+        }
+        val jalaliMonth: Int
+        val jalaliDay: Int
+        if (days < 186) {
+            jalaliMonth = 1 + (days / 31)
+            jalaliDay = 1 + (days % 31)
+        } else {
+            jalaliMonth = 7 + ((days - 186) / 30)
+            jalaliDay = 1 + ((days - 186) % 30)
+        }
+
+        val leapYear: Int = jalaliYear % 33
+        val leapResults = arrayOf(1, 5, 9, 13, 17, 22, 26, 30)
+        val isLeapYear = leapResults.any { it == leapYear }
+
+        return if (jalaliMonth <= 6) {
+            31
+        } else if (jalaliMonth in 7..11) {
+            30
+        } else {
+            if (isLeapYear)
+                30
+            else 29
+        }
     }
 
     private fun jalaliToGregorian(year: Int, month: Int, day: Int): IntArray {
