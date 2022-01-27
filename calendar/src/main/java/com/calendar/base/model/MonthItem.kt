@@ -1,11 +1,19 @@
 package com.calendar.base.model
 
 import com.calendar.base.calendar.BaseCalendar
+import java.util.*
+import kotlin.collections.ArrayList
 
 data class MonthItem(
     val calendar: BaseCalendar,
-    val month: Int
+    val month: Int,
+    val year: Int
 ) {
+
+    init {
+        calendar.set(Calendar.YEAR, year)
+        calendar.set(Calendar.MONTH, month)
+    }
 
     private val days = ArrayList<DayItem>()
 
@@ -20,9 +28,9 @@ data class MonthItem(
             days.addAll(
                 calendar.generateDays(month).map {
                     if (it == -1)
-                        DayItem(calendar, null)
+                        DayItem(null)
                     else
-                        DayItem(calendar, it)
+                        DayItem(it)
                 }
             )
         }

@@ -17,4 +17,5 @@ abstract class BaseCalendar {
     abstract fun getYearName(): String
 
     abstract fun getNextDates(field: Int, value: Int): List<MonthItem>
+    abstract fun set(field: Int, value: Int)
 }

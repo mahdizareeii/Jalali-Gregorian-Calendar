@@ -75,12 +75,19 @@ class MyJalaliCalendar : BaseCalendar() {
             set(field, get(field) + value)
         }
 
+        //TODO refactor here like gregorian
+        val todayYear = today.get(Calendar.YEAR)
         val todayMonth = today.get(Calendar.MONTH)
+        val nextYear = next.get(Calendar.YEAR)
         val nextMonth = next.get(Calendar.MONTH)
         for (month in todayMonth until nextMonth) {
-            months.add(MonthItem(MyJalaliCalendar(), month))
+            months.add(MonthItem(MyJalaliCalendar(), month,todayYear))
         }
         return months
+    }
+
+    override fun set(field: Int, value: Int) {
+        calendar.set(field, value)
     }
 
     private fun gregorianToJalali(year: Int, month: Int, day: Int): IntArray {

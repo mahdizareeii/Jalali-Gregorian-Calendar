@@ -5,7 +5,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.calendar.R
 import com.calendar.base.model.DayItem
-import com.calendar.utils.SquareView
+import com.calendar.view.SquareView
 
 class DayViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val bgDay: SquareView = view.findViewById(R.id.bg_day)

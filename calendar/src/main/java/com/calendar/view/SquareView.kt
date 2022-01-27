@@ -1,4 +1,4 @@
-package com.calendar.utils
+package com.calendar.view
 
 import android.content.Context
 import android.util.AttributeSet

@@ -49,12 +49,41 @@ class MyGregorianCalendar : BaseCalendar() {
             set(field, get(field) + value)
         }
 
+        val todayYear = today.get(Calendar.YEAR)
         val todayMonth = today.get(Calendar.MONTH)
+        val nextYear = next.get(Calendar.YEAR)
         val nextMonth = next.get(Calendar.MONTH)
-        for (month in todayMonth until nextMonth) {
-            months.add(MonthItem(MyGregorianCalendar(), month))
+
+        if (todayYear == nextYear) {
+            for (month in todayMonth until nextMonth) {
+                months.add(MonthItem(MyGregorianCalendar(), month, todayYear))
+            }
+        } else {
+            if (field == Calendar.YEAR)
+                for (year in todayYear..nextYear) {
+                    for (month in 0..11)
+                        months.add(MonthItem(MyGregorianCalendar(), month, year))
+                }
+            else if (field == Calendar.MONTH) {
+                var temp = value
+                var tempYear = todayYear
+                while (temp >= 12) {
+                    for (month in 0..11)
+                        months.add(MonthItem(MyGregorianCalendar(), month, tempYear))
+                    temp -= 12
+                    tempYear++
+                }
+
+                if (temp != 0)
+                    for (month in 0..temp)
+                        months.add(MonthItem(MyGregorianCalendar(), month, tempYear))
+            }
         }
         return months
+    }
+
+    override fun set(field: Int, value: Int) {
+        calendar.set(field, value)
     }
 
 
