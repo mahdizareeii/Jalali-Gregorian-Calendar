@@ -39,7 +39,7 @@ class CalendarView @JvmOverloads constructor(
 
         calendar = MyGregorianCalendar()
         initRecyclerView(LinearLayoutManager.VERTICAL)
-        submitNextDates(Calendar.MONTH, 48)
+        submitNextDates(Calendar.MONTH, 1)
     }
 
     fun submitYears(years: List<YearItem>) {

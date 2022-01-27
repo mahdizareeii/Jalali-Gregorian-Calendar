@@ -55,9 +55,10 @@ class MyGregorianCalendar : BaseCalendar() {
         val nextMonth = next.get(Calendar.MONTH)
 
         if (todayYear == nextYear) {
-            for (month in todayMonth until nextMonth) {
-                months.add(MonthItem(MyGregorianCalendar(), month, todayYear))
-            }
+            if (field == Calendar.MONTH)
+                for (month in todayMonth..nextMonth) {
+                    months.add(MonthItem(MyGregorianCalendar(), month, todayYear))
+                }
         } else {
             if (field == Calendar.YEAR)
                 for (year in todayYear..nextYear) {
