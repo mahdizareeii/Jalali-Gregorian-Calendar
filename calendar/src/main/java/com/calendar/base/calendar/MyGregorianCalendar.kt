@@ -1,6 +1,5 @@
 package com.calendar.base.calendar
 
-import com.calendar.base.model.MonthItem
 import java.util.*
 
 class MyGregorianCalendar : BaseCalendar() {
