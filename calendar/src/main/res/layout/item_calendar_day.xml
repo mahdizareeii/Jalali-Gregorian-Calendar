@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.calendar.view.SquareView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.calendar.utils.SquareView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bg_day"
     android:layout_width="match_parent"
@@ -13,4 +13,4 @@
         android:layout_height="wrap_content"
         tools:text="1" />
 
-</com.calendar.view.SquareView>
+</com.calendar.utils.SquareView>

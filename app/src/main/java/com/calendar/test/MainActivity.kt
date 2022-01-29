@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.calendar.base.CalendarSelectionType
 import com.calendar.base.CalendarType
-import com.calendar.base.CalendarView
+import com.calendar.CalendarView
 import java.util.*
 
 class MainActivity : AppCompatActivity() {

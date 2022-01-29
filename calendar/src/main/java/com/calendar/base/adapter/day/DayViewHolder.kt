@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.calendar.R
 import com.calendar.base.adapter.day.types.DaySelectionType
 import com.calendar.base.model.DayItem
-import com.calendar.view.SquareView
+import com.calendar.utils.SquareView
 
 internal class DayViewHolder(
     view: View,

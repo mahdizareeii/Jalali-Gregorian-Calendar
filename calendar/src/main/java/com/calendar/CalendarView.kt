@@ -1,4 +1,4 @@
-package com.calendar.base
+package com.calendar
 
 import android.content.Context
 import android.util.AttributeSet
@@ -6,7 +6,8 @@ import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.calendar.R
+import com.calendar.base.CalendarSelectionType
+import com.calendar.base.CalendarType
 import com.calendar.base.adapter.month.MonthAdapter
 import com.calendar.base.calendar.BaseCalendar
 
