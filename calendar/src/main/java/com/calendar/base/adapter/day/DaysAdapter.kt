@@ -8,14 +8,17 @@ import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.calendar.R
+import com.calendar.base.adapter.day.types.DaySelectionType
 import com.calendar.base.model.DayItem
 import com.google.android.flexbox.FlexboxLayoutManager
 
-class DaysAdapter : ListAdapter<DayItem, DayViewHolder>(DiffUtilCallBack()) {
+internal class DaysAdapter(
+    private val daySelectionType: DaySelectionType
+) : ListAdapter<DayItem, DayViewHolder>(DiffUtilCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DayViewHolder {
         return DayViewHolder(
-            LayoutInflater.from(parent.context).inflate(
+            view = LayoutInflater.from(parent.context).inflate(
                 R.layout.item_calendar_day,
                 parent,
                 false
@@ -29,7 +32,8 @@ class DaysAdapter : ListAdapter<DayItem, DayViewHolder>(DiffUtilCallBack()) {
                         dp(parent.context, 1)
                     )
                 }
-            }
+            },
+            daySelectionType = daySelectionType
         )
     }
 

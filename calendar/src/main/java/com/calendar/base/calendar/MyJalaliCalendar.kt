@@ -71,10 +71,38 @@ class MyJalaliCalendar : BaseCalendar() {
     override fun get(field: Int) = calendar.get(field)
 
     override fun clear() {
-//        calendar.clear()
+        //calendar.clear()
     }
 
     override fun getNewInstanceOfCalendar(): BaseCalendar = MyJalaliCalendar()
+
+    private fun getDayOfWeek(): Int {
+        val jalali = gregorianToJalali(
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH) + 1,
+            calendar.get(Calendar.DAY_OF_MONTH)
+        )
+
+        val gregorian = jalaliToGregorian(
+            jalali[0],
+            jalali[1],
+            1,
+        )
+
+        val calendar = Calendar.getInstance().apply {
+            set(Calendar.YEAR, gregorian[0])
+            set(Calendar.MONTH, gregorian[1] - 1)
+            set(Calendar.DAY_OF_MONTH, gregorian[2])
+        }
+
+        return calendar.get(Calendar.DAY_OF_WEEK)
+    }
+
+    private fun isLeapYear(year: Int): Boolean {
+        return arrayOf(1, 5, 9, 13, 17, 22, 26, 30).any {
+            it == year % 33
+        }
+    }
 
     private fun gregorianToJalali(year: Int, month: Int, day: Int): IntArray {
         val gregorianDayMonth: IntArray =
@@ -169,33 +197,5 @@ class MyJalaliCalendar : BaseCalendar() {
                 30
             else 29
         }
-    }
-
-    private fun isLeapYear(year: Int): Boolean {
-        return arrayOf(1, 5, 9, 13, 17, 22, 26, 30).any {
-            it == year % 33
-        }
-    }
-
-    private fun getDayOfWeek(): Int {
-        val jalali = gregorianToJalali(
-            calendar.get(Calendar.YEAR),
-            calendar.get(Calendar.MONTH) + 1,
-            calendar.get(Calendar.DAY_OF_MONTH)
-        )
-
-        val gregorian = jalaliToGregorian(
-            jalali[0],
-            jalali[1],
-            1,
-        )
-
-        val calendar = Calendar.getInstance().apply {
-            set(Calendar.YEAR, gregorian[0])
-            set(Calendar.MONTH, gregorian[1] - 1)
-            set(Calendar.DAY_OF_MONTH, gregorian[2])
-        }
-
-        return calendar.get(Calendar.DAY_OF_WEEK)
     }
 }

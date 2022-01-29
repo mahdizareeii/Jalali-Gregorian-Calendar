@@ -5,14 +5,16 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.calendar.R
 import com.calendar.base.adapter.day.DaysAdapter
+import com.calendar.base.adapter.day.types.DaySelectionType
 import com.calendar.base.model.MonthItem
 import com.google.android.flexbox.AlignItems
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 
-class MonthViewHolder(
-    view: View
+internal class MonthViewHolder(
+    view: View,
+    private val daySelectionType: DaySelectionType
 ) : RecyclerView.ViewHolder(view) {
     private val context = view.context
     private val txtMonth: AppCompatTextView = view.findViewById(R.id.txt_month)
@@ -28,7 +30,7 @@ class MonthViewHolder(
     }
 
     private fun initRecyclerView() {
-        adapter = DaysAdapter()
+        adapter = DaysAdapter(daySelectionType)
         rvDays.layoutManager = FlexboxLayoutManager(context).apply {
             flexDirection = FlexDirection.ROW_REVERSE
             alignItems = AlignItems.CENTER

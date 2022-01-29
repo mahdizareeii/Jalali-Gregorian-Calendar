@@ -5,17 +5,21 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.calendar.R
+import com.calendar.base.adapter.day.types.DaySelectionType
 import com.calendar.base.model.MonthItem
 
-class MonthAdapter : ListAdapter<MonthItem, MonthViewHolder>(DiffUtilCallBack()) {
+internal class MonthAdapter(
+    private val daySelectionType: DaySelectionType
+) : ListAdapter<MonthItem, MonthViewHolder>(DiffUtilCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MonthViewHolder {
         return MonthViewHolder(
-            LayoutInflater.from(parent.context).inflate(
+            view = LayoutInflater.from(parent.context).inflate(
                 R.layout.item_month,
                 parent,
                 false
-            )
+            ),
+            daySelectionType = daySelectionType
         )
     }
 

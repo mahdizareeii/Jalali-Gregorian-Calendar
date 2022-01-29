@@ -1,8 +1,10 @@
 package com.calendar.base
 
-enum class CalendarType {
-    MULTIPLE_SELECTION,
-    RANGE_SELECTION,
-    SINGLE_SELECTION,
-    WITHOUT_SELECTION
+import com.calendar.base.calendar.BaseCalendar
+import com.calendar.base.calendar.MyGregorianCalendar
+import com.calendar.base.calendar.MyJalaliCalendar
+
+enum class CalendarType(internal val calendar: BaseCalendar) {
+    Jalali(MyJalaliCalendar()),
+    Gregorian(MyGregorianCalendar())
 }
