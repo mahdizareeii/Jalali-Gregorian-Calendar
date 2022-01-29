@@ -8,7 +8,7 @@ import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.calendar.R
-import com.calendar.base.adapter.day.types.DaySelectionType
+import com.calendar.base.types.DaySelectionType
 import com.calendar.base.model.DayItem
 import com.google.android.flexbox.FlexboxLayoutManager
 

@@ -4,7 +4,7 @@ import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.calendar.R
-import com.calendar.base.adapter.day.types.DaySelectionType
+import com.calendar.base.types.DaySelectionType
 import com.calendar.base.model.DayItem
 import com.calendar.utils.SquareView
 

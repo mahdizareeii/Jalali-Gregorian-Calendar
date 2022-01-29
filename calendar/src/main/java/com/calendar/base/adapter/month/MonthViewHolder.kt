@@ -5,7 +5,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.calendar.R
 import com.calendar.base.adapter.day.DaysAdapter
-import com.calendar.base.adapter.day.types.DaySelectionType
+import com.calendar.base.types.DaySelectionType
 import com.calendar.base.model.MonthItem
 import com.google.android.flexbox.AlignItems
 import com.google.android.flexbox.FlexDirection
