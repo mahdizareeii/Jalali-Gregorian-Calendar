@@ -12,8 +12,8 @@ class MyGregorianCalendar : BaseCalendar() {
             "July", "August", "September", "October", "November", "December"
         )
 
-    override fun getDisplayedMonthName(value: Int): String {
-        return nameOfMonths.getOrNull(value) ?: "Unknown"
+    override fun getDisplayedMonthName(): String {
+        return nameOfMonths.getOrNull(calendar.get(Calendar.MONTH)) ?: "Unknown"
     }
 
     override fun firstDayPositionInWeek(): Int {
@@ -22,9 +22,8 @@ class MyGregorianCalendar : BaseCalendar() {
         return if (position == 7) 0 else position
     }
 
-    override fun generateDays(month: Int): List<Int> {
+    override fun generateDays(): List<Int> {
         val days = ArrayList<Int>()
-        calendar.set(Calendar.MONTH, month)
         val countOfDays = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
 
         //shift days
@@ -46,6 +45,10 @@ class MyGregorianCalendar : BaseCalendar() {
     }
 
     override fun get(field: Int) = calendar.get(field)
+
+    override fun clear() {
+        calendar.clear()
+    }
 
     override fun getNewInstanceOfCalendar(): BaseCalendar = MyGregorianCalendar()
 

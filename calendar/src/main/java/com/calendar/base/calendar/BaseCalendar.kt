@@ -7,17 +7,18 @@ abstract class BaseCalendar {
 
     abstract val nameOfMonths: List<String>
 
-    abstract fun getDisplayedMonthName(value: Int): String
+    abstract fun getDisplayedMonthName(): String
 
     /** you must set month like this
      *  'calendar.set(Calendar.MONTH, month)'
      *  before call this method
      */
     abstract fun firstDayPositionInWeek(): Int
-    abstract fun generateDays(month: Int): List<Int>
+    abstract fun generateDays(): List<Int>
     abstract fun getYearName(): String
     abstract fun set(field: Int, value: Int)
     abstract fun get(field: Int): Int
+    abstract fun clear()
 
     /**
      *  you can increase up month and year with set field and you will get next dates
@@ -46,17 +47,17 @@ abstract class BaseCalendar {
                         months.add(MonthItem(getNewInstanceOfCalendar(), month, year))
                 }
             else if (field == Calendar.MONTH) {
-                var temp = value
+                var tempMonth = value
                 var tempYear = todayYear
-                while (temp >= 12) {
+                while (tempMonth >= 12) {
                     for (month in 0..11)
                         months.add(MonthItem(getNewInstanceOfCalendar(), month, tempYear))
-                    temp -= 12
+                    tempMonth -= 12
                     tempYear++
                 }
 
-                if (temp != 0)
-                    for (month in 0..temp)
+                if (tempMonth != 0)
+                    for (month in 0..tempMonth)
                         months.add(MonthItem(getNewInstanceOfCalendar(), month, tempYear))
             }
         }

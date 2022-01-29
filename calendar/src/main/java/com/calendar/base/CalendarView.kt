@@ -10,7 +10,6 @@ import com.calendar.R
 import com.calendar.base.adapter.month.MonthAdapter
 import com.calendar.base.calendar.BaseCalendar
 import com.calendar.base.calendar.MyGregorianCalendar
-import com.calendar.base.calendar.MyJalaliCalendar
 import com.calendar.base.model.MonthItem
 import com.calendar.base.model.YearItem
 import java.util.*
@@ -38,7 +37,7 @@ class CalendarView @JvmOverloads constructor(
 
         //TODO init with MyGregorianCalendar or MyJalaliCalendar depend user input
 
-        calendar = MyJalaliCalendar()
+        calendar = MyGregorianCalendar()
         initRecyclerView(LinearLayoutManager.VERTICAL)
         submitNextDates(Calendar.MONTH, 80)
     }

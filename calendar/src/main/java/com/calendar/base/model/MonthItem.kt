@@ -11,6 +11,7 @@ data class MonthItem(
 ) {
 
     init {
+        calendar.clear()
         calendar.set(Calendar.YEAR, year)
         calendar.set(Calendar.MONTH, month)
     }
@@ -20,13 +21,13 @@ data class MonthItem(
     fun getYear() = calendar.getYearName()
 
     fun getDisplayedName(): String {
-        return calendar.getDisplayedMonthName(month)
+        return calendar.getDisplayedMonthName()
     }
 
     fun generateDays(): List<DayItem> {
         if (days.isNullOrEmpty()) {
             days.addAll(
-                calendar.generateDays(month).map {
+                calendar.generateDays().map {
                     if (it == -1)
                         DayItem(null)
                     else

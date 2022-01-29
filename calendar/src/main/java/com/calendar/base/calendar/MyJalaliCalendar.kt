@@ -22,14 +22,14 @@ class MyJalaliCalendar : BaseCalendar() {
             "اسفند"
         )
 
-    override fun getDisplayedMonthName(value: Int): String {
-        val monthIndic = gregorianToJalali(
-            calendar.get(Calendar.YEAR),
-            value + 1,
-            calendar.get(Calendar.DAY_OF_MONTH)
-        )[1]
-
-        return nameOfMonths.getOrNull(monthIndic - 1) ?: "نا شناخته"
+    override fun getDisplayedMonthName(): String {
+        return nameOfMonths.getOrNull(
+            gregorianToJalali(
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH) + 1,
+                calendar.get(Calendar.DAY_OF_MONTH)
+            )[1] - 1
+        ) ?: "نا شناخته"
     }
 
     override fun firstDayPositionInWeek(): Int {
@@ -38,11 +38,9 @@ class MyJalaliCalendar : BaseCalendar() {
         return if (position == 7) 0 else position
     }
 
-    override fun generateDays(month: Int): List<Int> {
+    override fun generateDays(): List<Int> {
         val days = ArrayList<Int>()
-        /*calendar.set(Calendar.MONTH, month)
-        val countOfDays = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
-*/
+
         val countOfDays = getJalaliMonthCount(
             calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH) + 1,
@@ -73,6 +71,10 @@ class MyJalaliCalendar : BaseCalendar() {
     }
 
     override fun get(field: Int) = calendar.get(field)
+
+    override fun clear() {
+//        calendar.clear()
+    }
 
     override fun getNewInstanceOfCalendar(): BaseCalendar = MyJalaliCalendar()
 
@@ -154,14 +156,10 @@ class MyJalaliCalendar : BaseCalendar() {
             jalaliYear += ((days - 1) / 365)
             days = (days - 1) % 365
         }
-        val jalaliMonth: Int
-        val jalaliDay: Int
-        if (days < 186) {
-            jalaliMonth = 1 + (days / 31)
-            jalaliDay = 1 + (days % 31)
+        val jalaliMonth: Int = if (days < 186) {
+            1 + (days / 31)
         } else {
-            jalaliMonth = 7 + ((days - 186) / 30)
-            jalaliDay = 1 + ((days - 186) % 30)
+            7 + ((days - 186) / 30)
         }
 
         return if (jalaliMonth <= 6) {
