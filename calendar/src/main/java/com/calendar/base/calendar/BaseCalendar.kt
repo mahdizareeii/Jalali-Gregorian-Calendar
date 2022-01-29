@@ -19,6 +19,7 @@ abstract class BaseCalendar {
     abstract fun set(field: Int, value: Int)
     abstract fun get(field: Int): Int
     abstract fun clear()
+    protected abstract fun getNewInstanceOfCalendar(): BaseCalendar
 
     /**
      *  you can increase up month and year with set field and you will get next dates
@@ -63,8 +64,6 @@ abstract class BaseCalendar {
         }
         return months
     }
-
-    protected abstract fun getNewInstanceOfCalendar(): BaseCalendar
 
     fun gregorianToJalali(year: Int, month: Int, day: Int): IntArray {
         val gregorianDayMonth: IntArray =
