@@ -6,7 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.calendar.R
 import com.calendar.base.adapter.day.DaysAdapter
 import com.calendar.base.model.MonthItem
-import com.google.android.flexbox.*
+import com.google.android.flexbox.AlignItems
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexWrap
+import com.google.android.flexbox.FlexboxLayoutManager
 
 class MonthViewHolder(
     view: View
@@ -17,16 +20,21 @@ class MonthViewHolder(
     private var adapter: DaysAdapter? = null
     fun bind(monthItem: MonthItem) {
         if (adapter == null) {
-            rvDays.layoutManager = FlexboxLayoutManager(context).apply {
-                flexDirection = FlexDirection.ROW_REVERSE
-                alignItems = AlignItems.CENTER
-                flexWrap = FlexWrap.WRAP
-            }
-            rvDays.setHasFixedSize(true)
-            adapter = DaysAdapter()
-            rvDays.adapter = adapter
+            initRecyclerView()
         }
-        adapter?.submitItem(monthItem.getDayOfMonths())
-        txtMonth.text = String.format("${monthItem.getYear()} - ${monthItem.getDisplayedName()}")
+        adapter?.submitList(monthItem.generateDays())
+        txtMonth.text =
+            String.format("${monthItem.getDisplayedYearName()} - ${monthItem.getDisplayedMonthName()}")
+    }
+
+    private fun initRecyclerView() {
+        adapter = DaysAdapter()
+        rvDays.layoutManager = FlexboxLayoutManager(context).apply {
+            flexDirection = FlexDirection.ROW_REVERSE
+            alignItems = AlignItems.CENTER
+            flexWrap = FlexWrap.WRAP
+        }
+        rvDays.itemAnimator = null
+        rvDays.adapter = adapter
     }
 }

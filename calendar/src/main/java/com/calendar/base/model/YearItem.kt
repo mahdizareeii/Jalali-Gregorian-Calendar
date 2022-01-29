@@ -7,7 +7,7 @@ data class YearItem(
     val calendar: BaseCalendar,
     val year: Int,
 ) {
-    fun getMonthOfYear(): List<MonthItem> {
+    /*fun getMonthOfYear(): List<MonthItem> {
         val months = ArrayList<MonthItem>()
 
         calendar.set(Calendar.YEAR, year)
@@ -15,5 +15,5 @@ data class YearItem(
         for (i in 0..11) months.add(MonthItem(calendar, i))
 
         return months
-    }
+    }*/
 }
