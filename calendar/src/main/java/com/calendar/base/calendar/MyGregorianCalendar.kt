@@ -12,8 +12,8 @@ class MyGregorianCalendar : BaseCalendar() {
             "July", "August", "September", "October", "November", "December"
         )
 
-    override fun getDisplayedMonthName(): String {
-        return nameOfMonths.getOrNull(calendar.get(Calendar.MONTH)) ?: "Unknown"
+    override fun init() {
+
     }
 
     override fun firstDayPositionInWeek(): Int {
@@ -38,7 +38,13 @@ class MyGregorianCalendar : BaseCalendar() {
         return days
     }
 
-    override fun getYearName(): String = calendar.get(Calendar.YEAR).toString()
+    override fun getYear(): Int = calendar.get(Calendar.YEAR)
+
+    override fun getMonth(): Int = calendar.get(Calendar.MONTH) + 1
+
+    override fun getMonthName(): String {
+        return nameOfMonths.getOrNull(calendar.get(Calendar.MONTH)) ?: "Unknown"
+    }
 
     override fun set(field: Int, value: Int) {
         calendar.set(field, value)

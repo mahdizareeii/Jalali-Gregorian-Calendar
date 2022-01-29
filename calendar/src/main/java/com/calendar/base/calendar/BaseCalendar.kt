@@ -7,15 +7,16 @@ abstract class BaseCalendar {
 
     abstract val nameOfMonths: List<String>
 
-    abstract fun getDisplayedMonthName(): String
-
+    abstract fun init()
     /** you must set month like this
      *  'calendar.set(Calendar.MONTH, month)'
      *  before call this method
      */
     abstract fun firstDayPositionInWeek(): Int
     abstract fun generateDays(): List<Int>
-    abstract fun getYearName(): String
+    abstract fun getYear(): Int
+    abstract fun getMonth(): Int
+    abstract fun getMonthName(): String
     abstract fun set(field: Int, value: Int)
     abstract fun get(field: Int): Int
     abstract fun clear()

@@ -5,8 +5,8 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.calendar.R
 import com.calendar.base.adapter.day.DaysAdapter
-import com.calendar.base.types.DaySelectionType
 import com.calendar.base.model.MonthItem
+import com.calendar.base.types.DaySelectionType
 import com.google.android.flexbox.AlignItems
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
@@ -26,7 +26,7 @@ internal class MonthViewHolder(
         }
         adapter?.submitList(monthItem.generateDays())
         txtMonth.text =
-            String.format("${monthItem.getDisplayedYearName()} - ${monthItem.getDisplayedMonthName()}")
+            String.format("${monthItem.getYear} - ${monthItem.getMonthName}")
     }
 
     private fun initRecyclerView() {

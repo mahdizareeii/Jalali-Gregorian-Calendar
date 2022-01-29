@@ -4,8 +4,9 @@ import com.calendar.base.adapter.day.DayViewHolder
 import com.calendar.base.types.DaySelectionType
 import com.calendar.base.model.DayItem
 
-internal class SingleSelection : DaySelectionType {
+internal class SingleSelection : DaySelectionType() {
     override fun bind(viewHolder: DayViewHolder, dayItem: DayItem) {
-        TODO("Not yet implemented")
+        super.bind(viewHolder, dayItem)
+        //TODO
     }
 }

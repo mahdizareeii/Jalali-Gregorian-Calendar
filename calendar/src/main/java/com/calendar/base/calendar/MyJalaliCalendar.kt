@@ -5,6 +5,18 @@ import java.util.*
 class MyJalaliCalendar : BaseCalendar() {
 
     private val calendar = GregorianCalendar()
+    var persianDate: IntArray? = null
+    var persianDateAsString: String? = null
+
+    override fun init() {
+        persianDate = gregorianToJalali(
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH) + 1,
+            calendar.get(Calendar.DAY_OF_MONTH)
+        )
+
+        persianDateAsString = persianDate?.joinToString(" - ")
+    }
 
     override val nameOfMonths: List<String>
         get() = listOf(
@@ -21,16 +33,6 @@ class MyJalaliCalendar : BaseCalendar() {
             "بهمن",
             "اسفند"
         )
-
-    override fun getDisplayedMonthName(): String {
-        return nameOfMonths.getOrNull(
-            gregorianToJalali(
-                calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH) + 1,
-                calendar.get(Calendar.DAY_OF_MONTH)
-            )[1] - 1
-        ) ?: "نا شناخته"
-    }
 
     override fun firstDayPositionInWeek(): Int {
         val position = getDayOfWeek()
@@ -58,11 +60,19 @@ class MyJalaliCalendar : BaseCalendar() {
         return days
     }
 
-    override fun getYearName(): String = gregorianToJalali(
+    override fun getYear(): Int = gregorianToJalali(
         calendar.get(Calendar.YEAR),
         calendar.get(Calendar.MONTH) + 1,
         calendar.get(Calendar.DAY_OF_MONTH)
-    )[0].toString()
+    )[0]
+
+    override fun getMonth(): Int = persianDate?.getOrNull(1) ?: -1
+
+    override fun getMonthName(): String {
+        return nameOfMonths.getOrNull(
+            (persianDate?.getOrNull(1) ?: -1) - 1
+        ) ?: "نا شناخته"
+    }
 
     override fun set(field: Int, value: Int) {
         calendar.set(field, value)
@@ -98,12 +108,6 @@ class MyJalaliCalendar : BaseCalendar() {
         return calendar.get(Calendar.DAY_OF_WEEK)
     }
 
-    private fun isLeapYear(year: Int): Boolean {
-        return arrayOf(1, 5, 9, 13, 17, 22, 26, 30).any {
-            it == year % 33
-        }
-    }
-
     private fun getJalaliMonthCount(year: Int, month: Int, day: Int): Int {
         val gregorianDayMonth =
             intArrayOf(0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334)
@@ -132,6 +136,12 @@ class MyJalaliCalendar : BaseCalendar() {
             if (isLeapYear(jalaliYear))
                 30
             else 29
+        }
+    }
+
+    private fun isLeapYear(year: Int): Boolean {
+        return arrayOf(1, 5, 9, 13, 17, 22, 26, 30).any {
+            it == year % 33
         }
     }
 }

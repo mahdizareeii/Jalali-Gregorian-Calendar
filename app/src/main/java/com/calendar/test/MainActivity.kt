@@ -3,9 +3,9 @@ package com.calendar.test
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.calendar.CalendarView
 import com.calendar.base.CalendarSelectionType
 import com.calendar.base.CalendarType
-import com.calendar.CalendarView
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
 
         calendar.initCalendar(
             CalendarType.Jalali,
-            CalendarSelectionType.WITHOUT_SELECTION,
+            CalendarSelectionType.RANGE_SELECTION,
             LinearLayoutManager.VERTICAL
         )
 
