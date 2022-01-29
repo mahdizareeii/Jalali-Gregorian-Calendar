@@ -23,7 +23,8 @@ class MonthViewHolder(
             initRecyclerView()
         }
         adapter?.submitList(monthItem.generateDays())
-        txtMonth.text = String.format("${monthItem.getYear()} - ${monthItem.getDisplayedName()}")
+        txtMonth.text =
+            String.format("${monthItem.getDisplayedYearName()} - ${monthItem.getDisplayedMonthName()}")
     }
 
     private fun initRecyclerView() {

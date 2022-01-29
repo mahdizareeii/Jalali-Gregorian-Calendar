@@ -18,9 +18,9 @@ data class MonthItem(
 
     private val days = ArrayList<DayItem>()
 
-    fun getYear() = calendar.getYearName()
+    fun getDisplayedYearName() = calendar.getYearName()
 
-    fun getDisplayedName(): String {
+    fun getDisplayedMonthName(): String {
         return calendar.getDisplayedMonthName()
     }
 

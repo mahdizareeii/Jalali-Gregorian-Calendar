@@ -33,8 +33,7 @@ class MyJalaliCalendar : BaseCalendar() {
     }
 
     override fun firstDayPositionInWeek(): Int {
-        calendar.set(Calendar.DAY_OF_MONTH, 1)
-        val position = calendar.get(Calendar.DAY_OF_WEEK)
+        val position = getDayOfWeek()
         return if (position == 7) 0 else position
     }
 
@@ -47,11 +46,10 @@ class MyJalaliCalendar : BaseCalendar() {
             calendar.get(Calendar.DAY_OF_MONTH)
         )
 
-        //TODO shift days
         //shift days
-        /*repeat(firstDayPositionInWeek()) {
+        repeat(firstDayPositionInWeek()) {
             days.add(-1)
-        }*/
+        }
 
         for (day in 1..countOfDays) {
             days.add(day)
@@ -177,5 +175,27 @@ class MyJalaliCalendar : BaseCalendar() {
         return arrayOf(1, 5, 9, 13, 17, 22, 26, 30).any {
             it == year % 33
         }
+    }
+
+    private fun getDayOfWeek(): Int {
+        val jalali = gregorianToJalali(
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH) + 1,
+            calendar.get(Calendar.DAY_OF_MONTH)
+        )
+
+        val gregorian = jalaliToGregorian(
+            jalali[0],
+            jalali[1],
+            1,
+        )
+
+        val calendar = Calendar.getInstance().apply {
+            set(Calendar.YEAR, gregorian[0])
+            set(Calendar.MONTH, gregorian[1] - 1)
+            set(Calendar.DAY_OF_MONTH, gregorian[2])
+        }
+
+        return calendar.get(Calendar.DAY_OF_WEEK)
     }
 }
