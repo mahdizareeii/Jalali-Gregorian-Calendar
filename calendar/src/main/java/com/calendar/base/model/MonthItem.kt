@@ -11,6 +11,8 @@ data class MonthItem(
 ) {
     private val days = ArrayList<DayItem>()
 
+    lateinit var listener: MonthListener
+
     init {
         calendar.clear()
         calendar.set(Calendar.YEAR, year)
@@ -37,5 +39,9 @@ data class MonthItem(
             )
         }
         return days
+    }
+
+    interface MonthListener {
+        fun onDataSetChanged()
     }
 }
