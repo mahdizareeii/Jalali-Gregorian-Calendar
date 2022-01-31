@@ -5,7 +5,7 @@ import com.calendar.base.adapter.day.DayViewHolder
 import com.calendar.base.adapter.day.DaysListener
 import com.calendar.base.model.DayItem
 
-abstract class DaySelectionType {
+abstract class CalendarType {
     protected lateinit var context: Context
 
     open fun bind(

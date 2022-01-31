@@ -2,18 +2,15 @@ package com.calendar
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.calendar.base.CalendarType
+import com.calendar.base.CalendarRegional
 import com.calendar.base.adapter.month.MonthAdapter
 import com.calendar.base.calendar.BaseCalendar
-import com.calendar.base.model.DayItem
+import com.calendar.base.types.CalendarType
 import com.calendar.base.types.DaySelectionProperties
-import com.calendar.base.types.rangeslelection.RangeSelection
-import com.calendar.base.types.rangeslelection.RangeSelectionListener
 
 class CalendarView @JvmOverloads constructor(
     context: Context,
@@ -35,17 +32,15 @@ class CalendarView @JvmOverloads constructor(
     }
 
     fun initCalendar(
+        calendarRegional: CalendarRegional,
         calendarType: CalendarType,
         orientation: Int
     ) {
-        calendar = calendarType.calendar
+        calendar = calendarRegional.calendar
 
         val properties = DaySelectionProperties()
 
-        adapter = MonthAdapter(
-            RangeSelection(),
-            properties
-        )
+        adapter = MonthAdapter(calendarType, properties)
 
         if (orientation == LinearLayoutManager.HORIZONTAL)
             PagerSnapHelper().attachToRecyclerView(recyclerView)
@@ -54,7 +49,7 @@ class CalendarView @JvmOverloads constructor(
         recyclerView.layoutManager = LinearLayoutManager(
             context,
             orientation,
-            false
+            calendarRegional == CalendarRegional.Jalali
         )
     }
 }

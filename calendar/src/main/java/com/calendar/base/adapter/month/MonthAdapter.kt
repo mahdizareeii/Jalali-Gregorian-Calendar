@@ -8,10 +8,10 @@ import com.calendar.R
 import com.calendar.base.adapter.day.DaysListener
 import com.calendar.base.model.MonthItem
 import com.calendar.base.types.DaySelectionProperties
-import com.calendar.base.types.DaySelectionType
+import com.calendar.base.types.CalendarType
 
 internal class MonthAdapter(
-    private val daySelectionType: DaySelectionType,
+    private val calendarType: CalendarType,
     private val daySelectionProperties: DaySelectionProperties
 ) : ListAdapter<MonthItem, MonthViewHolder>(DiffUtilCallBack()), DaysListener {
 
@@ -22,7 +22,7 @@ internal class MonthAdapter(
                 parent,
                 false
             ),
-            daySelectionType = daySelectionType,
+            calendarType = calendarType,
             daySelectionProperties = daySelectionProperties,
             daysListener = this
         )

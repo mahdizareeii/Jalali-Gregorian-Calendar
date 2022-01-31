@@ -10,11 +10,11 @@ import androidx.recyclerview.widget.ListAdapter
 import com.calendar.R
 import com.calendar.base.model.DayItem
 import com.calendar.base.types.DaySelectionProperties
-import com.calendar.base.types.DaySelectionType
+import com.calendar.base.types.CalendarType
 import com.google.android.flexbox.FlexboxLayoutManager
 
 internal class DaysAdapter(
-    private val daySelectionType: DaySelectionType,
+    private val calendarType: CalendarType,
     private val daySelectionProperties: DaySelectionProperties,
     private val daysListener: DaysListener
 ) : ListAdapter<DayItem, DayViewHolder>(DiffUtilCallBack()) {
@@ -36,7 +36,7 @@ internal class DaysAdapter(
                     )
                 }
             },
-            daySelectionType = daySelectionType,
+            calendarType = calendarType,
             daySelectionProperties = daySelectionProperties,
             listener = daysListener
         )

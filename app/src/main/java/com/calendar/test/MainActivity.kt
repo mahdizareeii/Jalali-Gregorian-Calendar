@@ -4,10 +4,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.calendar.CalendarView
-import com.calendar.base.CalendarType
-import com.calendar.base.model.DayItem
+import com.calendar.base.CalendarRegional
 import com.calendar.base.types.rangeslelection.RangeSelection
-import com.calendar.base.types.rangeslelection.RangeSelectionListener
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -17,8 +15,9 @@ class MainActivity : AppCompatActivity() {
         val calendar = findViewById<CalendarView>(R.id.calendarView)
 
         calendar.initCalendar(
-            CalendarType.Jalali,
-            LinearLayoutManager.VERTICAL
+            CalendarRegional.Jalali,
+            RangeSelection(),
+            LinearLayoutManager.HORIZONTAL
         )
 
         calendar.submitNextDates(Calendar.MONTH, 80)

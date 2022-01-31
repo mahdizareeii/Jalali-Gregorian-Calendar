@@ -6,9 +6,9 @@ import com.calendar.base.adapter.day.DayViewHolder
 import com.calendar.base.adapter.day.DaysListener
 import com.calendar.base.model.DayItem
 import com.calendar.base.types.DaySelectionProperties
-import com.calendar.base.types.DaySelectionType
+import com.calendar.base.types.CalendarType
 
-class RangeSelection : DaySelectionType() {
+class RangeSelection : CalendarType() {
 
     override fun bind(
         viewHolder: DayViewHolder,
