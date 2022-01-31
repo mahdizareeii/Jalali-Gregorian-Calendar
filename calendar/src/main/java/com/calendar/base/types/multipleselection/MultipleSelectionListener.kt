@@ -1,3 +1,5 @@
 package com.calendar.base.types.multipleselection
 
-interface MultipleSelectionListener
+interface MultipleSelectionListener{
+
+}

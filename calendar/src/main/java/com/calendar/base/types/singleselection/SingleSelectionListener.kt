@@ -1,3 +1,7 @@
 package com.calendar.base.types.singleselection
 
-interface SingleSelectionListener
+import com.calendar.base.model.DayItem
+
+interface SingleSelectionListener {
+    fun onDaySelected(dayItem: DayItem)
+}

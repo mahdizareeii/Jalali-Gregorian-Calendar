@@ -1,3 +1,62 @@
 package com.calendar.base.types.singleselection
 
-class SingleSelection
+import androidx.core.content.ContextCompat
+import com.calendar.R
+import com.calendar.base.adapter.day.DayViewHolder
+import com.calendar.base.model.DayItem
+import com.calendar.base.types.CalendarListener
+import com.calendar.base.types.CalendarProperties
+import com.calendar.base.types.CalendarType
+
+class SingleSelection(
+    private val singleSelectionListener: SingleSelectionListener
+) : CalendarType() {
+
+    override fun bind(
+        viewHolder: DayViewHolder,
+        dayItem: DayItem,
+        properties: CalendarProperties,
+        listener: CalendarListener
+    ) {
+        super.bind(viewHolder, dayItem, properties, listener)
+        if (checkAvailability(dayItem, properties)) {
+            viewHolder.bgDay.background = ContextCompat.getDrawable(
+                context, background(
+                    currentItem = dayItem,
+                    selectedSingle = properties.selectedSingle
+                )
+            )
+
+            viewHolder.bgDay.setOnClickListener {
+                onDayClicked(properties, dayItem, singleSelectionListener)
+                listener.onNotifyDataSetChanged()
+            }
+        }
+    }
+
+    private fun background(
+        currentItem: DayItem,
+        selectedSingle: DayItem?
+    ): Int {
+        return if (selectedSingle != null) {
+            when (selectedSingle) {
+                currentItem -> R.drawable.bg_day_single_selected
+                else -> R.drawable.bg_day
+            }
+        } else {
+            R.drawable.bg_day
+        }
+    }
+
+    private fun onDayClicked(
+        property: CalendarProperties,
+        dayItem: DayItem,
+        listener: SingleSelectionListener
+    ) {
+        property.apply {
+            selectedSingle = dayItem
+            listener.onDaySelected(dayItem)
+        }
+    }
+
+}
