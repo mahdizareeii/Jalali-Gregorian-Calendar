@@ -1,3 +1,8 @@
 package com.calendar.base.types.rangeslelection
 
-interface RangeSelectionListener
+import com.calendar.base.model.DayItem
+
+interface RangeSelectionListener{
+    fun onCheckInSelected(dayItem: DayItem)
+    fun onCheckOutSelected(dayItem: DayItem)
+}

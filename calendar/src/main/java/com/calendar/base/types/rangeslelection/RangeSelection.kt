@@ -3,18 +3,20 @@ package com.calendar.base.types.rangeslelection
 import androidx.core.content.ContextCompat
 import com.calendar.R
 import com.calendar.base.adapter.day.DayViewHolder
-import com.calendar.base.adapter.day.DaysListener
+import com.calendar.base.types.CalendarListener
 import com.calendar.base.model.DayItem
-import com.calendar.base.types.DaySelectionProperties
 import com.calendar.base.types.CalendarType
+import com.calendar.base.types.CalendarProperties
 
-class RangeSelection : CalendarType() {
+class RangeSelection(
+    private val rangeSelectionListener: RangeSelectionListener
+) : CalendarType() {
 
     override fun bind(
         viewHolder: DayViewHolder,
         dayItem: DayItem,
-        properties: DaySelectionProperties,
-        listener: DaysListener
+        properties: CalendarProperties,
+        listener: CalendarListener
     ) {
         super.bind(viewHolder, dayItem, properties, listener)
 
@@ -27,7 +29,7 @@ class RangeSelection : CalendarType() {
         )
 
         viewHolder.bgDay.setOnClickListener {
-            onDayClicked(properties, dayItem)
+            onDayClicked(properties, dayItem, rangeSelectionListener)
             listener.onNotifyDataSetChanged()
         }
     }
@@ -54,19 +56,25 @@ class RangeSelection : CalendarType() {
     }
 
     private fun onDayClicked(
-        property: DaySelectionProperties,
-        dayItem: DayItem
+        property: CalendarProperties,
+        dayItem: DayItem,
+        listener: RangeSelectionListener
     ) {
         property.apply {
             if (selectedCheckIn == dayItem || selectedCheckIn == null || selectedCheckOut != null) {
                 selectedCheckIn = dayItem
                 selectedCheckOut = null
+
+                listener.onCheckInSelected(selectedCheckIn!!)
             } else {
                 if (selectedCheckIn!! > dayItem) {
                     selectedCheckOut = selectedCheckIn
                     selectedCheckIn = dayItem
+                    listener.onCheckInSelected(selectedCheckIn!!)
+                    listener.onCheckOutSelected(selectedCheckOut!!)
                 } else {
                     selectedCheckOut = dayItem
+                    listener.onCheckOutSelected(selectedCheckOut!!)
                 }
             }
         }

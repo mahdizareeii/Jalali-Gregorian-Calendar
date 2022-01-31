@@ -10,7 +10,7 @@ import com.calendar.base.calendar.RegionalType
 import com.calendar.base.adapter.month.MonthAdapter
 import com.calendar.base.calendar.BaseCalendar
 import com.calendar.base.types.CalendarType
-import com.calendar.base.types.DaySelectionProperties
+import com.calendar.base.types.CalendarProperties
 
 class CalendarView @JvmOverloads constructor(
     context: Context,
@@ -38,7 +38,7 @@ class CalendarView @JvmOverloads constructor(
     ) {
         calendar = regionalType.calendar
 
-        val properties = DaySelectionProperties()
+        val properties = CalendarProperties()
 
         adapter = MonthAdapter(calendarType, properties)
 

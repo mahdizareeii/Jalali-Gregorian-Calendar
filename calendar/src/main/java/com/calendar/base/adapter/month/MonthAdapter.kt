@@ -5,15 +5,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.calendar.R
-import com.calendar.base.adapter.day.DaysListener
+import com.calendar.base.types.CalendarListener
 import com.calendar.base.model.MonthItem
-import com.calendar.base.types.DaySelectionProperties
+import com.calendar.base.types.CalendarProperties
 import com.calendar.base.types.CalendarType
 
 internal class MonthAdapter(
     private val calendarType: CalendarType,
-    private val daySelectionProperties: DaySelectionProperties
-) : ListAdapter<MonthItem, MonthViewHolder>(DiffUtilCallBack()), DaysListener {
+    private val calendarProperties: CalendarProperties
+) : ListAdapter<MonthItem, MonthViewHolder>(DiffUtilCallBack()), CalendarListener {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MonthViewHolder {
         return MonthViewHolder(
@@ -23,8 +23,8 @@ internal class MonthAdapter(
                 false
             ),
             calendarType = calendarType,
-            daySelectionProperties = daySelectionProperties,
-            daysListener = this
+            calendarProperties = calendarProperties,
+            calendarListener = this
         )
     }
 
