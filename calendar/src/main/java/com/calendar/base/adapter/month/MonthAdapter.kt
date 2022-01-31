@@ -11,7 +11,6 @@ import com.calendar.base.types.CalendarProperties
 import com.calendar.base.types.CalendarType
 
 internal class MonthAdapter(
-    private val calendarType: CalendarType,
     private val calendarProperties: CalendarProperties
 ) : ListAdapter<MonthItem, MonthViewHolder>(DiffUtilCallBack()), CalendarListener {
 
@@ -22,7 +21,6 @@ internal class MonthAdapter(
                 parent,
                 false
             ),
-            calendarType = calendarType,
             calendarProperties = calendarProperties,
             calendarListener = this
         )

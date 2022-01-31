@@ -15,7 +15,6 @@ import com.calendar.base.types.CalendarListener
 import com.google.android.flexbox.FlexboxLayoutManager
 
 internal class DaysAdapter(
-    private val calendarType: CalendarType,
     private val calendarProperties: CalendarProperties,
     private val calendarListener: CalendarListener
 ) : ListAdapter<DayItem, DayViewHolder>(DiffUtilCallBack()) {
@@ -37,7 +36,6 @@ internal class DaysAdapter(
                     )
                 }
             },
-            calendarType = calendarType,
             calendarProperties = calendarProperties,
             listener = calendarListener
         )

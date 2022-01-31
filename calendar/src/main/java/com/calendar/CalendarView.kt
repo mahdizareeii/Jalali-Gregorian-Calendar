@@ -34,13 +34,12 @@ class CalendarView @JvmOverloads constructor(
 
     fun initCalendar(
         regionalType: RegionalType,
-        calendarType: CalendarType,
         orientation: Int,
         calendarProperties: CalendarProperties
     ) {
         calendar = regionalType.calendar
 
-        adapter = MonthAdapter(calendarType, calendarProperties)
+        adapter = MonthAdapter(calendarProperties)
 
         if (orientation == LinearLayoutManager.HORIZONTAL)
             PagerSnapHelper().attachToRecyclerView(recyclerView)

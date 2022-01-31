@@ -5,6 +5,9 @@ import androidx.core.content.ContextCompat
 import com.calendar.R
 import com.calendar.base.adapter.day.DayViewHolder
 import com.calendar.base.model.DayItem
+import com.calendar.base.types.multipleselection.MultipleSelection
+import com.calendar.base.types.rangeslelection.RangeSelection
+import com.calendar.base.types.singleselection.SingleSelection
 
 abstract class CalendarType {
     protected lateinit var context: Context
@@ -63,20 +66,33 @@ abstract class CalendarType {
         dayItem: DayItem,
         properties: CalendarProperties
     ): Boolean {
-        if (properties.selectedCheckIn != null && properties.selectedCheckOut != null)
-            return dayItem >= properties.selectedCheckIn!! && dayItem <= properties.selectedCheckOut!!
+        return when (properties.calendarType::class.java) {
+            RangeSelection::class.java -> {
+                if (properties.selectedCheckIn != null && properties.selectedCheckOut != null)
+                    return dayItem >= properties.selectedCheckIn!! && dayItem <= properties.selectedCheckOut!!
 
-        if (properties.selectedCheckIn != null)
-            return dayItem == properties.selectedCheckIn
+                if (properties.selectedCheckIn != null)
+                    return dayItem == properties.selectedCheckIn
 
-        if (properties.selectedCheckOut != null)
-            return dayItem == properties.selectedCheckOut
+                if (properties.selectedCheckOut != null)
+                    return dayItem == properties.selectedCheckOut
 
-        if (properties.selectedSingle != null)
-            return properties.selectedSingle == dayItem
+                return false
+            }
 
-        return properties.selectedMultipleDayItem?.any {
-            it == dayItem
-        } ?: false
+            SingleSelection::class.java -> {
+                return if (properties.selectedSingle != null)
+                    properties.selectedSingle == dayItem
+                else false
+            }
+
+            MultipleSelection::class.java -> {
+                properties.selectedMultipleDayItem?.any {
+                    it == dayItem
+                } ?: false
+            }
+
+            else -> false
+        }
     }
 }

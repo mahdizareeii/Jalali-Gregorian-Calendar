@@ -3,6 +3,7 @@ package com.calendar.base.types
 import com.calendar.base.model.DayItem
 
 data class CalendarProperties(
+    val calendarType: CalendarType,
     var today: DayItem? = null,
 
     //for range selection

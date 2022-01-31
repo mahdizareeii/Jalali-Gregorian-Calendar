@@ -17,7 +17,6 @@ import com.google.android.flexbox.FlexboxLayoutManager
 internal class MonthViewHolder(
     view: View,
     private val calendarProperties: CalendarProperties,
-    private val calendarType: CalendarType,
     private val calendarListener: CalendarListener
 ) : RecyclerView.ViewHolder(view) {
     private val context = view.context
@@ -40,7 +39,6 @@ internal class MonthViewHolder(
 
     private fun initRecyclerView() {
         adapter = DaysAdapter(
-            calendarType,
             calendarProperties,
             calendarListener
         )
