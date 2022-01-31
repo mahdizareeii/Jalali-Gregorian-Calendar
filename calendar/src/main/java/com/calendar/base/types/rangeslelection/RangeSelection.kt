@@ -28,7 +28,7 @@ class RangeSelection() : DaySelectionType() {
         )
 
         viewHolder.bgDay.setOnClickListener {
-            if (properties.selectedCheckIn == null || properties.selectedCheckOut != null) {
+            if (properties.selectedCheckIn == dayItem || properties.selectedCheckIn == null || properties.selectedCheckOut != null) {
                 properties.selectedCheckIn = dayItem
                 properties.selectedCheckOut = null
                 listener.onDayNotifyDataSetChangedFrom(monthItemPosition)

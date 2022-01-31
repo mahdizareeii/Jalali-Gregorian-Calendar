@@ -11,7 +11,7 @@ data class MonthItem(
 ) {
     private val days = ArrayList<DayItem>()
 
-    lateinit var listener: MonthListener
+    var listener: MonthListener? = null
 
     init {
         calendar.clear()
