@@ -8,7 +8,7 @@ import com.calendar.base.model.DayItem
 abstract class CalendarType {
     protected lateinit var context: Context
 
-    open fun bind(
+    internal open fun bind(
         viewHolder: DayViewHolder,
         dayItem: DayItem,
         properties: DaySelectionProperties,

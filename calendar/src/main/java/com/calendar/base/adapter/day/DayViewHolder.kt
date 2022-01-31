@@ -9,7 +9,7 @@ import com.calendar.base.types.DaySelectionProperties
 import com.calendar.base.types.CalendarType
 import com.calendar.utils.SquareView
 
-class DayViewHolder(
+internal class DayViewHolder(
     view: View,
     private val daySelectionProperties: DaySelectionProperties,
     private val calendarType: CalendarType,
