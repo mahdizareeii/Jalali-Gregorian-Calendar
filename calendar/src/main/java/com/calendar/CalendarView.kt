@@ -49,7 +49,7 @@ class CalendarView @JvmOverloads constructor(
         recyclerView.layoutManager = LinearLayoutManager(
             context,
             orientation,
-            calendarRegional == CalendarRegional.Jalali
+            calendarRegional == CalendarRegional.Jalali && orientation == LinearLayoutManager.HORIZONTAL
         )
     }
 }

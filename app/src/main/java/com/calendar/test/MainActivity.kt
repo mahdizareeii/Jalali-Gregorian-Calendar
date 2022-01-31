@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         calendar.initCalendar(
             CalendarRegional.Jalali,
             RangeSelection(),
-            LinearLayoutManager.HORIZONTAL
+            LinearLayoutManager.VERTICAL
         )
 
         calendar.submitNextDates(Calendar.MONTH, 80)
