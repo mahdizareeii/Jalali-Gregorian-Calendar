@@ -19,7 +19,6 @@ internal class DaysAdapter(
     private val daysListener: DaysListener
 ) : ListAdapter<DayItem, DayViewHolder>(DiffUtilCallBack()) {
 
-    var monthItemPosition: Int = 0
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DayViewHolder {
         return DayViewHolder(
             view = LayoutInflater.from(parent.context).inflate(
@@ -44,7 +43,7 @@ internal class DaysAdapter(
     }
 
     override fun onBindViewHolder(holder: DayViewHolder, position: Int) {
-        holder.bind(getItem(position), monthItemPosition)
+        holder.bind(getItem(position))
     }
 
     private fun dp(context: Context, value: Int): Int =

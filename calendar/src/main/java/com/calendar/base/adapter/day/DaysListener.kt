@@ -9,4 +9,6 @@ interface DaysListener :
     RangeSelectionListener,
     MultipleSelectionListener,
     SingleSelectionListener,
-    WithoutSelectionListener
+    WithoutSelectionListener {
+    fun onNotifyDataSetChanged()
+}

@@ -13,11 +13,10 @@ class RangeSelection : DaySelectionType() {
     override fun bind(
         viewHolder: DayViewHolder,
         dayItem: DayItem,
-        listener: DaysListener,
         properties: DaySelectionProperties,
-        monthItemPosition: Int
+        listener: DaysListener
     ) {
-        super.bind(viewHolder, dayItem, listener, properties, monthItemPosition)
+        super.bind(viewHolder, dayItem, properties, listener)
 
         viewHolder.bgDay.background = ContextCompat.getDrawable(
             context, background(
@@ -28,7 +27,8 @@ class RangeSelection : DaySelectionType() {
         )
 
         viewHolder.bgDay.setOnClickListener {
-            onDayClicked(properties, listener, dayItem, monthItemPosition)
+            onDayClicked(properties, dayItem)
+            listener.onNotifyDataSetChanged()
         }
     }
 
@@ -55,23 +55,18 @@ class RangeSelection : DaySelectionType() {
 
     private fun onDayClicked(
         property: DaySelectionProperties,
-        listener: DaysListener,
-        dayItem: DayItem,
-        monthItemPosition: Int
+        dayItem: DayItem
     ) {
         property.apply {
             if (selectedCheckIn == dayItem || selectedCheckIn == null || selectedCheckOut != null) {
                 selectedCheckIn = dayItem
                 selectedCheckOut = null
-                listener.onDayNotifyDataSetChangedFrom(monthItemPosition)
             } else {
                 if (selectedCheckIn!! > dayItem) {
                     selectedCheckOut = selectedCheckIn
                     selectedCheckIn = dayItem
-                    listener.onDayNotifyDataSetChangedFrom(monthItemPosition)
                 } else {
                     selectedCheckOut = dayItem
-                    listener.onDayNotifyDataSetChangedUntil(monthItemPosition)
                 }
             }
         }

@@ -25,11 +25,10 @@ internal class MonthViewHolder(
     private val rvDays: RecyclerView = view.findViewById(R.id.rv_days)
     private var adapter: DaysAdapter? = null
 
-    fun bind(monthItem: MonthItem, monthItemPosition: Int) {
+    fun bind(monthItem: MonthItem) {
         if (adapter == null) {
             initRecyclerView()
         }
-        adapter?.monthItemPosition = monthItemPosition
         monthItem.listener = object : MonthItem.MonthListener {
             override fun onDataSetChanged() {
                 adapter?.notifyDataSetChanged()

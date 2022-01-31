@@ -29,18 +29,10 @@ internal class MonthAdapter(
     }
 
     override fun onBindViewHolder(holder: MonthViewHolder, position: Int) {
-        holder.bind(getItem(position), position)
+        holder.bind(getItem(position))
     }
 
-    override fun onDayNotifyDataSetChangedFrom(position: Int) {
-        notifyList()
-    }
-
-    override fun onDayNotifyDataSetChangedUntil(position: Int) {
-        notifyList()
-    }
-
-    private fun notifyList() {
+    override fun onNotifyDataSetChanged() {
         for (indic in currentList.indices)
             getItem(indic).listener?.onDataSetChanged()
     }

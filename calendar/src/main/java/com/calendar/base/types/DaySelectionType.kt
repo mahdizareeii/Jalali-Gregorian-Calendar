@@ -11,9 +11,8 @@ abstract class DaySelectionType {
     open fun bind(
         viewHolder: DayViewHolder,
         dayItem: DayItem,
-        listener: DaysListener,
         properties: DaySelectionProperties,
-        monthItemPosition: Int
+        listener: DaysListener
     ) {
         context = viewHolder.itemView.context
         viewHolder.bgDay.visibility = dayItem.visibility

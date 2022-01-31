@@ -18,13 +18,12 @@ class DayViewHolder(
     val bgDay: SquareView = view.findViewById(R.id.bg_day)
     val txtDay: AppCompatTextView = view.findViewById(R.id.txt_day)
 
-    fun bind(dayItem: DayItem, monthItemPosition: Int) {
+    fun bind(dayItem: DayItem) {
         daySelectionType.bind(
             this,
             dayItem,
-            listener,
             daySelectionProperties,
-            monthItemPosition
+            listener
         )
     }
 }
