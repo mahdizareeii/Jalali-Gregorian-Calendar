@@ -11,6 +11,7 @@
         android:id="@+id/txt_day"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#526576"
         tools:text="1" />
 
 </com.calendar.utils.SquareView>

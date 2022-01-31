@@ -3,10 +3,10 @@ package com.calendar.base.types.rangeslelection
 import androidx.core.content.ContextCompat
 import com.calendar.R
 import com.calendar.base.adapter.day.DayViewHolder
-import com.calendar.base.types.CalendarListener
 import com.calendar.base.model.DayItem
-import com.calendar.base.types.CalendarType
+import com.calendar.base.types.CalendarListener
 import com.calendar.base.types.CalendarProperties
+import com.calendar.base.types.CalendarType
 
 class RangeSelection(
     private val rangeSelectionListener: RangeSelectionListener
@@ -19,18 +19,19 @@ class RangeSelection(
         listener: CalendarListener
     ) {
         super.bind(viewHolder, dayItem, properties, listener)
-
-        viewHolder.bgDay.background = ContextCompat.getDrawable(
-            context, background(
-                currentItem = dayItem,
-                checkIn = properties.selectedCheckIn,
-                checkOut = properties.selectedCheckOut
+        if (checkAvailability(dayItem, properties)) {
+            viewHolder.bgDay.background = ContextCompat.getDrawable(
+                context, background(
+                    currentItem = dayItem,
+                    checkIn = properties.selectedCheckIn,
+                    checkOut = properties.selectedCheckOut
+                )
             )
-        )
 
-        viewHolder.bgDay.setOnClickListener {
-            onDayClicked(properties, dayItem, rangeSelectionListener)
-            listener.onNotifyDataSetChanged()
+            viewHolder.bgDay.setOnClickListener {
+                onDayClicked(properties, dayItem, rangeSelectionListener)
+                listener.onNotifyDataSetChanged()
+            }
         }
     }
 

@@ -5,8 +5,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.calendar.CalendarView
+import com.calendar.base.calendar.MyJalaliCalendar
 import com.calendar.base.calendar.RegionalType
 import com.calendar.base.model.DayItem
+import com.calendar.base.types.CalendarProperties
 import com.calendar.base.types.rangeslelection.RangeSelection
 import com.calendar.base.types.rangeslelection.RangeSelectionListener
 import java.util.*
@@ -20,7 +22,16 @@ class MainActivity : AppCompatActivity(), RangeSelectionListener {
         calendar.initCalendar(
             RegionalType.Jalali,
             RangeSelection(this),
-            LinearLayoutManager.VERTICAL
+            LinearLayoutManager.VERTICAL,
+            CalendarProperties(
+                selectedCheckIn = DayItem(
+                    1400, 11, 25
+                ),
+                selectedCheckOut = DayItem(
+                    1400, 12, 25
+                ),
+                today = MyJalaliCalendar().getToday()
+            )
         )
 
         calendar.submitNextDates(Calendar.MONTH, 80)

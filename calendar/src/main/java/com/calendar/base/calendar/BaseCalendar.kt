@@ -1,13 +1,14 @@
 package com.calendar.base.calendar
 
+import com.calendar.base.model.DayItem
 import com.calendar.base.model.MonthItem
 import java.util.*
 
 abstract class BaseCalendar {
 
     abstract val nameOfMonths: List<String>
-
     abstract fun init()
+
     /** you must set month like this
      *  'calendar.set(Calendar.MONTH, month)'
      *  before call this method
@@ -20,6 +21,7 @@ abstract class BaseCalendar {
     abstract fun set(field: Int, value: Int)
     abstract fun get(field: Int): Int
     abstract fun clear()
+    abstract fun getToday(): DayItem
     protected abstract fun getNewInstanceOfCalendar(): BaseCalendar
 
     /**

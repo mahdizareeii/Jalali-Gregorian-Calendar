@@ -1,5 +1,6 @@
 package com.calendar.base.calendar
 
+import com.calendar.base.model.DayItem
 import java.util.*
 
 class MyGregorianCalendar : BaseCalendar() {
@@ -54,6 +55,15 @@ class MyGregorianCalendar : BaseCalendar() {
 
     override fun clear() {
         calendar.clear()
+    }
+
+    override fun getToday(): DayItem {
+        val todayCalendar = Calendar.getInstance()
+        return DayItem(
+            todayCalendar.get(Calendar.YEAR),
+            todayCalendar.get(Calendar.MONTH) + 1,
+            todayCalendar.get(Calendar.DAY_OF_MONTH)
+        )
     }
 
     override fun getNewInstanceOfCalendar(): BaseCalendar = MyGregorianCalendar()

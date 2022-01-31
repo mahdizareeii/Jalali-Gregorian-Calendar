@@ -8,6 +8,7 @@ data class DayItem(
     val day: Int?
 ) {
     val visibility = if (day != null) View.VISIBLE else View.INVISIBLE
+    val isHoliday: Boolean = false
 
     override fun toString(): String {
         return "$year - $month - $day"
