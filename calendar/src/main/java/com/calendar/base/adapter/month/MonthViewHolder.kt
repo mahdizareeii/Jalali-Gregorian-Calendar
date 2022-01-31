@@ -24,6 +24,7 @@ internal class MonthViewHolder(
     private val txtMonth: AppCompatTextView = view.findViewById(R.id.txt_month)
     private val rvDays: RecyclerView = view.findViewById(R.id.rv_days)
     private var adapter: DaysAdapter? = null
+
     fun bind(monthItem: MonthItem, monthItemPosition: Int) {
         if (adapter == null) {
             initRecyclerView()

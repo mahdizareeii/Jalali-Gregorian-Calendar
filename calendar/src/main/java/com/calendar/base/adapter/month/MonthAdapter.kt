@@ -15,12 +15,6 @@ internal class MonthAdapter(
     private val daySelectionProperties: DaySelectionProperties
 ) : ListAdapter<MonthItem, MonthViewHolder>(DiffUtilCallBack()), DaysListener {
 
-    /**
-     * for notify months when select range
-     */
-    private var fromMonth = 0
-    private var untilMonth = 0
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MonthViewHolder {
         return MonthViewHolder(
             view = LayoutInflater.from(parent.context).inflate(
@@ -39,14 +33,16 @@ internal class MonthAdapter(
     }
 
     override fun onDayNotifyDataSetChangedFrom(position: Int) {
-        for (i in fromMonth..untilMonth) getItem(i).listener?.onDataSetChanged()
-        getItem(position).listener?.onDataSetChanged()
-        fromMonth = position
+        notifyList()
     }
 
     override fun onDayNotifyDataSetChangedUntil(position: Int) {
-        for (i in fromMonth..position) getItem(i).listener?.onDataSetChanged()
-        untilMonth = position
+        notifyList()
+    }
+
+    private fun notifyList() {
+        for (indic in currentList.indices)
+            getItem(indic).listener?.onDataSetChanged()
     }
 
     private class DiffUtilCallBack : DiffUtil.ItemCallback<MonthItem>() {

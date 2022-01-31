@@ -8,7 +8,7 @@ import com.calendar.base.model.DayItem
 import com.calendar.base.types.DaySelectionProperties
 import com.calendar.base.types.DaySelectionType
 
-class RangeSelection() : DaySelectionType() {
+class RangeSelection : DaySelectionType() {
 
     override fun bind(
         viewHolder: DayViewHolder,
@@ -39,24 +39,17 @@ class RangeSelection() : DaySelectionType() {
     ): Int {
         return if (checkIn != null && checkOut != null) {
             when {
-                checkIn == currentItem -> {
-                    R.drawable.bg_day_range_start
-                }
-                checkOut == currentItem -> {
-                    R.drawable.bg_day_range_end
-                }
-                else -> {
+                checkIn == currentItem -> R.drawable.bg_day_range_start
+                checkOut == currentItem -> R.drawable.bg_day_range_end
+                else ->
                     if (checkIn < currentItem && checkOut > currentItem)
                         R.drawable.bg_day_single_selected
-                    else
-                        R.drawable.bg_day
-                }
+                    else R.drawable.bg_day
             }
         } else {
             if (checkIn != null && checkIn == currentItem)
                 R.drawable.bg_day_range_start
-            else
-                R.drawable.bg_day
+            else R.drawable.bg_day
         }
     }
 
