@@ -28,14 +28,7 @@ class RangeSelection() : DaySelectionType() {
         )
 
         viewHolder.bgDay.setOnClickListener {
-            if (properties.selectedCheckIn == dayItem || properties.selectedCheckIn == null || properties.selectedCheckOut != null) {
-                properties.selectedCheckIn = dayItem
-                properties.selectedCheckOut = null
-                listener.onDayNotifyDataSetChangedFrom(monthItemPosition)
-            } else {
-                properties.selectedCheckOut = dayItem
-                listener.onDayNotifyDataSetChangedUntil(monthItemPosition)
-            }
+            onDayClicked(properties, listener, dayItem, monthItemPosition)
         }
     }
 
@@ -64,6 +57,30 @@ class RangeSelection() : DaySelectionType() {
                 R.drawable.bg_day_range_start
             else
                 R.drawable.bg_day
+        }
+    }
+
+    private fun onDayClicked(
+        property: DaySelectionProperties,
+        listener: DaysListener,
+        dayItem: DayItem,
+        monthItemPosition: Int
+    ) {
+        property.apply {
+            if (selectedCheckIn == dayItem || selectedCheckIn == null || selectedCheckOut != null) {
+                selectedCheckIn = dayItem
+                selectedCheckOut = null
+                listener.onDayNotifyDataSetChangedFrom(monthItemPosition)
+            } else {
+                if (selectedCheckIn!! > dayItem) {
+                    selectedCheckOut = selectedCheckIn
+                    selectedCheckIn = dayItem
+                    listener.onDayNotifyDataSetChangedFrom(monthItemPosition)
+                } else {
+                    selectedCheckOut = dayItem
+                    listener.onDayNotifyDataSetChangedUntil(monthItemPosition)
+                }
+            }
         }
     }
 }
