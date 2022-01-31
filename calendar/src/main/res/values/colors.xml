@@ -2,4 +2,5 @@
 <resources>
     <color name="red">#ea5045</color>
     <color name="secondary">#526576</color>
+    <color name="white">#ffffff</color>
 </resources>
