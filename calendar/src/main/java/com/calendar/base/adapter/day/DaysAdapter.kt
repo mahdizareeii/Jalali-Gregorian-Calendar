@@ -44,12 +44,7 @@ internal class DaysAdapter(
         holder.bind(dayList[position])
     }
 
-    private fun dp(context: Context, value: Int): Int =
-        TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP,
-            value.toFloat(),
-            context.resources.displayMetrics
-        ).toInt()
+    override fun getItemCount(): Int = dayList.size
 
     fun submitList(list: List<DayItem>) {
         dayList.clear()
@@ -57,5 +52,10 @@ internal class DaysAdapter(
         notifyDataSetChanged()
     }
 
-    override fun getItemCount(): Int = dayList.size
+    private fun dp(context: Context, value: Int): Int =
+        TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            value.toFloat(),
+            context.resources.displayMetrics
+        ).toInt()
 }

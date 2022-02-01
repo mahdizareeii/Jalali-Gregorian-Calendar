@@ -2,17 +2,18 @@ package com.calendar.base.adapter.month
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.calendar.R
+import com.calendar.base.model.DayItem
 import com.calendar.base.model.MonthItem
 import com.calendar.base.types.CalendarListener
 import com.calendar.base.types.CalendarProperties
 
 internal class MonthAdapter(
     private val calendarProperties: CalendarProperties
-) : ListAdapter<MonthItem, MonthViewHolder>(DiffUtilCallBack()), CalendarListener {
+) : RecyclerView.Adapter<MonthViewHolder>(), CalendarListener {
 
+    private val monthList = ArrayList<MonthItem>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MonthViewHolder {
         return MonthViewHolder(
             view = LayoutInflater.from(parent.context).inflate(
@@ -26,21 +27,19 @@ internal class MonthAdapter(
     }
 
     override fun onBindViewHolder(holder: MonthViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(monthList[position])
     }
 
     override fun onNotifyDataSetChanged() {
-        for (indic in currentList.indices)
-            getItem(indic).listener?.onDataSetChanged()
+        for (indic in monthList.indices)
+            monthList.getOrNull(indic)?.listener?.onDataSetChanged()
     }
 
-    private class DiffUtilCallBack : DiffUtil.ItemCallback<MonthItem>() {
-        override fun areItemsTheSame(oldItem: MonthItem, newItem: MonthItem): Boolean {
-            return oldItem.month == newItem.month
-        }
+    override fun getItemCount(): Int = monthList.size
 
-        override fun areContentsTheSame(oldItem: MonthItem, newItem: MonthItem): Boolean {
-            return oldItem == newItem
-        }
+    fun submitList(list: List<MonthItem>) {
+        monthList.clear()
+        monthList.addAll(list)
+        notifyDataSetChanged()
     }
 }

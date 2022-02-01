@@ -6,11 +6,8 @@ import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.calendar.base.calendar.RegionalType
 import com.calendar.base.adapter.month.MonthAdapter
 import com.calendar.base.calendar.BaseCalendar
-import com.calendar.base.model.DayItem
-import com.calendar.base.types.CalendarType
 import com.calendar.base.types.CalendarProperties
 
 class CalendarView @JvmOverloads constructor(
@@ -33,22 +30,20 @@ class CalendarView @JvmOverloads constructor(
     }
 
     fun initCalendar(
-        regionalType: RegionalType,
-        orientation: Int,
         calendarProperties: CalendarProperties
     ) {
-        calendar = regionalType.calendar
+        calendar = calendarProperties.regionalType.calendar
 
         adapter = MonthAdapter(calendarProperties)
 
-        if (orientation == LinearLayoutManager.HORIZONTAL)
+        if (calendarProperties.calendarOrientation == CalendarProperties.HORIZONTAL)
             PagerSnapHelper().attachToRecyclerView(recyclerView)
 
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(
             context,
-            orientation,
-            regionalType == RegionalType.Jalali && orientation == LinearLayoutManager.HORIZONTAL
+            calendarProperties.calendarOrientation,
+            calendarProperties.calendarIsReverse()
         )
     }
 }

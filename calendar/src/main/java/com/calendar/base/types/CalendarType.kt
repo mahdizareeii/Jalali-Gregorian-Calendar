@@ -48,8 +48,8 @@ abstract class CalendarType {
         dayItem: DayItem,
         properties: CalendarProperties
     ): Boolean {
-        val isAvailable = if (properties.today == null) true
-        else dayItem >= properties.today!!
+        val isAvailable = if (properties.getToday() == null) true
+        else dayItem >= properties.getToday()!!
 
         if (!isAvailable) setUnAvailableBackground(viewHolder)
 
