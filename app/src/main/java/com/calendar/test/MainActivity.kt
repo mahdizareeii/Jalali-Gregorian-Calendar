@@ -13,9 +13,11 @@ import com.calendar.base.types.multipleselection.MultipleSelection
 import com.calendar.base.types.multipleselection.MultipleSelectionListener
 import com.calendar.base.types.rangeslelection.RangeSelection
 import com.calendar.base.types.rangeslelection.RangeSelectionListener
+import com.calendar.base.types.withoutselection.WithoutSelection
+import com.calendar.base.types.withoutselection.WithoutSelectionListener
 import java.util.*
 
-class MainActivity : AppCompatActivity(), MultipleSelectionListener {
+class MainActivity : AppCompatActivity(), WithoutSelectionListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -24,7 +26,7 @@ class MainActivity : AppCompatActivity(), MultipleSelectionListener {
         calendar.initCalendar(
             CalendarProperties(
                 regionalType = RegionalType.Jalali,
-                calendarType = MultipleSelection(this),
+                calendarType = WithoutSelection(this),
                 availableFromToday = true,
                 calendarOrientation = VERTICAL
             )
@@ -33,9 +35,6 @@ class MainActivity : AppCompatActivity(), MultipleSelectionListener {
         calendar.submitNextDates(Calendar.MONTH, 80)
     }
 
-    override fun onSelectedDays(selectedDays: List<DayItem>) {
-        Toast.makeText(this, selectedDays.lastOrNull().toString(), Toast.LENGTH_SHORT).show()
-    }
 
 
 }
