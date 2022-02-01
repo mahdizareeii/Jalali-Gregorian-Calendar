@@ -42,27 +42,27 @@ abstract class BaseCalendar {
         if (todayYear == nextYear) {
             if (field == Calendar.MONTH)
                 for (month in todayMonth..nextMonth) {
-                    months.add(MonthItem(getNewInstanceOfCalendar(), month, todayYear))
+                    months.add(MonthItem(getNewInstanceOfCalendar(), month + 1, todayYear))
                 }
         } else {
             if (field == Calendar.YEAR)
                 for (year in todayYear..nextYear) {
                     for (month in 0..11)
-                        months.add(MonthItem(getNewInstanceOfCalendar(), month, year))
+                        months.add(MonthItem(getNewInstanceOfCalendar(), month + 1, year))
                 }
             else if (field == Calendar.MONTH) {
                 var tempMonth = value
                 var tempYear = todayYear
                 while (tempMonth >= 12) {
                     for (month in 0..11)
-                        months.add(MonthItem(getNewInstanceOfCalendar(), month, tempYear))
+                        months.add(MonthItem(getNewInstanceOfCalendar(), month + 1, tempYear))
                     tempMonth -= 12
                     tempYear++
                 }
 
                 if (tempMonth != 0)
                     for (month in 0..tempMonth)
-                        months.add(MonthItem(getNewInstanceOfCalendar(), month, tempYear))
+                        months.add(MonthItem(getNewInstanceOfCalendar(), month + 1, tempYear))
             }
         }
         return months
