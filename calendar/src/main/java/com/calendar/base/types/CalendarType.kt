@@ -26,16 +26,16 @@ abstract class CalendarType {
 
     private fun textColor(
         viewHolder: DayViewHolder,
-        dayItem: DayItem,
+        currentItem: DayItem,
         properties: CalendarProperties
     ) {
         viewHolder.txtDay.setTextColor(
             ContextCompat.getColor(
                 context,
                 when {
-                    dayItem.isHoliday -> R.color.red
+                    currentItem.isHoliday -> R.color.red
                     else -> {
-                        if (isSelected(dayItem, properties)) R.color.white
+                        if (isSelected(currentItem, properties)) R.color.white
                         else R.color.secondary
                     }
                 }
@@ -45,11 +45,11 @@ abstract class CalendarType {
 
     internal fun checkAvailability(
         viewHolder: DayViewHolder,
-        dayItem: DayItem,
+        currentItem: DayItem,
         properties: CalendarProperties
     ): Boolean {
         val isAvailable = if (properties.getToday() == null) true
-        else dayItem >= properties.getToday()!!
+        else currentItem >= properties.getToday()!!
 
         if (!isAvailable) setUnAvailableBackground(viewHolder)
 
@@ -62,32 +62,32 @@ abstract class CalendarType {
     }
 
     private fun isSelected(
-        dayItem: DayItem,
+        currentItem: DayItem,
         properties: CalendarProperties
     ): Boolean {
         return when (properties.calendarType::class.java) {
             RangeSelection::class.java -> {
                 if (properties.selectedCheckIn != null && properties.selectedCheckOut != null)
-                    return dayItem >= properties.selectedCheckIn!! && dayItem <= properties.selectedCheckOut!!
+                    return currentItem >= properties.selectedCheckIn!! && currentItem <= properties.selectedCheckOut!!
 
                 if (properties.selectedCheckIn != null)
-                    return dayItem == properties.selectedCheckIn
+                    return currentItem == properties.selectedCheckIn
 
                 if (properties.selectedCheckOut != null)
-                    return dayItem == properties.selectedCheckOut
+                    return currentItem == properties.selectedCheckOut
 
                 return false
             }
 
             SingleSelection::class.java -> {
                 return if (properties.selectedSingle != null)
-                    properties.selectedSingle == dayItem
+                    properties.selectedSingle == currentItem
                 else false
             }
 
             MultipleSelection::class.java -> {
                 properties.selectedMultipleDayItem?.any {
-                    it == dayItem
+                    it == currentItem
                 } ?: false
             }
 

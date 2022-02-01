@@ -9,11 +9,13 @@ import com.calendar.base.model.DayItem
 import com.calendar.base.types.CalendarProperties
 import com.calendar.base.types.CalendarProperties.Companion.HORIZONTAL
 import com.calendar.base.types.CalendarProperties.Companion.VERTICAL
+import com.calendar.base.types.multipleselection.MultipleSelection
+import com.calendar.base.types.multipleselection.MultipleSelectionListener
 import com.calendar.base.types.rangeslelection.RangeSelection
 import com.calendar.base.types.rangeslelection.RangeSelectionListener
 import java.util.*
 
-class MainActivity : AppCompatActivity(), RangeSelectionListener {
+class MainActivity : AppCompatActivity(), MultipleSelectionListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -22,7 +24,7 @@ class MainActivity : AppCompatActivity(), RangeSelectionListener {
         calendar.initCalendar(
             CalendarProperties(
                 regionalType = RegionalType.Jalali,
-                calendarType = RangeSelection(this),
+                calendarType = MultipleSelection(this),
                 availableFromToday = true,
                 calendarOrientation = VERTICAL
             )
@@ -31,12 +33,8 @@ class MainActivity : AppCompatActivity(), RangeSelectionListener {
         calendar.submitNextDates(Calendar.MONTH, 80)
     }
 
-    override fun onCheckInSelected(dayItem: DayItem) {
-        Toast.makeText(this, dayItem.toString(), Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onCheckOutSelected(dayItem: DayItem) {
-        Toast.makeText(this, dayItem.toString(), Toast.LENGTH_SHORT).show()
+    override fun onSelectedDays(selectedDays: List<DayItem>) {
+        Toast.makeText(this, selectedDays.lastOrNull().toString(), Toast.LENGTH_SHORT).show()
     }
 
 

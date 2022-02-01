@@ -15,7 +15,7 @@ data class CalendarProperties(
     var selectedCheckOut: DayItem? = null,
 
     //for multiple selection
-    val selectedMultipleDayItem: ArrayList<DayItem>? = null,
+    val selectedMultipleDayItem: ArrayList<DayItem> = ArrayList(),
 
     //for single selection
     var selectedSingle: DayItem? = null

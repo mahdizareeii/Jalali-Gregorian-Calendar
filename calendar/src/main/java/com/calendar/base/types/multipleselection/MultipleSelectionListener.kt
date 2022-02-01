@@ -1,5 +1,7 @@
 package com.calendar.base.types.multipleselection
 
-interface MultipleSelectionListener{
+import com.calendar.base.model.DayItem
 
+interface MultipleSelectionListener {
+    fun onSelectedDays(selectedDays: List<DayItem>)
 }

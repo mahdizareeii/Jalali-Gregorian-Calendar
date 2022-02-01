@@ -58,23 +58,23 @@ class RangeSelection(
 
     private fun onDayClicked(
         property: CalendarProperties,
-        dayItem: DayItem,
+        currentItem: DayItem,
         listener: RangeSelectionListener
     ) {
         property.apply {
-            if (selectedCheckIn == dayItem || selectedCheckIn == null || selectedCheckOut != null) {
-                selectedCheckIn = dayItem
+            if (selectedCheckIn == currentItem || selectedCheckIn == null || selectedCheckOut != null) {
+                selectedCheckIn = currentItem
                 selectedCheckOut = null
 
                 listener.onCheckInSelected(selectedCheckIn!!)
             } else {
-                if (selectedCheckIn!! > dayItem) {
+                if (selectedCheckIn!! > currentItem) {
                     selectedCheckOut = selectedCheckIn
-                    selectedCheckIn = dayItem
+                    selectedCheckIn = currentItem
                     listener.onCheckInSelected(selectedCheckIn!!)
                     listener.onCheckOutSelected(selectedCheckOut!!)
                 } else {
-                    selectedCheckOut = dayItem
+                    selectedCheckOut = currentItem
                     listener.onCheckOutSelected(selectedCheckOut!!)
                 }
             }

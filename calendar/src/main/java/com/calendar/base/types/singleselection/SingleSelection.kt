@@ -50,12 +50,12 @@ class SingleSelection(
 
     private fun onDayClicked(
         property: CalendarProperties,
-        dayItem: DayItem,
+        currentItem: DayItem,
         listener: SingleSelectionListener
     ) {
         property.apply {
-            selectedSingle = dayItem
-            listener.onDaySelected(dayItem)
+            selectedSingle = currentItem
+            listener.onDaySelected(currentItem)
         }
     }
 
