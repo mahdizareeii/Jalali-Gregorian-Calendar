@@ -5,20 +5,19 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.updateLayoutParams
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.calendar.R
 import com.calendar.base.model.DayItem
-import com.calendar.base.types.CalendarProperties
-import com.calendar.base.types.CalendarType
 import com.calendar.base.types.CalendarListener
+import com.calendar.base.types.CalendarProperties
 import com.google.android.flexbox.FlexboxLayoutManager
 
 internal class DaysAdapter(
     private val calendarProperties: CalendarProperties,
     private val calendarListener: CalendarListener
-) : ListAdapter<DayItem, DayViewHolder>(DiffUtilCallBack()) {
+) : RecyclerView.Adapter<DayViewHolder>() {
 
+    private val dayList = ArrayList<DayItem>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DayViewHolder {
         return DayViewHolder(
             view = LayoutInflater.from(parent.context).inflate(
@@ -42,7 +41,7 @@ internal class DaysAdapter(
     }
 
     override fun onBindViewHolder(holder: DayViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(dayList[position])
     }
 
     private fun dp(context: Context, value: Int): Int =
@@ -52,13 +51,11 @@ internal class DaysAdapter(
             context.resources.displayMetrics
         ).toInt()
 
-    private class DiffUtilCallBack : DiffUtil.ItemCallback<DayItem>() {
-        override fun areItemsTheSame(oldItem: DayItem, newItem: DayItem): Boolean {
-            return oldItem.day == newItem.day
-        }
-
-        override fun areContentsTheSame(oldItem: DayItem, newItem: DayItem): Boolean {
-            return oldItem == newItem
-        }
+    fun submitList(list: List<DayItem>) {
+        dayList.clear()
+        dayList.addAll(list)
+        notifyDataSetChanged()
     }
+
+    override fun getItemCount(): Int = dayList.size
 }

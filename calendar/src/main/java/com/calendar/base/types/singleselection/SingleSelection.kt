@@ -19,7 +19,7 @@ class SingleSelection(
         listener: CalendarListener
     ) {
         super.bind(viewHolder, dayItem, properties, listener)
-        if (checkAvailability(dayItem, properties)) {
+        if (checkAvailability(viewHolder, dayItem, properties)) {
             viewHolder.bgDay.background = ContextCompat.getDrawable(
                 context, background(
                     currentItem = dayItem,

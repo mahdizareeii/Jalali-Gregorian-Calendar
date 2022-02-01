@@ -17,8 +17,14 @@ data class DayItem(
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
-        (other as DayItem)
-        return (this.year == other.year && this.month == other.month && this.day == other.day)
+
+        other as DayItem
+
+        if (year != other.year) return false
+        if (month != other.month) return false
+        if (day != other.day) return false
+
+        return true
     }
 
     operator fun compareTo(other: DayItem): Int {

@@ -5,10 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.calendar.R
-import com.calendar.base.types.CalendarListener
 import com.calendar.base.model.MonthItem
+import com.calendar.base.types.CalendarListener
 import com.calendar.base.types.CalendarProperties
-import com.calendar.base.types.CalendarType
 
 internal class MonthAdapter(
     private val calendarProperties: CalendarProperties

@@ -19,21 +19,9 @@ abstract class CalendarType {
         listener: CalendarListener
     ) {
         context = viewHolder.itemView.context
-        backgroundAvailability(viewHolder, dayItem, properties)
         textColor(viewHolder, dayItem, properties)
         viewHolder.bgDay.visibility = dayItem.visibility
         viewHolder.txtDay.text = dayItem.day.toString()
-    }
-
-    private fun backgroundAvailability(
-        viewHolder: DayViewHolder,
-        dayItem: DayItem,
-        properties: CalendarProperties
-    ) {
-        if (!checkAvailability(dayItem, properties)) {
-            viewHolder.bgDay.background.alpha = 200
-            viewHolder.txtDay.alpha = 0.3f
-        }
     }
 
     private fun textColor(
@@ -55,11 +43,22 @@ abstract class CalendarType {
         )
     }
 
-    protected fun checkAvailability(
+    internal fun checkAvailability(
+        viewHolder: DayViewHolder,
         dayItem: DayItem,
         properties: CalendarProperties
     ): Boolean {
-        return properties.today != null && dayItem >= properties.today!!
+        val isAvailable = if (properties.today == null) true
+        else dayItem >= properties.today!!
+
+        if (!isAvailable) setUnAvailableBackground(viewHolder)
+
+        return isAvailable
+    }
+
+    private fun setUnAvailableBackground(viewHolder: DayViewHolder) {
+        viewHolder.bgDay.background.alpha = 200
+        viewHolder.txtDay.alpha = 0.3f
     }
 
     private fun isSelected(
