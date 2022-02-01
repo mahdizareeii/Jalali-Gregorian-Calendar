@@ -9,32 +9,39 @@ data class MonthItem(
     val month: Int,
     val year: Int
 ) {
+    private val days = ArrayList<DayItem>()
+
+    var listener: MonthListener? = null
 
     init {
         calendar.clear()
         calendar.set(Calendar.YEAR, year)
         calendar.set(Calendar.MONTH, month)
+        calendar.init()
     }
 
-    private val days = ArrayList<DayItem>()
-
-    fun getDisplayedYearName() = calendar.getYearName()
-
-    fun getDisplayedMonthName(): String {
-        return calendar.getDisplayedMonthName()
-    }
+    val getYear get() = calendar.getYear()
+    val getMonthName get() = calendar.getMonthName()
 
     fun generateDays(): List<DayItem> {
         if (days.isNullOrEmpty()) {
             days.addAll(
                 calendar.generateDays().map {
                     if (it == -1)
-                        DayItem(null)
+                        DayItem(null, null, null)
                     else
-                        DayItem(it)
+                        DayItem(
+                            year = calendar.getYear(),
+                            month = calendar.getMonth(),
+                            day = it
+                        )
                 }
             )
         }
         return days
+    }
+
+    interface MonthListener {
+        fun onDataSetChanged()
     }
 }

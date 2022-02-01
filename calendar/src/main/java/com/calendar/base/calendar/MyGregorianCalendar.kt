@@ -1,5 +1,6 @@
 package com.calendar.base.calendar
 
+import com.calendar.base.model.DayItem
 import java.util.*
 
 class MyGregorianCalendar : BaseCalendar() {
@@ -12,8 +13,8 @@ class MyGregorianCalendar : BaseCalendar() {
             "July", "August", "September", "October", "November", "December"
         )
 
-    override fun getDisplayedMonthName(): String {
-        return nameOfMonths.getOrNull(calendar.get(Calendar.MONTH)) ?: "Unknown"
+    override fun init() {
+
     }
 
     override fun firstDayPositionInWeek(): Int {
@@ -38,7 +39,13 @@ class MyGregorianCalendar : BaseCalendar() {
         return days
     }
 
-    override fun getYearName(): String = calendar.get(Calendar.YEAR).toString()
+    override fun getYear(): Int = calendar.get(Calendar.YEAR)
+
+    override fun getMonth(): Int = calendar.get(Calendar.MONTH) + 1
+
+    override fun getMonthName(): String {
+        return nameOfMonths.getOrNull(calendar.get(Calendar.MONTH)) ?: "Unknown"
+    }
 
     override fun set(field: Int, value: Int) {
         calendar.set(field, value)
@@ -48,6 +55,15 @@ class MyGregorianCalendar : BaseCalendar() {
 
     override fun clear() {
         calendar.clear()
+    }
+
+    override fun getToday(): DayItem {
+        val todayCalendar = Calendar.getInstance()
+        return DayItem(
+            todayCalendar.get(Calendar.YEAR),
+            todayCalendar.get(Calendar.MONTH) + 1,
+            todayCalendar.get(Calendar.DAY_OF_MONTH)
+        )
     }
 
     override fun getNewInstanceOfCalendar(): BaseCalendar = MyGregorianCalendar()

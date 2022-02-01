@@ -2,34 +2,43 @@ package com.calendar.base.adapter.month
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.calendar.R
 import com.calendar.base.model.MonthItem
+import com.calendar.base.types.CalendarListener
+import com.calendar.base.types.CalendarProperties
 
-class MonthAdapter : ListAdapter<MonthItem, MonthViewHolder>(DiffUtilCallBack()) {
+internal class MonthAdapter(
+    private val calendarProperties: CalendarProperties
+) : RecyclerView.Adapter<MonthViewHolder>(), CalendarListener {
 
+    private val monthList = ArrayList<MonthItem>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MonthViewHolder {
         return MonthViewHolder(
-            LayoutInflater.from(parent.context).inflate(
+            view = LayoutInflater.from(parent.context).inflate(
                 R.layout.item_month,
                 parent,
                 false
-            )
+            ),
+            calendarProperties = calendarProperties,
+            calendarListener = this
         )
     }
 
     override fun onBindViewHolder(holder: MonthViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(monthList[position])
     }
 
-    private class DiffUtilCallBack : DiffUtil.ItemCallback<MonthItem>() {
-        override fun areItemsTheSame(oldItem: MonthItem, newItem: MonthItem): Boolean {
-            return oldItem.month == newItem.month
-        }
+    override fun onNotifyDataSetChanged() {
+        for (indic in monthList.indices)
+            monthList.getOrNull(indic)?.listener?.onDataSetChanged()
+    }
 
-        override fun areContentsTheSame(oldItem: MonthItem, newItem: MonthItem): Boolean {
-            return oldItem == newItem
-        }
+    override fun getItemCount(): Int = monthList.size
+
+    fun submitList(list: List<MonthItem>) {
+        monthList.clear()
+        monthList.addAll(list)
+        notifyDataSetChanged()
     }
 }

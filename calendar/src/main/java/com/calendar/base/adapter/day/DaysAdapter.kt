@@ -5,17 +5,22 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.updateLayoutParams
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.calendar.R
 import com.calendar.base.model.DayItem
+import com.calendar.base.types.CalendarListener
+import com.calendar.base.types.CalendarProperties
 import com.google.android.flexbox.FlexboxLayoutManager
 
-class DaysAdapter : ListAdapter<DayItem, DayViewHolder>(DiffUtilCallBack()) {
+internal class DaysAdapter(
+    private val calendarProperties: CalendarProperties,
+    private val calendarListener: CalendarListener
+) : RecyclerView.Adapter<DayViewHolder>() {
 
+    private val dayList = ArrayList<DayItem>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DayViewHolder {
         return DayViewHolder(
-            LayoutInflater.from(parent.context).inflate(
+            view = LayoutInflater.from(parent.context).inflate(
                 R.layout.item_calendar_day,
                 parent,
                 false
@@ -29,12 +34,22 @@ class DaysAdapter : ListAdapter<DayItem, DayViewHolder>(DiffUtilCallBack()) {
                         dp(parent.context, 1)
                     )
                 }
-            }
+            },
+            calendarProperties = calendarProperties,
+            listener = calendarListener
         )
     }
 
     override fun onBindViewHolder(holder: DayViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(dayList[position])
+    }
+
+    override fun getItemCount(): Int = dayList.size
+
+    fun submitList(list: List<DayItem>) {
+        dayList.clear()
+        dayList.addAll(list)
+        notifyDataSetChanged()
     }
 
     private fun dp(context: Context, value: Int): Int =
@@ -43,14 +58,4 @@ class DaysAdapter : ListAdapter<DayItem, DayViewHolder>(DiffUtilCallBack()) {
             value.toFloat(),
             context.resources.displayMetrics
         ).toInt()
-
-    private class DiffUtilCallBack : DiffUtil.ItemCallback<DayItem>() {
-        override fun areItemsTheSame(oldItem: DayItem, newItem: DayItem): Boolean {
-            return oldItem.day == newItem.day
-        }
-
-        override fun areContentsTheSame(oldItem: DayItem, newItem: DayItem): Boolean {
-            return oldItem == newItem
-        }
-    }
 }

@@ -5,14 +5,25 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.calendar.R
 import com.calendar.base.model.DayItem
-import com.calendar.view.SquareView
+import com.calendar.base.types.CalendarProperties
+import com.calendar.base.types.CalendarType
+import com.calendar.base.types.CalendarListener
+import com.calendar.utils.SquareView
 
-class DayViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    private val bgDay: SquareView = view.findViewById(R.id.bg_day)
-    private val txtDay: AppCompatTextView = view.findViewById(R.id.txt_day)
+internal class DayViewHolder(
+    view: View,
+    private val calendarProperties: CalendarProperties,
+    private val listener: CalendarListener
+) : RecyclerView.ViewHolder(view) {
+    val bgDay: SquareView = view.findViewById(R.id.bg_day)
+    val txtDay: AppCompatTextView = view.findViewById(R.id.txt_day)
 
     fun bind(dayItem: DayItem) {
-        bgDay.visibility = dayItem.visibility
-        txtDay.text = dayItem.day.toString()
+        calendarProperties.calendarType.bind(
+            this,
+            dayItem,
+            calendarProperties,
+            listener
+        )
     }
 }

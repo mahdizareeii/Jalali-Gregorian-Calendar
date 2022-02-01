@@ -5,6 +5,10 @@
       <map>
         <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/app/src/main/res/layout/activity_main.xml" value="0.1703125" />
         <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/drawable/bg_day.xml" value="0.1814814814814815" />
+        <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/drawable/bg_day_range_end.xml" value="0.20052083333333334" />
+        <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/drawable/bg_day_range_start.xml" value="0.20052083333333334" />
+        <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/drawable/bg_day_single_selected.xml" value="0.20052083333333334" />
+        <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/drawable/bg_disabled_date.xml" value="0.20052083333333334" />
         <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/layout/calendar.xml" value="0.184375" />
         <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/layout/days.xml" value="0.4466666666666667" />
         <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/layout/item_calendar.xml" value="0.22" />
