@@ -47,6 +47,7 @@ internal class MonthViewHolder(
             alignItems = AlignItems.CENTER
             flexWrap = FlexWrap.WRAP
         }
+        rvDays.setHasFixedSize(true)
         rvDays.itemAnimator = null
         rvDays.adapter = adapter
     }

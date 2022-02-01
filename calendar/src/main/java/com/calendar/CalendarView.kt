@@ -39,6 +39,7 @@ class CalendarView @JvmOverloads constructor(
         if (calendarProperties.calendarOrientation == CalendarProperties.HORIZONTAL)
             PagerSnapHelper().attachToRecyclerView(recyclerView)
 
+        recyclerView.setHasFixedSize(true)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(
             context,
