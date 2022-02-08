@@ -86,9 +86,9 @@ abstract class CalendarType {
             }
 
             MultipleSelection::class.java -> {
-                properties.selectedMultipleDayItem?.any {
+                properties.selectedMultipleDayItem.any {
                     it == currentItem
-                } ?: false
+                }
             }
 
             else -> false
