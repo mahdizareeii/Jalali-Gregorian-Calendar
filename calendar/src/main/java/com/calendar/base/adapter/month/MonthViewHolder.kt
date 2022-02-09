@@ -85,7 +85,7 @@ internal class MonthViewHolder(
                 listener.onLeftArrowClicked()
         }
         arrowRight?.setOnClickListener {
-            if (calendarProperties.regionalType == RegionalType.Gregorian)
+            if (isGregorianCalendar)
                 listener.onLeftArrowClicked()
             else
                 listener.onRightArrowClicked()
