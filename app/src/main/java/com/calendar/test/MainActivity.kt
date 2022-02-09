@@ -24,11 +24,11 @@ class MainActivity : AppCompatActivity(), RangeSelectionListener {
                 regionalType = RegionalType.Jalali,
                 calendarType = RangeSelection(this),
                 availableFromToday = true,
-                calendarOrientation = HORIZONTAL
+                calendarOrientation = VERTICAL
             )
         )
 
-        calendar.submitNextDates(Calendar.MONTH, 80)
+        calendar.submitNextDates(Calendar.MONTH, 3)
     }
 
     override fun onCheckInSelected(dayItem: DayItem) {

@@ -42,7 +42,7 @@ abstract class BaseCalendar {
         if (todayYear == nextYear) {
             if (field == Calendar.MONTH)
                 for (month in todayMonth..nextMonth) {
-                    months.add(MonthItem(getNewInstanceOfCalendar(), month + 1, todayYear))
+                    months.add(MonthItem(getNewInstanceOfCalendar(), month, todayYear))
                 }
         } else {
             if (field == Calendar.YEAR)
