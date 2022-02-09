@@ -15,6 +15,10 @@
         <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/layout/item_calendar_day.xml" value="0.184375" />
         <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/layout/item_days.xml" value="0.184375" />
         <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/layout/item_month.xml" value="0.184375" />
+        <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/layout/item_month_base.xml" value="0.184375" />
+        <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/layout/item_month_header.xml" value="0.184375" />
+        <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/layout/item_month_horizontal.xml" value="0.14666666666666667" />
+        <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/layout/item_month_vertical.xml" value="0.184375" />
       </map>
     </option>
   </component>

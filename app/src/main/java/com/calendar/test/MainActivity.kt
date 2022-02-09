@@ -7,6 +7,7 @@ import com.calendar.CalendarView
 import com.calendar.base.calendar.RegionalType
 import com.calendar.base.model.DayItem
 import com.calendar.base.types.CalendarProperties
+import com.calendar.base.types.CalendarProperties.Companion.HORIZONTAL
 import com.calendar.base.types.CalendarProperties.Companion.VERTICAL
 import com.calendar.base.types.rangeslelection.RangeSelection
 import com.calendar.base.types.rangeslelection.RangeSelectionListener
@@ -23,7 +24,7 @@ class MainActivity : AppCompatActivity(), RangeSelectionListener {
                 regionalType = RegionalType.Jalali,
                 calendarType = RangeSelection(this),
                 availableFromToday = true,
-                calendarOrientation = VERTICAL
+                calendarOrientation = HORIZONTAL
             )
         )
 
