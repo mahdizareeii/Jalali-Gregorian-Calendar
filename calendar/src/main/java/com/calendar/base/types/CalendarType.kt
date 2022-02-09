@@ -3,6 +3,7 @@ package com.calendar.base.types
 import android.content.Context
 import androidx.core.content.ContextCompat
 import com.calendar.R
+import com.calendar.base.adapter.day.DaysAdapterListener
 import com.calendar.base.adapter.day.DayViewHolder
 import com.calendar.base.model.DayItem
 import com.calendar.base.types.multipleselection.MultipleSelection
@@ -16,7 +17,7 @@ abstract class CalendarType {
         viewHolder: DayViewHolder,
         dayItem: DayItem,
         properties: CalendarProperties,
-        listener: CalendarListener
+        listener: DaysAdapterListener
     ) {
         context = viewHolder.itemView.context
         textColor(viewHolder, dayItem, properties)

@@ -2,7 +2,6 @@ package com.calendar.base.model
 
 import com.calendar.base.calendar.BaseCalendar
 import java.util.*
-import kotlin.collections.ArrayList
 
 data class MonthItem(
     val calendar: BaseCalendar,
@@ -11,7 +10,7 @@ data class MonthItem(
 ) {
     private val days = ArrayList<DayItem>()
 
-    var listener: MonthListener? = null
+    var listener: MonthItemListener? = null
 
     init {
         calendar.clear()
@@ -39,9 +38,5 @@ data class MonthItem(
             )
         }
         return days
-    }
-
-    interface MonthListener {
-        fun onDataSetChanged()
     }
 }

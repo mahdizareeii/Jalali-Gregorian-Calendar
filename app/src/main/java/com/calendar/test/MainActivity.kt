@@ -21,10 +21,10 @@ class MainActivity : AppCompatActivity(), RangeSelectionListener {
 
         calendar.initCalendar(
             CalendarProperties(
-                regionalType = RegionalType.Jalali,
+                regionalType = RegionalType.Gregorian,
                 calendarType = RangeSelection(this),
                 availableFromToday = true,
-                calendarOrientation = VERTICAL
+                calendarOrientation = HORIZONTAL
             )
         )
 

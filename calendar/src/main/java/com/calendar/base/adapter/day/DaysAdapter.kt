@@ -8,13 +8,12 @@ import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
 import com.calendar.R
 import com.calendar.base.model.DayItem
-import com.calendar.base.types.CalendarListener
 import com.calendar.base.types.CalendarProperties
 import com.google.android.flexbox.FlexboxLayoutManager
 
 internal class DaysAdapter(
     private val calendarProperties: CalendarProperties,
-    private val calendarListener: CalendarListener
+    private val daysAdapterListener: DaysAdapterListener
 ) : RecyclerView.Adapter<DayViewHolder>() {
 
     private val dayList = ArrayList<DayItem>()
@@ -36,7 +35,7 @@ internal class DaysAdapter(
                 }
             },
             calendarProperties = calendarProperties,
-            listener = calendarListener
+            listener = daysAdapterListener
         )
     }
 
