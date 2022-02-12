@@ -32,6 +32,9 @@ data class CalendarProperties(
     internal fun calendarIsReverse() =
         regionalType == RegionalType.Jalali && calendarOrientation == HORIZONTAL
 
+    internal fun isCheckInSelect() = selectedCheckIn != null && selectedCheckOut == null
+    internal fun isCheckOutSelect() = selectedCheckIn != null && selectedCheckOut != null
+
     companion object {
         const val HORIZONTAL = RecyclerView.HORIZONTAL
         const val VERTICAL = RecyclerView.VERTICAL

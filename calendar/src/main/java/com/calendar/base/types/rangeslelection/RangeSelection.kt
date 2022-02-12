@@ -65,7 +65,9 @@ class RangeSelection(
             if (showDaysPrice && selectedCheckIn == currentItem) {
                 selectedCheckIn = null
                 selectedCheckOut = null
-            } else if (selectedCheckIn == currentItem || selectedCheckIn == null || selectedCheckOut != null) {
+            } else if (showDaysPrice && isCheckOutSelect() && currentItem == selectedCheckOut) {
+                return
+            } else if (selectedCheckIn == currentItem || selectedCheckIn == null || isCheckOutSelect()) {
                 selectedCheckIn = currentItem
                 selectedCheckOut = null
                 listener.onCheckInSelected(selectedCheckIn!!)

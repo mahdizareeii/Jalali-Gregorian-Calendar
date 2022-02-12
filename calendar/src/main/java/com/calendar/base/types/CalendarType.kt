@@ -52,12 +52,54 @@ abstract class CalendarType {
         currentItem: DayItem,
         properties: CalendarProperties
     ): Boolean {
-        val availableFromToday = if (properties.getToday() == null) true
-        else currentItem >= properties.getToday()!!
+        val availableFromToday =
+            if (properties.getToday() == null) true
+            else currentItem >= properties.getToday()!!
 
-        if (!availableFromToday || currentItem.isDisable) setUnAvailableBackground(viewHolder)
+        val baseAvailability = availableFromToday && !currentItem.isDisable
 
-        return (availableFromToday && !currentItem.isDisable)
+        val availability = if (properties.showDaysPrice)
+            when (properties.calendarType::class.java) {
+                RangeSelection::class.java -> {
+                    when {
+                        properties.isCheckInSelect() -> {
+                            availableFromToday && !properties.customDays.any {
+                                it < currentItem && properties.selectedCheckIn!! < it && it.isDisable
+                            } && !properties.customDays.any {
+                                it >= currentItem && properties.selectedCheckIn!! > it && it.isDisable
+                            }
+                        }
+                        properties.isCheckOutSelect() -> {
+                            if (currentItem.isDisable && currentItem == properties.selectedCheckOut)
+                                true
+                            else
+                                baseAvailability
+                        }
+                        else -> baseAvailability
+                    }
+                }
+
+                else -> baseAvailability
+            }
+        else baseAvailability
+
+        if (availability)
+            setAvailableBackground(viewHolder)
+        else
+            setUnAvailableBackground(viewHolder)
+
+        return availability
+    }
+
+    private fun setAvailableBackground(viewHolder: DayViewHolder) {
+        viewHolder.bgDay.background = ContextCompat.getDrawable(
+            context,
+            R.drawable.bg_day
+        )?.apply {
+            alpha = 255
+        }
+        viewHolder.txtDay.alpha = 1f
+        viewHolder.txtPrice.alpha = 1f
     }
 
     private fun setUnAvailableBackground(viewHolder: DayViewHolder) {
