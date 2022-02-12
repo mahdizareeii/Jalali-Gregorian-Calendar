@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.calendar.base.adapter.month.MonthAdapter
+import com.calendar.base.adapter.month.MonthAdapterListener
 import com.calendar.base.calendar.BaseCalendar
 import com.calendar.base.types.CalendarProperties
 
@@ -34,17 +35,27 @@ class CalendarView @JvmOverloads constructor(
     ) {
         calendar = calendarProperties.regionalType.calendar
 
-        adapter = MonthAdapter(calendarProperties)
+        val layoutManager = LinearLayoutManager(
+            context,
+            calendarProperties.calendarOrientation,
+            calendarProperties.calendarIsReverse()
+        )
+
+        adapter = MonthAdapter(calendarProperties, object : MonthAdapterListener {
+            override fun onRightArrowClicked() {
+                layoutManager.scrollToPosition(layoutManager.findFirstVisibleItemPosition() - 1)
+            }
+
+            override fun onLeftArrowClicked() {
+                layoutManager.scrollToPosition(layoutManager.findFirstVisibleItemPosition() + 1)
+            }
+        })
 
         if (calendarProperties.calendarOrientation == CalendarProperties.HORIZONTAL)
             PagerSnapHelper().attachToRecyclerView(recyclerView)
 
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(
-            context,
-            calendarProperties.calendarOrientation,
-            calendarProperties.calendarIsReverse()
-        )
+        recyclerView.layoutManager = layoutManager
     }
 }

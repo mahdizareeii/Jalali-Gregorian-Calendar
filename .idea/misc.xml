@@ -9,12 +9,18 @@
         <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/drawable/bg_day_range_start.xml" value="0.20052083333333334" />
         <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/drawable/bg_day_single_selected.xml" value="0.20052083333333334" />
         <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/drawable/bg_disabled_date.xml" value="0.20052083333333334" />
+        <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/drawable/ic_left.xml" value="0.1175" />
+        <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/drawable/ic_right.xml" value="0.1175" />
         <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/layout/calendar.xml" value="0.184375" />
-        <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/layout/days.xml" value="0.4466666666666667" />
+        <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/layout/days.xml" value="0.3921161825726141" />
         <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/layout/item_calendar.xml" value="0.22" />
         <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/layout/item_calendar_day.xml" value="0.184375" />
         <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/layout/item_days.xml" value="0.184375" />
         <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/layout/item_month.xml" value="0.184375" />
+        <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/layout/item_month_base.xml" value="0.184375" />
+        <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/layout/item_month_header.xml" value="0.184375" />
+        <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/layout/item_month_horizontal.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/layout/item_month_vertical.xml" value="0.184375" />
       </map>
     </option>
   </component>

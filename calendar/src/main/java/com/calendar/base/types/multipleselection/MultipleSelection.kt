@@ -4,7 +4,7 @@ import androidx.core.content.ContextCompat
 import com.calendar.R
 import com.calendar.base.adapter.day.DayViewHolder
 import com.calendar.base.model.DayItem
-import com.calendar.base.types.CalendarListener
+import com.calendar.base.adapter.day.DaysAdapterListener
 import com.calendar.base.types.CalendarProperties
 import com.calendar.base.types.CalendarType
 
@@ -15,7 +15,7 @@ class MultipleSelection(
         viewHolder: DayViewHolder,
         dayItem: DayItem,
         properties: CalendarProperties,
-        listener: CalendarListener
+        listener: DaysAdapterListener
     ) {
         super.bind(viewHolder, dayItem, properties, listener)
         if (checkAvailability(viewHolder, dayItem, properties)) {
@@ -26,7 +26,7 @@ class MultipleSelection(
 
             viewHolder.bgDay.setOnClickListener {
                 onDayClicked(properties, dayItem, multipleSelectionListener)
-                listener.onNotifyDataSetChanged()
+                listener.onDaysNotifyDataSetChanged()
             }
         }
     }

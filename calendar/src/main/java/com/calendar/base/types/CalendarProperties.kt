@@ -22,8 +22,10 @@ data class CalendarProperties(
 
     //for without selection
 ) {
-    fun getToday(): DayItem? = if (availableFromToday) regionalType.calendar.getToday() else null
-    fun calendarIsReverse() =
+    internal fun getToday(): DayItem? =
+        if (availableFromToday) regionalType.calendar.getToday() else null
+
+    internal fun calendarIsReverse() =
         regionalType == RegionalType.Jalali && calendarOrientation == HORIZONTAL
 
     companion object {

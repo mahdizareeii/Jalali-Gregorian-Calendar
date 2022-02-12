@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rv_months"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:clipToPadding="false"
-    android:paddingBottom="100dp"
-    tools:listitem="@layout/item_month" />
+    tools:listitem="@layout/item_month_vertical" />

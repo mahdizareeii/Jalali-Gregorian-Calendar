@@ -2,13 +2,28 @@ package com.calendar.base.model
 
 import android.view.View
 
-data class DayItem(
+data class DayItem constructor(
     val year: Int?,
     val month: Int?,
     val day: Int?
 ) {
     val visibility = if (day != null) View.VISIBLE else View.INVISIBLE
-    val isHoliday: Boolean = false
+    var price: Double? = null
+    var isHoliday: Boolean = false
+    var isDisable: Boolean = false
+
+    constructor(
+        year: Int?,
+        month: Int?,
+        day: Int?,
+        price: Double?,
+        isHoliday: Boolean = false,
+        isDisable: Boolean = true
+    ) : this(year, month, day) {
+        this.price = price
+        this.isHoliday = isHoliday
+        this.isDisable = isDisable
+    }
 
     override fun toString(): String {
         return "$year - $month - $day"

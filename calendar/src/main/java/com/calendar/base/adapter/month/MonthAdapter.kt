@@ -5,31 +5,35 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.calendar.R
 import com.calendar.base.model.MonthItem
-import com.calendar.base.types.CalendarListener
+import com.calendar.base.adapter.day.DaysAdapterListener
 import com.calendar.base.types.CalendarProperties
 
 internal class MonthAdapter(
-    private val calendarProperties: CalendarProperties
-) : RecyclerView.Adapter<MonthViewHolder>(), CalendarListener {
+    private val calendarProperties: CalendarProperties,
+    private val listener: MonthAdapterListener
+) : RecyclerView.Adapter<MonthViewHolder>(), DaysAdapterListener {
 
     private val monthList = ArrayList<MonthItem>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MonthViewHolder {
         return MonthViewHolder(
             view = LayoutInflater.from(parent.context).inflate(
-                R.layout.item_month,
+                if (calendarProperties.calendarOrientation == CalendarProperties.VERTICAL)
+                    R.layout.item_month_vertical
+                else
+                    R.layout.item_month_horizontal,
                 parent,
                 false
             ),
             calendarProperties = calendarProperties,
-            calendarListener = this
+            daysAdapterListener = this
         )
     }
 
     override fun onBindViewHolder(holder: MonthViewHolder, position: Int) {
-        holder.bind(monthList[position])
+        holder.bind(monthList.size, position, monthList[position], listener)
     }
 
-    override fun onNotifyDataSetChanged() {
+    override fun onDaysNotifyDataSetChanged() {
         for (indic in monthList.indices)
             monthList.getOrNull(indic)?.listener?.onDataSetChanged()
     }
