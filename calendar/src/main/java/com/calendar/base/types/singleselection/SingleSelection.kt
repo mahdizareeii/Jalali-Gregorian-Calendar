@@ -3,8 +3,8 @@ package com.calendar.base.types.singleselection
 import androidx.core.content.ContextCompat
 import com.calendar.R
 import com.calendar.base.adapter.day.DayViewHolder
-import com.calendar.base.model.DayItem
 import com.calendar.base.adapter.day.DaysAdapterListener
+import com.calendar.base.model.DayItem
 import com.calendar.base.types.CalendarProperties
 import com.calendar.base.types.CalendarType
 
@@ -12,29 +12,35 @@ class SingleSelection(
     private val singleSelectionListener: SingleSelectionListener
 ) : CalendarType() {
 
-    override fun bind(
+    override val onDayClickListener: (
         viewHolder: DayViewHolder,
         dayItem: DayItem,
         properties: CalendarProperties,
         listener: DaysAdapterListener
-    ) {
-        super.bind(viewHolder, dayItem, properties, listener)
-        if (checkAvailability(viewHolder, dayItem, properties)) {
-            viewHolder.bgDay.background = ContextCompat.getDrawable(
-                context, background(
-                    currentItem = dayItem,
-                    selectedSingle = properties.selectedSingle
-                )
-            )
-
-            viewHolder.bgDay.setOnClickListener {
+    ) -> Unit
+        get() = { viewHolder, dayItem, properties, listener ->
+            if (checkAvailability(viewHolder, dayItem, properties)) {
                 onDayClicked(properties, dayItem, singleSelectionListener)
                 listener.onDaysNotifyDataSetChanged()
             }
         }
+
+    override fun dayBackground(
+        viewHolder: DayViewHolder,
+        dayItem: DayItem,
+        properties: CalendarProperties
+    ) {
+        if (checkAvailability(viewHolder, dayItem, properties)) {
+            viewHolder.bgDay.background = ContextCompat.getDrawable(
+                context, getDayBackground(
+                    currentItem = dayItem,
+                    selectedSingle = properties.selectedSingle
+                )
+            )
+        }
     }
 
-    private fun background(
+    private fun getDayBackground(
         currentItem: DayItem,
         selectedSingle: DayItem?
     ): Int {

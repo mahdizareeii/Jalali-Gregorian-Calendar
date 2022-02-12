@@ -14,6 +14,19 @@ import com.calendar.base.types.singleselection.SingleSelection
 abstract class CalendarType {
     protected lateinit var context: Context
 
+    internal abstract val onDayClickListener: (
+        viewHolder: DayViewHolder,
+        dayItem: DayItem,
+        properties: CalendarProperties,
+        listener: DaysAdapterListener
+    ) -> Unit
+
+    internal abstract fun dayBackground(
+        viewHolder: DayViewHolder,
+        dayItem: DayItem,
+        properties: CalendarProperties,
+    )
+
     internal open fun bind(
         viewHolder: DayViewHolder,
         dayItem: DayItem,
@@ -22,7 +35,11 @@ abstract class CalendarType {
     ) {
         context = viewHolder.itemView.context
         textColor(viewHolder, dayItem, properties)
+        dayBackground(viewHolder, dayItem, properties)
         viewHolder.bgDay.visibility = dayItem.dayVisibility
+        viewHolder.bgDay.setOnClickListener {
+            onDayClickListener.invoke(viewHolder, dayItem, properties, listener)
+        }
         viewHolder.txtDay.text = dayItem.day.toString()
         viewHolder.txtPrice.isVisible = properties.showDaysPrice
         viewHolder.txtPrice.text = dayItem.getPrice()
