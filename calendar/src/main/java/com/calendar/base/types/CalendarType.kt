@@ -3,8 +3,8 @@ package com.calendar.base.types
 import android.content.Context
 import androidx.core.content.ContextCompat
 import com.calendar.R
-import com.calendar.base.adapter.day.DaysAdapterListener
 import com.calendar.base.adapter.day.DayViewHolder
+import com.calendar.base.adapter.day.DaysAdapterListener
 import com.calendar.base.model.DayItem
 import com.calendar.base.types.multipleselection.MultipleSelection
 import com.calendar.base.types.rangeslelection.RangeSelection
@@ -58,7 +58,12 @@ abstract class CalendarType {
     }
 
     private fun setUnAvailableBackground(viewHolder: DayViewHolder) {
-        viewHolder.bgDay.background.alpha = 200
+        viewHolder.bgDay.background = ContextCompat.getDrawable(
+            context,
+            R.drawable.bg_disabled_date
+        )?.apply {
+            alpha = 0X3C
+        }
         viewHolder.txtDay.alpha = 0.3f
     }
 
