@@ -8,7 +8,11 @@ data class CalendarProperties(
     val regionalType: RegionalType,
     val calendarType: CalendarType,
     val calendarOrientation: Int,
+    val showDaysPrice: Boolean,
     private val availableFromToday: Boolean,
+
+    //for set custom days pricing and etc
+    var customDays: ArrayList<DayItem> = ArrayList(),
 
     //for range selection
     var selectedCheckIn: DayItem? = null,

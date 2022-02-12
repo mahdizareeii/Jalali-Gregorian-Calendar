@@ -5,13 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_day"
-    android:gravity="center">
+    android:gravity="center"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/txt_day"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#526576"
+        android:textSize="14sp"
         tools:text="1" />
 
+    <TextView
+        android:id="@+id/txt_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textColor="#526576"
+        android:textSize="12sp"
+        tools:text="560" />
 </com.calendar.utils.SquareView>

@@ -22,18 +22,20 @@ data class MonthItem(
     val getYear get() = calendar.getYear()
     val getMonthName get() = calendar.getMonthName()
 
-    fun generateDays(): List<DayItem> {
+    fun generateDays(customDays: List<DayItem>): List<DayItem> {
         if (days.isNullOrEmpty()) {
             days.addAll(
                 calendar.generateDays().map {
+                    val day = DayItem(
+                        year = calendar.getYear(),
+                        month = calendar.getMonth(),
+                        day = it
+                    )
+
                     if (it == -1)
                         DayItem(null, null, null)
                     else
-                        DayItem(
-                            year = calendar.getYear(),
-                            month = calendar.getMonth(),
-                            day = it
-                        )
+                        customDays.firstOrNull { customDay -> customDay == day } ?: day
                 }
             )
         }

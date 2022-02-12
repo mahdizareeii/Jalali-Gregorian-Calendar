@@ -2,6 +2,7 @@ package com.calendar.base.types
 
 import android.content.Context
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import com.calendar.R
 import com.calendar.base.adapter.day.DayViewHolder
 import com.calendar.base.adapter.day.DaysAdapterListener
@@ -21,8 +22,10 @@ abstract class CalendarType {
     ) {
         context = viewHolder.itemView.context
         textColor(viewHolder, dayItem, properties)
-        viewHolder.bgDay.visibility = dayItem.visibility
+        viewHolder.bgDay.visibility = dayItem.dayVisibility
         viewHolder.txtDay.text = dayItem.day.toString()
+        viewHolder.txtPrice.isVisible = properties.showDaysPrice
+        viewHolder.txtPrice.text = dayItem.getPrice()
     }
 
     private fun textColor(
@@ -30,18 +33,18 @@ abstract class CalendarType {
         currentItem: DayItem,
         properties: CalendarProperties
     ) {
-        viewHolder.txtDay.setTextColor(
-            ContextCompat.getColor(
-                context,
-                when {
-                    currentItem.isHoliday -> R.color.red
-                    else -> {
-                        if (isSelected(currentItem, properties)) R.color.white
-                        else R.color.secondary
-                    }
+        val color = ContextCompat.getColor(
+            context,
+            when {
+                currentItem.isHoliday -> R.color.red
+                else -> {
+                    if (isSelected(currentItem, properties)) R.color.white
+                    else R.color.secondary
                 }
-            )
+            }
         )
+        viewHolder.txtDay.setTextColor(color)
+        viewHolder.txtPrice.setTextColor(color)
     }
 
     internal fun checkAvailability(
@@ -49,12 +52,12 @@ abstract class CalendarType {
         currentItem: DayItem,
         properties: CalendarProperties
     ): Boolean {
-        val isAvailable = if (properties.getToday() == null) true
+        val availableFromToday = if (properties.getToday() == null) true
         else currentItem >= properties.getToday()!!
 
-        if (!isAvailable) setUnAvailableBackground(viewHolder)
+        if (!availableFromToday || currentItem.isDisable) setUnAvailableBackground(viewHolder)
 
-        return isAvailable
+        return (availableFromToday && !currentItem.isDisable)
     }
 
     private fun setUnAvailableBackground(viewHolder: DayViewHolder) {
@@ -65,6 +68,7 @@ abstract class CalendarType {
             alpha = 0X3C
         }
         viewHolder.txtDay.alpha = 0.3f
+        viewHolder.txtPrice.alpha = 0.3f
     }
 
     private fun isSelected(

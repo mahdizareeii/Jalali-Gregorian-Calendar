@@ -23,7 +23,13 @@ class MainActivity : AppCompatActivity(), RangeSelectionListener {
                 regionalType = RegionalType.Jalali,
                 calendarType = RangeSelection(this),
                 availableFromToday = true,
-                calendarOrientation = VERTICAL
+                calendarOrientation = VERTICAL,
+                showDaysPrice = true,
+                customDays = arrayListOf(
+                    DayItem(1400, 11, 26, 550000.0, false, false),
+                    DayItem(1400, 11, 27, 12300.0, true, false),
+                    DayItem(1400, 11, 28, 430000.0, true, true),
+                )
             )
         )
 

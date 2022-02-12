@@ -15,6 +15,7 @@ internal class DayViewHolder(
 ) : RecyclerView.ViewHolder(view) {
     val bgDay: SquareView = view.findViewById(R.id.bg_day)
     val txtDay: AppCompatTextView = view.findViewById(R.id.txt_day)
+    val txtPrice: AppCompatTextView = view.findViewById(R.id.txt_price)
 
     fun bind(dayItem: DayItem) {
         calendarProperties.calendarType.bind(

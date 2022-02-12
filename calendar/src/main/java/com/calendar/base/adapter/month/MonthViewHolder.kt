@@ -44,7 +44,7 @@ internal class MonthViewHolder(
                 adapter?.notifyDataSetChanged()
             }
         }
-        adapter?.submitList(monthItem.generateDays())
+        adapter?.submitList(monthItem.generateDays(calendarProperties.customDays))
         txtMonth.text = String.format("${monthItem.getYear} - ${monthItem.getMonthName}")
         initArrows(monthSize, position, listener)
     }
