@@ -65,7 +65,7 @@ class RangeSelection(
             if (showDaysPrice && selectedCheckIn == currentItem) {
                 selectedCheckIn = null
                 selectedCheckOut = null
-            } else if (showDaysPrice && isCheckOutSelect() && currentItem == selectedCheckOut) {
+            } else if (showDaysPrice && isCheckOutSelect() && currentItem == selectedCheckOut && currentItem.isDisable) {
                 return
             } else if (selectedCheckIn == currentItem || selectedCheckIn == null || isCheckOutSelect()) {
                 selectedCheckIn = currentItem

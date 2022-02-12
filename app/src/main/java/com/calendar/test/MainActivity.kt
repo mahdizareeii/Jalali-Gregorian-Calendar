@@ -29,11 +29,15 @@ class MainActivity : AppCompatActivity(), RangeSelectionListener {
                     DayItem(1400, 11, 26, 550000.0, false, false),
                     DayItem(1400, 11, 27, 12300.0, true, false),
                     DayItem(1400, 11, 28, 430000.0, true, true),
+                    DayItem(1400, 12, 5, 78893.0, false, false),
+                    DayItem(1400, 12, 6, 99999.0, false, false),
+                    DayItem(1400, 12, 7, 100000.0, false, false),
+                    DayItem(1400, 12, 8, 100000.0, false, true),
                 )
             )
         )
 
-        calendar.submitNextDates(Calendar.MONTH, 3)
+        calendar.submitNextDates(Calendar.MONTH, 80)
     }
 
     override fun onCheckInSelected(dayItem: DayItem) {
