@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.calendar.CalendarView
+import com.calendar.base.availablity.RangeSelectionWithPriceAvailability
 import com.calendar.base.calendar.RegionalType
 import com.calendar.base.model.DayItem
 import com.calendar.base.types.CalendarProperties
@@ -22,10 +23,13 @@ class MainActivity : AppCompatActivity(), RangeSelectionListener {
             CalendarProperties(
                 regionalType = RegionalType.Jalali,
                 calendarType = RangeSelection(this),
-                availableFromToday = true,
                 calendarOrientation = VERTICAL,
                 showDaysPrice = true,
-                minDaysInRangeSelection = 1,
+                minDaysInRangeSelection = 2,
+                availability = RangeSelectionWithPriceAvailability(
+                    availableFromToday = true,
+                    unAvailableDisableDays = true
+                ),
                 customDays = arrayListOf(
                     DayItem(1400, 11, 26, 550000.0, isHoliday = false, isDisable = false),
                     DayItem(1400, 11, 27, 12300.0, isHoliday = true, isDisable = false),

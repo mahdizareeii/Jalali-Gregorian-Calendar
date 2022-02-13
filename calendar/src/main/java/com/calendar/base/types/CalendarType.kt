@@ -125,16 +125,7 @@ abstract class CalendarType {
         currentItem: DayItem,
         properties: CalendarProperties
     ): Boolean {
-        val availability = if (properties.showDaysPrice) {
-            when (properties.calendarType::class.java) {
-                RangeSelection::class.java -> {
-                    properties.getRangeSelectionAvailability(currentItem)
-                }
-                else -> properties.checkAvailableFromTodayAndDaysNotDisable(currentItem)
-            }
-        } else {
-            properties.checkAvailableFromTodayAndDaysNotDisable(currentItem)
-        }
+        val availability = properties.availability.isAvailable(currentItem, properties)
         if (availability) setAvailableBackground(viewHolder)
         else setUnAvailableBackground(viewHolder)
         return availability
