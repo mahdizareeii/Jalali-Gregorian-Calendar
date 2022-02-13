@@ -77,38 +77,39 @@ abstract class CalendarType {
 
         val baseAvailability = availableFromToday && !currentItem.isDisable
 
-        val availability = if (properties.showDaysPrice)
+        val availability = if (properties.showDaysPrice) {
             when (properties.calendarType::class.java) {
                 RangeSelection::class.java -> {
                     when {
                         properties.isCheckInSelect() -> {
-                            val difDays = if (currentItem.isNotNull() && currentItem > properties.selectedCheckIn!!) {
-                                if (properties.regionalType.calendar is MyJalaliCalendar) {
-                                    DateUtil.diffDaysJalali(
-                                        properties.selectedCheckIn,
-                                        currentItem
-                                    )
-                                } else {
-                                    DateUtil.diffDaysGregorian(
-                                        properties.selectedCheckIn,
-                                        currentItem,
-                                    )
+                            val difDays =
+                                if (currentItem.isNotNull() && currentItem > properties.selectedCheckIn!!) {
+                                    if (properties.regionalType.calendar is MyJalaliCalendar) {
+                                        DateUtil.diffDaysJalali(
+                                            properties.selectedCheckIn,
+                                            currentItem
+                                        )
+                                    } else {
+                                        DateUtil.diffDaysGregorian(
+                                            properties.selectedCheckIn,
+                                            currentItem,
+                                        )
+                                    }
+                                } else if (currentItem.isNotNull() && currentItem < properties.selectedCheckIn!!)
+                                    if (properties.regionalType.calendar is MyJalaliCalendar) {
+                                        DateUtil.diffDaysJalali(
+                                            currentItem,
+                                            properties.selectedCheckIn
+                                        )
+                                    } else {
+                                        DateUtil.diffDaysGregorian(
+                                            currentItem,
+                                            properties.selectedCheckIn
+                                        )
+                                    }
+                                else {
+                                    properties.minDaysInRangeSelection
                                 }
-                            } else if (currentItem.isNotNull() && currentItem < properties.selectedCheckIn!!)
-                                if (properties.regionalType.calendar is MyJalaliCalendar) {
-                                    DateUtil.diffDaysJalali(
-                                        currentItem,
-                                        properties.selectedCheckIn
-                                    )
-                                } else {
-                                    DateUtil.diffDaysGregorian(
-                                        currentItem,
-                                        properties.selectedCheckIn
-                                    )
-                                }
-                            else {
-                                properties.minDaysInRangeSelection
-                            }
 
                             availableFromToday &&
                                     difDays >= properties.minDaysInRangeSelection &&
@@ -131,7 +132,9 @@ abstract class CalendarType {
 
                 else -> baseAvailability
             }
-        else baseAvailability
+        } else {
+            baseAvailability
+        }
 
         if (availability)
             setAvailableBackground(viewHolder)
