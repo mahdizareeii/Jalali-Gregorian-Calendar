@@ -1,14 +1,17 @@
 package com.calendar.base.model
 
 import android.view.View
+import com.calendar.utils.PriceFormatter
+import kotlin.math.abs
 
 data class DayItem constructor(
     val year: Int?,
     val month: Int?,
     val day: Int?
 ) {
-    val visibility = if (day != null) View.VISIBLE else View.INVISIBLE
+
     var price: Double? = null
+    var discount: Double? = null
     var isHoliday: Boolean = false
     var isDisable: Boolean = false
 
@@ -25,8 +28,20 @@ data class DayItem constructor(
         this.isDisable = isDisable
     }
 
+    val dayVisibility get() = if (day != null) View.VISIBLE else View.INVISIBLE
+
+    fun getPrice(): String {
+        val price = if (discount != null && discount != 0.0)
+            ((price ?: 0.0) - ((price ?: 0.0) * ((discount ?: 0.0) / 100))).div(1000)
+        else
+            (price ?: 0.0).div(1000)
+        return if (price <= 0.0) "-" else PriceFormatter.formatPrice(abs(price))
+    }
+
+    fun isNotNull() = year != null && month != null && day != null
+
     override fun toString(): String {
-        return "$year - $month - $day"
+        return "$year-$month-$day"
     }
 
     override fun equals(other: Any?): Boolean {
@@ -42,18 +57,18 @@ data class DayItem constructor(
         return true
     }
 
-    operator fun compareTo(other: DayItem): Int {
+    operator fun compareTo(other: DayItem?): Int {
         return when {
             this === other -> 0
-            year == other.year && month == other.month && day == other.day -> 0
-            (year ?: 0) > (other.year ?: 0) -> 1
-            year == other.year -> {
+            year == other?.year && month == other?.month && day == other?.day -> 0
+            (year ?: 0) > (other?.year ?: 0) -> 1
+            year == other?.year -> {
                 when {
-                    month == other.month -> {
-                        if ((day ?: 0) > (other.day ?: 0)) 1
+                    month == other?.month -> {
+                        if ((day ?: 0) > (other?.day ?: 0)) 1
                         else -1
                     }
-                    (month ?: 0) > (other.month ?: 0) -> 1
+                    (month ?: 0) > (other?.month ?: 0) -> 1
                     else -> -1
                 }
             }

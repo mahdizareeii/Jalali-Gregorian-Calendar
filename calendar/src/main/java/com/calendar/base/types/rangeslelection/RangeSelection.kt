@@ -3,8 +3,8 @@ package com.calendar.base.types.rangeslelection
 import androidx.core.content.ContextCompat
 import com.calendar.R
 import com.calendar.base.adapter.day.DayViewHolder
-import com.calendar.base.model.DayItem
 import com.calendar.base.adapter.day.DaysAdapterListener
+import com.calendar.base.model.DayItem
 import com.calendar.base.types.CalendarProperties
 import com.calendar.base.types.CalendarType
 
@@ -12,30 +12,31 @@ class RangeSelection(
     private val rangeSelectionListener: RangeSelectionListener
 ) : CalendarType() {
 
-    override fun bind(
+    override val onDayClickListener: (viewHolder: DayViewHolder, dayItem: DayItem, properties: CalendarProperties, listener: DaysAdapterListener) -> Unit
+        get() = { viewHolder, dayItem, properties, listener ->
+            if (checkAvailability(viewHolder, dayItem, properties)) {
+                onDayClicked(properties, dayItem, rangeSelectionListener)
+                listener.onDaysNotifyDataSetChanged()
+            }
+        }
+
+    override fun dayBackground(
         viewHolder: DayViewHolder,
         dayItem: DayItem,
-        properties: CalendarProperties,
-        listener: DaysAdapterListener
+        properties: CalendarProperties
     ) {
-        super.bind(viewHolder, dayItem, properties, listener)
         if (checkAvailability(viewHolder, dayItem, properties)) {
             viewHolder.bgDay.background = ContextCompat.getDrawable(
-                context, background(
+                context, getDayBackground(
                     currentItem = dayItem,
                     checkIn = properties.selectedCheckIn,
                     checkOut = properties.selectedCheckOut
                 )
             )
-
-            viewHolder.bgDay.setOnClickListener {
-                onDayClicked(properties, dayItem, rangeSelectionListener)
-                listener.onDaysNotifyDataSetChanged()
-            }
         }
     }
 
-    private fun background(
+    private fun getDayBackground(
         currentItem: DayItem,
         checkIn: DayItem?,
         checkOut: DayItem?,
@@ -62,10 +63,14 @@ class RangeSelection(
         listener: RangeSelectionListener
     ) {
         property.apply {
-            if (selectedCheckIn == currentItem || selectedCheckIn == null || selectedCheckOut != null) {
+            if (showDaysPrice && selectedCheckIn == currentItem) {
+                selectedCheckIn = null
+                selectedCheckOut = null
+            } else if (showDaysPrice && isCheckOutSelect() && currentItem == selectedCheckOut && currentItem.isDisable) {
+                return
+            } else if (selectedCheckIn == currentItem || selectedCheckIn == null || isCheckOutSelect()) {
                 selectedCheckIn = currentItem
                 selectedCheckOut = null
-
                 listener.onCheckInSelected(selectedCheckIn!!)
             } else {
                 if (selectedCheckIn!! > currentItem) {
