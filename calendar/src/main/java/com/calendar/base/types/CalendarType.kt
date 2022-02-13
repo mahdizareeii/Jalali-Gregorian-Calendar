@@ -6,12 +6,10 @@ import androidx.core.view.isVisible
 import com.calendar.R
 import com.calendar.base.adapter.day.DayViewHolder
 import com.calendar.base.adapter.day.DaysAdapterListener
-import com.calendar.base.calendar.MyJalaliCalendar
 import com.calendar.base.model.DayItem
 import com.calendar.base.types.multipleselection.MultipleSelection
 import com.calendar.base.types.rangeslelection.RangeSelection
 import com.calendar.base.types.singleselection.SingleSelection
-import com.calendar.utils.DateUtil
 
 abstract class CalendarType {
     protected lateinit var context: Context
@@ -64,84 +62,6 @@ abstract class CalendarType {
         )
         viewHolder.txtDay.setTextColor(color)
         viewHolder.txtPrice.setTextColor(color)
-    }
-
-    internal fun checkAvailability(
-        viewHolder: DayViewHolder,
-        currentItem: DayItem,
-        properties: CalendarProperties
-    ): Boolean {
-        val availableFromToday =
-            if (properties.getToday() == null) true
-            else currentItem >= properties.getToday()!!
-
-        val baseAvailability = availableFromToday && !currentItem.isDisable
-
-        val availability = if (properties.showDaysPrice) {
-            when (properties.calendarType::class.java) {
-                RangeSelection::class.java -> {
-                    when {
-                        properties.isCheckInSelect() -> {
-                            val difDays =
-                                if (currentItem.isNotNull() && currentItem > properties.selectedCheckIn!!) {
-                                    if (properties.regionalType.calendar is MyJalaliCalendar) {
-                                        DateUtil.diffDaysJalali(
-                                            properties.selectedCheckIn,
-                                            currentItem
-                                        )
-                                    } else {
-                                        DateUtil.diffDaysGregorian(
-                                            properties.selectedCheckIn,
-                                            currentItem,
-                                        )
-                                    }
-                                } else if (currentItem.isNotNull() && currentItem < properties.selectedCheckIn!!)
-                                    if (properties.regionalType.calendar is MyJalaliCalendar) {
-                                        DateUtil.diffDaysJalali(
-                                            currentItem,
-                                            properties.selectedCheckIn
-                                        )
-                                    } else {
-                                        DateUtil.diffDaysGregorian(
-                                            currentItem,
-                                            properties.selectedCheckIn
-                                        )
-                                    }
-                                else {
-                                    properties.minDaysInRangeSelection
-                                }
-
-                            availableFromToday &&
-                                    difDays >= properties.minDaysInRangeSelection &&
-                                    !properties.customDays.any {
-                                        it < currentItem && properties.selectedCheckIn!! < it && it.isDisable
-                                    } &&
-                                    !properties.customDays.any {
-                                        it >= currentItem && properties.selectedCheckIn!! > it && it.isDisable
-                                    }
-                        }
-                        properties.isCheckOutSelect() -> {
-                            if (currentItem.isDisable && currentItem == properties.selectedCheckOut)
-                                true
-                            else
-                                baseAvailability
-                        }
-                        else -> baseAvailability
-                    }
-                }
-
-                else -> baseAvailability
-            }
-        } else {
-            baseAvailability
-        }
-
-        if (availability)
-            setAvailableBackground(viewHolder)
-        else
-            setUnAvailableBackground(viewHolder)
-
-        return availability
     }
 
     private fun setAvailableBackground(viewHolder: DayViewHolder) {
@@ -199,4 +119,28 @@ abstract class CalendarType {
             else -> false
         }
     }
+
+    internal fun checkAvailability(
+        viewHolder: DayViewHolder,
+        currentItem: DayItem,
+        properties: CalendarProperties
+    ): Boolean {
+        val availability = if (properties.showDaysPrice) {
+            when (properties.calendarType::class.java) {
+                RangeSelection::class.java -> {
+                    properties.getRangeSelectionAvailability(currentItem)
+                }
+                else -> properties.checkAvailableFromTodayAndDaysNotDisable(currentItem)
+            }
+        } else {
+            properties.checkAvailableFromTodayAndDaysNotDisable(currentItem)
+        }
+
+        if (availability) setAvailableBackground(viewHolder)
+        else setUnAvailableBackground(viewHolder)
+
+        return availability
+    }
+
+
 }

@@ -57,18 +57,18 @@ data class DayItem constructor(
         return true
     }
 
-    operator fun compareTo(other: DayItem): Int {
+    operator fun compareTo(other: DayItem?): Int {
         return when {
             this === other -> 0
-            year == other.year && month == other.month && day == other.day -> 0
-            (year ?: 0) > (other.year ?: 0) -> 1
-            year == other.year -> {
+            year == other?.year && month == other?.month && day == other?.day -> 0
+            (year ?: 0) > (other?.year ?: 0) -> 1
+            year == other?.year -> {
                 when {
-                    month == other.month -> {
-                        if ((day ?: 0) > (other.day ?: 0)) 1
+                    month == other?.month -> {
+                        if ((day ?: 0) > (other?.day ?: 0)) 1
                         else -1
                     }
-                    (month ?: 0) > (other.month ?: 0) -> 1
+                    (month ?: 0) > (other?.month ?: 0) -> 1
                     else -> -1
                 }
             }
