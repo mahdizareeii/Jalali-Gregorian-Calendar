@@ -42,11 +42,11 @@ object DateUtil {
     private fun operateDiffs(start: Date?, end: Date?): LongArray {
         val differenceInTime = (end?.time ?: 0) - (start?.time ?: 0)
 
-        val differenceInSeconds: Long = (TimeUnit.MILLISECONDS.toSeconds(differenceInTime) % 60)
-        val differenceInMinutes: Long = (TimeUnit.MILLISECONDS.toMinutes(differenceInTime) % 60)
-        val differenceInHours: Long = (TimeUnit.MILLISECONDS.toHours(differenceInTime) % 24)
-        val differenceInDays: Long = (TimeUnit.MILLISECONDS.toDays(differenceInTime) % 365)
-        val differenceInYears: Long = (TimeUnit.MILLISECONDS.toDays(differenceInTime) / 365L)
+        val differenceInSeconds = (TimeUnit.MILLISECONDS.toSeconds(differenceInTime) % 60)
+        val differenceInMinutes = (TimeUnit.MILLISECONDS.toMinutes(differenceInTime) % 60)
+        val differenceInHours = (TimeUnit.MILLISECONDS.toHours(differenceInTime) % 24)
+        val differenceInDays = (TimeUnit.MILLISECONDS.toDays(differenceInTime) % 365)
+        val differenceInYears = (TimeUnit.MILLISECONDS.toDays(differenceInTime) / 365L)
 
         return longArrayOf(
             differenceInYears,
