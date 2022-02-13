@@ -135,10 +135,8 @@ abstract class CalendarType {
         } else {
             properties.checkAvailableFromTodayAndDaysNotDisable(currentItem)
         }
-
         if (availability) setAvailableBackground(viewHolder)
         else setUnAvailableBackground(viewHolder)
-
         return availability
     }
 
