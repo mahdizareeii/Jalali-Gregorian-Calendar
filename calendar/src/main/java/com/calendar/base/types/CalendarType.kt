@@ -41,7 +41,7 @@ abstract class CalendarType {
             onDayClickListener.invoke(viewHolder, dayItem, properties, listener)
         }
         viewHolder.txtDay.text = dayItem.day.toString()
-        viewHolder.txtPrice.isVisible = properties.showDaysPrice
+        viewHolder.txtPrice.isVisible = properties.txtPriceVisibility(dayItem)
         viewHolder.txtPrice.text = dayItem.getPrice()
     }
 

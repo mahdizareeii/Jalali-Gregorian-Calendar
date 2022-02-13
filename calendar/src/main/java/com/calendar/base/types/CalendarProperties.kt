@@ -29,6 +29,9 @@ data class CalendarProperties(
 
     //for without selection
 ) {
+    internal fun txtPriceVisibility(currentItem: DayItem) =
+        showDaysPrice && selectedCheckOut != currentItem
+
     internal fun calendarIsReverse() =
         regionalType == RegionalType.Jalali && calendarOrientation == HORIZONTAL
 
@@ -58,10 +61,7 @@ data class CalendarProperties(
 
     private fun checkAvailabilityFromToday(
         currentItem: DayItem
-    ): Boolean {
-        return if (getToday() == null) true
-        else currentItem >= getToday()!!
-    }
+    ) = if (getToday() == null) true else currentItem >= getToday()!!
 
     private fun getDifDaysFromCheckIn(currentItem: DayItem) =
         if (currentItem.isNotNull() && currentItem > selectedCheckIn) {
