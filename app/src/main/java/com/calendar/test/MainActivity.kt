@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity(), RangeSelectionListener {
                 availableFromToday = true,
                 calendarOrientation = VERTICAL,
                 showDaysPrice = true,
+                minDaysInRangeSelection = 22,
                 customDays = arrayListOf(
                     DayItem(1400, 11, 26, 550000.0, false, false),
                     DayItem(1400, 11, 27, 12300.0, true, false),

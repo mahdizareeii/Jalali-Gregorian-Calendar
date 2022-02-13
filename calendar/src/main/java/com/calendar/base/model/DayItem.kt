@@ -38,8 +38,10 @@ data class DayItem constructor(
         return if (price <= 0.0) "-" else PriceFormatter.formatPrice(abs(price))
     }
 
+    fun isNotNull() = year != null && month != null && day != null
+
     override fun toString(): String {
-        return "$year - $month - $day"
+        return "$year-$month-$day"
     }
 
     override fun equals(other: Any?): Boolean {

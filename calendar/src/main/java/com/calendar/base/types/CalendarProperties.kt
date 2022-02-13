@@ -9,6 +9,7 @@ data class CalendarProperties(
     val calendarType: CalendarType,
     val calendarOrientation: Int,
     val showDaysPrice: Boolean,
+    val minDaysInRangeSelection: Int = 1,
     private val availableFromToday: Boolean,
 
     //for set custom days pricing and etc

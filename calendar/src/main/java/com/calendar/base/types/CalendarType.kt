@@ -6,10 +6,12 @@ import androidx.core.view.isVisible
 import com.calendar.R
 import com.calendar.base.adapter.day.DayViewHolder
 import com.calendar.base.adapter.day.DaysAdapterListener
+import com.calendar.base.calendar.MyJalaliCalendar
 import com.calendar.base.model.DayItem
 import com.calendar.base.types.multipleselection.MultipleSelection
 import com.calendar.base.types.rangeslelection.RangeSelection
 import com.calendar.base.types.singleselection.SingleSelection
+import com.calendar.utils.DateUtil
 
 abstract class CalendarType {
     protected lateinit var context: Context
@@ -80,11 +82,42 @@ abstract class CalendarType {
                 RangeSelection::class.java -> {
                     when {
                         properties.isCheckInSelect() -> {
-                            availableFromToday && !properties.customDays.any {
-                                it < currentItem && properties.selectedCheckIn!! < it && it.isDisable
-                            } && !properties.customDays.any {
-                                it >= currentItem && properties.selectedCheckIn!! > it && it.isDisable
+                            val difDays = if (currentItem.isNotNull() && currentItem > properties.selectedCheckIn!!) {
+                                if (properties.regionalType.calendar is MyJalaliCalendar) {
+                                    DateUtil.diffDaysJalali(
+                                        properties.selectedCheckIn,
+                                        currentItem
+                                    )
+                                } else {
+                                    DateUtil.diffDaysGregorian(
+                                        properties.selectedCheckIn,
+                                        currentItem,
+                                    )
+                                }
+                            } else if (currentItem.isNotNull() && currentItem < properties.selectedCheckIn!!)
+                                if (properties.regionalType.calendar is MyJalaliCalendar) {
+                                    DateUtil.diffDaysJalali(
+                                        currentItem,
+                                        properties.selectedCheckIn
+                                    )
+                                } else {
+                                    DateUtil.diffDaysGregorian(
+                                        currentItem,
+                                        properties.selectedCheckIn
+                                    )
+                                }
+                            else {
+                                properties.minDaysInRangeSelection
                             }
+
+                            availableFromToday &&
+                                    difDays >= properties.minDaysInRangeSelection &&
+                                    !properties.customDays.any {
+                                        it < currentItem && properties.selectedCheckIn!! < it && it.isDisable
+                                    } &&
+                                    !properties.customDays.any {
+                                        it >= currentItem && properties.selectedCheckIn!! > it && it.isDisable
+                                    }
                         }
                         properties.isCheckOutSelect() -> {
                             if (currentItem.isDisable && currentItem == properties.selectedCheckOut)
