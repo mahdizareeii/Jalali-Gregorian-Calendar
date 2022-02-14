@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.calendar.base.adapter.month.MonthAdapter
 import com.calendar.base.adapter.month.MonthAdapterListener
 import com.calendar.base.calendar.BaseCalendar
-import com.calendar.base.types.CalendarProperties
 
 class CalendarView @JvmOverloads constructor(
     context: Context,

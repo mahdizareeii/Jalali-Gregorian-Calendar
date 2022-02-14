@@ -5,7 +5,7 @@ import com.calendar.R
 import com.calendar.base.adapter.day.DayViewHolder
 import com.calendar.base.adapter.day.DaysAdapterListener
 import com.calendar.base.model.DayItem
-import com.calendar.base.types.CalendarProperties
+import com.calendar.CalendarProperties
 import com.calendar.base.types.CalendarType
 
 class WithoutSelection(

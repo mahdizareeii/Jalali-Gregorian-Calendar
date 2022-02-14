@@ -5,7 +5,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.calendar.R
 import com.calendar.base.model.DayItem
-import com.calendar.base.types.CalendarProperties
+import com.calendar.CalendarProperties
 import com.calendar.utils.SquareView
 
 internal class DayViewHolder(

@@ -2,7 +2,7 @@ package com.calendar.base.availablity
 
 import com.calendar.base.calendar.MyJalaliCalendar
 import com.calendar.base.model.DayItem
-import com.calendar.base.types.CalendarProperties
+import com.calendar.CalendarProperties
 import com.calendar.utils.DateUtil
 
 class RangePriceSelectionAvailabilityRule(

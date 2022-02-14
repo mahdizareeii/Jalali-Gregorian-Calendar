@@ -3,6 +3,7 @@ package com.calendar.base.types
 import android.content.Context
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import com.calendar.CalendarProperties
 import com.calendar.R
 import com.calendar.base.adapter.day.DayViewHolder
 import com.calendar.base.adapter.day.DaysAdapterListener

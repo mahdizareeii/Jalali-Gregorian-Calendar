@@ -8,7 +8,7 @@ import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
 import com.calendar.R
 import com.calendar.base.model.DayItem
-import com.calendar.base.types.CalendarProperties
+import com.calendar.CalendarProperties
 import com.google.android.flexbox.FlexboxLayoutManager
 
 internal class DaysAdapter(

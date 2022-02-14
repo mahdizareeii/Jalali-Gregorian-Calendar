@@ -7,8 +7,8 @@ import com.calendar.CalendarView
 import com.calendar.base.availablity.RangePriceSelectionAvailabilityRule
 import com.calendar.base.calendar.RegionalType
 import com.calendar.base.model.DayItem
-import com.calendar.base.types.CalendarProperties
-import com.calendar.base.types.CalendarProperties.Companion.VERTICAL
+import com.calendar.CalendarProperties
+import com.calendar.CalendarProperties.Companion.VERTICAL
 import com.calendar.base.types.rangeslelection.RangeSelection
 import com.calendar.base.types.rangeslelection.RangeSelectionListener
 import java.util.*
@@ -39,8 +39,8 @@ class MainActivity : AppCompatActivity(), RangeSelectionListener {
                     DayItem(1400, 12, 7, 100000.0, isHoliday = false, isDisable = false),
                     DayItem(1400, 12, 8, 100000.0, isHoliday = false, isDisable = true),
                     DayItem(1400, 12, 15, 456000.0, isHoliday = false, isDisable = true),
-                    DayItem(1401, 1, 1, 100000.0, isHoliday = false, isDisable = true),
                     DayItem(1400, 12, 29, 500000.0, isHoliday = true, isDisable = false),
+                    DayItem(1401, 1, 1, 100000.0, isHoliday = false, isDisable = true),
                 )
             )
         )

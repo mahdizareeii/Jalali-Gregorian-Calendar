@@ -11,7 +11,7 @@ import com.calendar.base.adapter.day.DaysAdapterListener
 import com.calendar.base.calendar.RegionalType
 import com.calendar.base.model.MonthItem
 import com.calendar.base.model.MonthItemListener
-import com.calendar.base.types.CalendarProperties
+import com.calendar.CalendarProperties
 import com.google.android.flexbox.AlignItems
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap

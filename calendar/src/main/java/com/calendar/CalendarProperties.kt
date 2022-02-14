@@ -1,10 +1,11 @@
-package com.calendar.base.types
+package com.calendar
 
 import androidx.annotation.IntRange
 import androidx.recyclerview.widget.RecyclerView
 import com.calendar.base.availablity.BaseAvailabilityRule
 import com.calendar.base.calendar.RegionalType
 import com.calendar.base.model.DayItem
+import com.calendar.base.types.CalendarType
 
 /**
  *  if the

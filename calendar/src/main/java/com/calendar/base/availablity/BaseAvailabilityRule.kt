@@ -1,7 +1,7 @@
 package com.calendar.base.availablity
 
 import com.calendar.base.model.DayItem
-import com.calendar.base.types.CalendarProperties
+import com.calendar.CalendarProperties
 
 open class BaseAvailabilityRule(
     private val availableFromToday: Boolean,
