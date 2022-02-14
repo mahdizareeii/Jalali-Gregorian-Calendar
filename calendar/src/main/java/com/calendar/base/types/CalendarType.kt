@@ -12,6 +12,11 @@ import com.calendar.base.types.multipleselection.MultipleSelection
 import com.calendar.base.types.rangeslelection.RangeSelection
 import com.calendar.base.types.singleselection.SingleSelection
 
+/**
+ * @property context init with viewHolder item view context
+ * @property onDayClickListener when day of month clicked this fun will invoke
+ * @property dayBackground decision for day item background base on implementation of each class
+ */
 abstract class CalendarType {
     protected lateinit var context: Context
 
@@ -87,6 +92,11 @@ abstract class CalendarType {
         viewHolder.txtPrice.alpha = 0.3f
     }
 
+    /**
+     * @return selection state base on CalendarType
+     * @param currentItem the current day item
+     * @param properties for check the properties base on CalendarType
+     */
     private fun isSelected(
         currentItem: DayItem,
         properties: CalendarProperties
