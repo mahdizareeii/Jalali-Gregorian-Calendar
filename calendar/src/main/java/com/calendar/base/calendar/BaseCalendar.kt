@@ -10,10 +10,16 @@ abstract class BaseCalendar {
     abstract fun init()
 
     /** you must set month like this
-     *  'calendar.set(Calendar.MONTH, month)'
+     *  calendar.set(Calendar.MONTH, month)
      *  before call this method
+     *
+     *  @return position of day in week
      */
     abstract fun firstDayPositionInWeek(): Int
+
+    /**
+     * @return list of days of month
+     */
     abstract fun generateDays(): List<Int>
     abstract fun getYear(): Int
     abstract fun getMonth(): Int
@@ -26,6 +32,9 @@ abstract class BaseCalendar {
 
     /**
      *  you can increase up month and year with set field and you will get next dates
+     *  @param field the field that you want increase up
+     *  @param value the value that increase up field
+     *  @return a list that contain months
      */
     fun getNextDates(field: Int, value: Int): List<MonthItem> {
         val months = ArrayList<MonthItem>()
@@ -68,6 +77,9 @@ abstract class BaseCalendar {
         return months
     }
 
+    /**
+     * @return IntArray of jalali date for example : intArrayOf(1450, 1, 1)
+     */
     fun gregorianToJalali(year: Int, month: Int, day: Int): IntArray {
         val gregorianDayMonth: IntArray =
             intArrayOf(0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334)
@@ -94,6 +106,9 @@ abstract class BaseCalendar {
         return intArrayOf(jalaliYear, jalaliMonth, jalaliDay)
     }
 
+    /**
+     * @return IntArray of gregorian date for example : intArrayOf(2050, 1, 1)
+     */
     fun jalaliToGregorian(year: Int, month: Int, day: Int): IntArray {
         val yearTemp = year + 1595
         var days =

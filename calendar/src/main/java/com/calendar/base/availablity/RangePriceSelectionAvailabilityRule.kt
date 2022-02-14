@@ -5,10 +5,10 @@ import com.calendar.base.model.DayItem
 import com.calendar.base.types.CalendarProperties
 import com.calendar.utils.DateUtil
 
-class RangeSelectionWithPriceAvailability(
+class RangePriceSelectionAvailabilityRule(
     availableFromToday: Boolean,
     unAvailableDisableDays: Boolean
-) : BaseAvailability(availableFromToday, unAvailableDisableDays) {
+) : BaseAvailabilityRule(availableFromToday, unAvailableDisableDays) {
 
     override fun isAvailable(
         currentItem: DayItem,

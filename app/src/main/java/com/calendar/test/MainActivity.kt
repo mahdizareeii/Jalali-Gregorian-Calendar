@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.calendar.CalendarView
-import com.calendar.base.availablity.RangeSelectionWithPriceAvailability
+import com.calendar.base.availablity.RangePriceSelectionAvailabilityRule
 import com.calendar.base.calendar.RegionalType
 import com.calendar.base.model.DayItem
 import com.calendar.base.types.CalendarProperties
@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity(), RangeSelectionListener {
                 calendarOrientation = VERTICAL,
                 showDaysPrice = true,
                 minDaysInRangeSelection = 2,
-                availability = RangeSelectionWithPriceAvailability(
+                availabilityRule = RangePriceSelectionAvailabilityRule(
                     availableFromToday = true,
                     unAvailableDisableDays = true
                 ),
@@ -49,11 +49,11 @@ class MainActivity : AppCompatActivity(), RangeSelectionListener {
     }
 
     override fun onCheckInSelected(dayItem: DayItem) {
-        Toast.makeText(this, dayItem.toString(), Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, dayItem.getGregorianDate(), Toast.LENGTH_SHORT).show()
     }
 
     override fun onCheckOutSelected(dayItem: DayItem) {
-        Toast.makeText(this, dayItem.toString(), Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, dayItem.getGregorianDate(), Toast.LENGTH_SHORT).show()
     }
 
 

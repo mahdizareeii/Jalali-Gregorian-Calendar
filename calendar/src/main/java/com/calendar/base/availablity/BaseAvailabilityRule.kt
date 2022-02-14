@@ -3,7 +3,7 @@ package com.calendar.base.availablity
 import com.calendar.base.model.DayItem
 import com.calendar.base.types.CalendarProperties
 
-open class BaseAvailability(
+open class BaseAvailabilityRule(
     private val availableFromToday: Boolean,
     private val unAvailableDisableDays: Boolean
 ) {

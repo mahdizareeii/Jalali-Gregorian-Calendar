@@ -125,7 +125,7 @@ abstract class CalendarType {
         currentItem: DayItem,
         properties: CalendarProperties
     ): Boolean {
-        val availability = properties.availability.isAvailable(currentItem, properties)
+        val availability = properties.availabilityRule.isAvailable(currentItem, properties)
         if (availability) setAvailableBackground(viewHolder)
         else setUnAvailableBackground(viewHolder)
         return availability

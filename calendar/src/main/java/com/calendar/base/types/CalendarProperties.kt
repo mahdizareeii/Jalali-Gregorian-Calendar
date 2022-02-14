@@ -1,17 +1,24 @@
 package com.calendar.base.types
 
+import androidx.annotation.IntRange
 import androidx.recyclerview.widget.RecyclerView
-import com.calendar.base.availablity.BaseAvailability
+import com.calendar.base.availablity.BaseAvailabilityRule
 import com.calendar.base.calendar.RegionalType
 import com.calendar.base.model.DayItem
 
+/**
+ *  if the
+ *  @property showDaysPrice
+ *  be true the calendar will show prices that you gave from
+ *  @property customDays
+ */
 data class CalendarProperties(
     val regionalType: RegionalType,
     val calendarType: CalendarType,
     val calendarOrientation: Int,
     val showDaysPrice: Boolean,
-    val minDaysInRangeSelection: Int = 1,
-    val availability: BaseAvailability,
+    @IntRange(from = 1) val minDaysInRangeSelection: Int = 1,
+    val availabilityRule: BaseAvailabilityRule,
     //for set custom days pricing and etc
     var customDays: ArrayList<DayItem> = ArrayList(),
 
