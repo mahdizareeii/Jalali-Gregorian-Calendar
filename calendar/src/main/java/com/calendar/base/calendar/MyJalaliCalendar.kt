@@ -44,7 +44,7 @@ class MyJalaliCalendar : BaseCalendar() {
     override fun generateDays(): List<Int> {
         val days = ArrayList<Int>()
 
-        val countOfDays = getJalaliMonthCount(
+        val countOfDays = DateUtil.getJalaliMonthCount(
             calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH) + 1,
             calendar.get(Calendar.DAY_OF_MONTH)
@@ -118,42 +118,5 @@ class MyJalaliCalendar : BaseCalendar() {
         }
 
         return calendar.get(Calendar.DAY_OF_WEEK)
-    }
-
-    private fun getJalaliMonthCount(year: Int, month: Int, day: Int): Int {
-        val gregorianDayMonth =
-            intArrayOf(0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334)
-        val gy2 = if (month > 2) (year + 1) else year
-        var days =
-            355666 + (365 * year) + ((gy2 + 3) / 4) - ((gy2 + 99) / 100) + ((gy2 + 399) / 400) + day + gregorianDayMonth[month - 1]
-        var jalaliYear = -1595 + (33 * (days / 12053))
-        days %= 12053
-        jalaliYear += 4 * (days / 1461)
-        days %= 1461
-        if (days > 365) {
-            jalaliYear += ((days - 1) / 365)
-            days = (days - 1) % 365
-        }
-        val jalaliMonth: Int = if (days < 186) {
-            1 + (days / 31)
-        } else {
-            7 + ((days - 186) / 30)
-        }
-
-        return if (jalaliMonth <= 6) {
-            31
-        } else if (jalaliMonth in 7..11) {
-            30
-        } else {
-            if (isLeapYear(jalaliYear))
-                30
-            else 29
-        }
-    }
-
-    private fun isLeapYear(year: Int): Boolean {
-        return arrayOf(1, 5, 9, 13, 17, 22, 26, 30).any {
-            it == year % 33
-        }
     }
 }

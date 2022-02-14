@@ -28,6 +28,7 @@ data class MonthItem(
             days.addAll(
                 calendar.generateDays().map {
                     if (it == -1) {
+                        //shift days
                         DayItem(null, null, null, null)
                     } else {
                         val day = DayItem(
