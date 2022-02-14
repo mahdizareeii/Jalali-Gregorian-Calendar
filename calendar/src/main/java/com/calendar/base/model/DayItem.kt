@@ -21,7 +21,8 @@ import kotlin.math.abs
 data class DayItem constructor(
     val year: Int?,
     val month: Int?,
-    val day: Int?
+    val day: Int?,
+    val isGregorianDate: Boolean?
 ) {
 
     var gregorianYear: Int? = null
@@ -44,10 +45,11 @@ data class DayItem constructor(
         year: Int?,
         month: Int?,
         day: Int?,
+        isGregorianDate: Boolean,
         price: Double?,
         isHoliday: Boolean = false,
         isDisable: Boolean = true
-    ) : this(year, month, day) {
+    ) : this(year, month, day, isGregorianDate) {
         this.price = price
         this.isHoliday = isHoliday
         this.isDisable = isDisable
@@ -95,22 +97,6 @@ data class DayItem constructor(
             else -> -1
         }
     }
-
-    /**
-     * @param year the converted year of jalali date to gregorian
-     * @param month the converted month of jalali date to gregorian
-     * @param day the converted day of jalali date to gregorian
-     */
-    fun setGregorianDate(year: Int, month: Int, day: Int) {
-        this.gregorianYear = year
-        this.gregorianMonth = month
-        this.gregorianDay = day
-    }
-
-    /**
-     * @return formatted date as string "yyyy-MM-dd"
-     */
-    fun getGregorianDate(): String = "$gregorianYear-$gregorianMonth-$gregorianDay"
 
     /**
      * @return formatted price of date as string

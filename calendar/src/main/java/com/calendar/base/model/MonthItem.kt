@@ -2,7 +2,6 @@ package com.calendar.base.model
 
 import com.calendar.base.calendar.BaseCalendar
 import com.calendar.base.calendar.MyGregorianCalendar
-import com.calendar.base.calendar.MyJalaliCalendar
 import java.util.*
 
 data class MonthItem(
@@ -29,28 +28,16 @@ data class MonthItem(
             days.addAll(
                 calendar.generateDays().map {
                     if (it == -1) {
-                        DayItem(null, null, null)
+                        DayItem(null, null, null, null)
                     } else {
                         val day = DayItem(
                             year = calendar.getYear(),
                             month = calendar.getMonth(),
-                            day = it
+                            day = it,
+                            isGregorianDate = calendar is MyGregorianCalendar
                         )
 
-                        (customDays.firstOrNull { customDay -> customDay == day } ?: day).apply {
-                            if (calendar is MyJalaliCalendar) {
-                                val gregorianDate = calendar.jalaliToGregorian(
-                                    day.year!!,
-                                    day.month!!,
-                                    day.day!!
-                                )
-                                setGregorianDate(
-                                    year = gregorianDate[0],
-                                    month = gregorianDate[1],
-                                    day = gregorianDate[2]
-                                )
-                            }
-                        }
+                        customDays.firstOrNull { customDay -> customDay == day } ?: day
                     }
                 }
             )

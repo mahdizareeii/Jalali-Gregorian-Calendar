@@ -1,6 +1,7 @@
 package com.calendar.base.calendar
 
 import com.calendar.base.model.DayItem
+import com.calendar.utils.DateUtil
 import java.util.*
 
 class MyJalaliCalendar : BaseCalendar() {
@@ -10,7 +11,7 @@ class MyJalaliCalendar : BaseCalendar() {
     var persianDateAsString: String? = null
 
     override fun init() {
-        persianDate = gregorianToJalali(
+        persianDate = DateUtil.gregorianToJalali(
             calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH) + 1,
             calendar.get(Calendar.DAY_OF_MONTH)
@@ -61,7 +62,7 @@ class MyJalaliCalendar : BaseCalendar() {
         return days
     }
 
-    override fun getYear(): Int = gregorianToJalali(
+    override fun getYear(): Int = DateUtil.gregorianToJalali(
         calendar.get(Calendar.YEAR),
         calendar.get(Calendar.MONTH) + 1,
         calendar.get(Calendar.DAY_OF_MONTH)
@@ -87,24 +88,24 @@ class MyJalaliCalendar : BaseCalendar() {
 
     override fun getToday(): DayItem {
         val todayCalendar = Calendar.getInstance()
-        val today = gregorianToJalali(
+        val today = DateUtil.gregorianToJalali(
             todayCalendar.get(Calendar.YEAR),
             todayCalendar.get(Calendar.MONTH) + 1,
             todayCalendar.get(Calendar.DAY_OF_MONTH)
         )
-        return DayItem(today[0], today[1], today[2])
+        return DayItem(today[0], today[1], today[2], false)
     }
 
     override fun getNewInstanceOfCalendar(): BaseCalendar = MyJalaliCalendar()
 
     private fun getDayOfWeek(): Int {
-        val jalali = gregorianToJalali(
+        val jalali = DateUtil.gregorianToJalali(
             calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH) + 1,
             calendar.get(Calendar.DAY_OF_MONTH)
         )
 
-        val gregorian = jalaliToGregorian(
+        val gregorian = DateUtil.jalaliToGregorian(
             jalali[0],
             jalali[1],
             1,
