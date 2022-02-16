@@ -4,6 +4,7 @@ import androidx.annotation.IntRange
 import androidx.recyclerview.widget.RecyclerView
 import com.calendar.base.availablity.BaseAvailabilityRule
 import com.calendar.base.calendar.RegionalType
+import com.calendar.base.model.AgendaDays
 import com.calendar.base.model.DayItem
 import com.calendar.base.types.CalendarType
 
@@ -21,6 +22,8 @@ data class CalendarProperties(
     val showDaysPrice: Boolean,
     @IntRange(from = 1) val minDaysInRangeSelection: Int = 1,
     val availabilityRule: BaseAvailabilityRule,
+    //for highlight custom days
+    val agendaDays: ArrayList<AgendaDays> = ArrayList(),
     //for set custom days pricing and etc
     var customDays: ArrayList<DayItem> = ArrayList(),
 
@@ -36,6 +39,14 @@ data class CalendarProperties(
 ) {
     internal fun txtPriceVisibility(currentItem: DayItem) =
         showDaysPrice && selectedCheckOut != currentItem
+
+    internal fun imgStartAgendaVisibility(currentItem: DayItem) =
+        agendaDays.any { it.daysList.any { day -> day == currentItem } }
+
+    internal fun imgStartAgendaColor(currentItem: DayItem) =
+        agendaDays.firstOrNull {
+            it.daysList.firstOrNull { day -> day == currentItem } != null
+        }?.getAgendaColor()
 
     internal fun calendarIsReverse() =
         regionalType == RegionalType.Jalali && calendarOrientation == HORIZONTAL

@@ -8,6 +8,7 @@ import com.calendar.CalendarProperties.Companion.VERTICAL
 import com.calendar.CalendarView
 import com.calendar.base.availablity.RangePriceSelectionAvailabilityRule
 import com.calendar.base.calendar.RegionalType
+import com.calendar.base.model.AgendaDays
 import com.calendar.base.model.DayItem
 import com.calendar.base.types.rangeslelection.RangeSelection
 import com.calendar.base.types.rangeslelection.RangeSelectionListener
@@ -41,6 +42,23 @@ class MainActivity : AppCompatActivity(), RangeSelectionListener {
                     DayItem(1400, 12, 15, false, 456000.0, isHoliday = false, isDisable = true),
                     DayItem(1400, 12, 29, false, 500000.0, isHoliday = true, isDisable = false),
                     DayItem(1401, 1, 1, false, 100000.0, isHoliday = false, isDisable = true),
+                ),
+                agendaDays = arrayListOf(
+                    AgendaDays(
+                        id = "0",
+                        title = "در این روزها آنی رزرو کنید",
+                        color = "#fb3449",
+                        daysList = listOf(
+                            DayItem(1400,11,29,false),
+                            DayItem(1400,11,30,false),
+                            DayItem(1400,12,1,false),
+                            DayItem(1401,1,1,false),
+                            DayItem(1401,1,2,false),
+                            DayItem(1401,1,3,false),
+                            DayItem(1401,1,4,false),
+                            DayItem(1401,2,4,false),
+                        )
+                    )
                 )
             )
         )

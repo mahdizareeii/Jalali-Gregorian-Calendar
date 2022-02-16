@@ -5,9 +5,9 @@ import com.calendar.base.calendar.MyGregorianCalendar
 import java.util.*
 
 data class MonthItem(
-    val calendar: BaseCalendar,
-    val month: Int,
-    val year: Int
+    private val calendar: BaseCalendar,
+    private val month: Int,
+    private val year: Int
 ) {
     private val days = ArrayList<DayItem>()
 
@@ -21,6 +21,7 @@ data class MonthItem(
     }
 
     val getYear get() = calendar.getYear()
+    val getMonth get() = calendar.getMonth()
     val getMonthName get() = calendar.getMonthName()
 
     fun generateDays(customDays: List<DayItem>): List<DayItem> {

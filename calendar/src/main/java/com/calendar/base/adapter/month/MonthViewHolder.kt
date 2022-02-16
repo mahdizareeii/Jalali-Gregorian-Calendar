@@ -2,16 +2,17 @@ package com.calendar.base.adapter.month
 
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.calendar.CalendarProperties
 import com.calendar.R
 import com.calendar.base.adapter.day.DaysAdapter
 import com.calendar.base.adapter.day.DaysAdapterListener
 import com.calendar.base.calendar.RegionalType
 import com.calendar.base.model.MonthItem
 import com.calendar.base.model.MonthItemListener
-import com.calendar.CalendarProperties
 import com.google.android.flexbox.AlignItems
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
@@ -28,6 +29,9 @@ internal class MonthViewHolder(
     private val arrowRight: ImageView? = view.findViewById(R.id.arrow_right) ?: null
     private val txtMonth: AppCompatTextView = view.findViewById(R.id.txt_month)
     private val rvDays: RecyclerView = view.findViewById(R.id.rv_days)
+    private val txtAgendaDesc: TextView = view.findViewById(R.id.txt_agenda_desc)
+    private val imgEndAgenda: ImageView = view.findViewById(R.id.img_end_agenda)
+    private val imgStartAgenda: ImageView = view.findViewById(R.id.img_start_agenda)
     private var adapter: DaysAdapter? = null
 
     fun bind(
@@ -38,6 +42,7 @@ internal class MonthViewHolder(
     ) {
         if (adapter == null) {
             initRecyclerView()
+            initAgendaDesc(monthItem)
         }
         monthItem.listener = object : MonthItemListener {
             override fun onDataSetChanged() {
@@ -90,5 +95,28 @@ internal class MonthViewHolder(
             else
                 listener.onRightArrowClicked()
         }
+    }
+
+    private fun initAgendaDesc(monthItem: MonthItem) {
+        val agendaVisibility = calendarProperties.agendaDays.firstOrNull {
+            it.daysList.firstOrNull { day ->
+                day.year == monthItem.getYear &&
+                        day.month == monthItem.getMonth
+            } != null
+        } != null
+
+        imgEndAgenda.isVisible = false
+        imgStartAgenda.isVisible = agendaVisibility
+        txtAgendaDesc.isVisible = agendaVisibility
+        txtAgendaDesc.text = calendarProperties.agendaDays.firstOrNull {
+            it.daysList.firstOrNull { day ->
+                day.year == monthItem.getYear &&
+                        day.month == monthItem.getMonth
+            } != null
+        }?.title ?: "--"
+    }
+
+    private fun initAgendaRangeDesc() {
+        //TODO
     }
 }
