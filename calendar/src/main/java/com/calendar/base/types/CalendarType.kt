@@ -1,9 +1,7 @@
 package com.calendar.base.types
 
 import android.content.Context
-import android.widget.ImageView
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.isVisible
 import com.calendar.CalendarProperties
 import com.calendar.R
@@ -13,6 +11,7 @@ import com.calendar.base.model.DayItem
 import com.calendar.base.types.multipleselection.MultipleSelection
 import com.calendar.base.types.rangeslelection.RangeSelection
 import com.calendar.base.types.singleselection.SingleSelection
+import com.calendar.utils.setMutableDrawableColor
 
 /**
  * @property context init with viewHolder item view context
@@ -61,8 +60,7 @@ abstract class CalendarType {
     ) {
         viewHolder.imgStartAgenda.isVisible =
             !isSelected(dayItem, properties) && properties.imgStartAgendaVisibility(dayItem)
-        setMutableDrawableColor(
-            viewHolder.imgStartAgenda,
+        viewHolder.imgStartAgenda.setMutableDrawableColor(
             properties.imgStartAgendaColor(dayItem)
         )
     }
@@ -106,15 +104,6 @@ abstract class CalendarType {
         }
         viewHolder.txtDay.alpha = 0.3f
         viewHolder.txtPrice.alpha = 0.3f
-    }
-
-    private fun setMutableDrawableColor(imageView: ImageView, color: Int?) {
-        color ?: return
-        DrawableCompat.wrap(imageView.drawable).also {
-            it.mutate().also { drawable ->
-                DrawableCompat.setTint(drawable, color)
-            }
-        }
     }
 
     /**

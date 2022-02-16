@@ -13,6 +13,7 @@ import com.calendar.base.adapter.day.DaysAdapterListener
 import com.calendar.base.calendar.RegionalType
 import com.calendar.base.model.MonthItem
 import com.calendar.base.model.MonthItemListener
+import com.calendar.utils.setMutableDrawableColor
 import com.google.android.flexbox.AlignItems
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
@@ -42,8 +43,8 @@ internal class MonthViewHolder(
     ) {
         if (adapter == null) {
             initRecyclerView()
-            initAgendaDesc(monthItem)
         }
+        initAgendaDesc(monthItem)
         monthItem.listener = object : MonthItemListener {
             override fun onDataSetChanged() {
                 adapter?.notifyDataSetChanged()
@@ -98,22 +99,13 @@ internal class MonthViewHolder(
     }
 
     private fun initAgendaDesc(monthItem: MonthItem) {
-        val agendaVisibility = calendarProperties.agendaDays.firstOrNull {
-            it.daysList.firstOrNull { day ->
-                day.year == monthItem.getYear &&
-                        day.month == monthItem.getMonth
-            } != null
-        } != null
-
+        val agendaDays = calendarProperties.findMonthInAgendaList(monthItem)
+        val agendaVisibility = agendaDays != null
         imgEndAgenda.isVisible = false
         imgStartAgenda.isVisible = agendaVisibility
         txtAgendaDesc.isVisible = agendaVisibility
-        txtAgendaDesc.text = calendarProperties.agendaDays.firstOrNull {
-            it.daysList.firstOrNull { day ->
-                day.year == monthItem.getYear &&
-                        day.month == monthItem.getMonth
-            } != null
-        }?.title ?: "--"
+        imgStartAgenda.setMutableDrawableColor(agendaDays?.getAgendaColor())
+        txtAgendaDesc.text = agendaDays?.title ?: "-"
     }
 
     private fun initAgendaRangeDesc() {

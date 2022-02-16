@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity(), RangeSelectionListener {
                 agendaDays = arrayListOf(
                     AgendaDays(
                         id = "0",
-                        title = "در این روزها آنی رزرو کنید",
+                        title = "روز های تحت دستور",
                         color = "#fb3449",
                         daysList = listOf(
                             DayItem(1400,11,29,false),

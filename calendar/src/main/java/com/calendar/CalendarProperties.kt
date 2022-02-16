@@ -6,6 +6,7 @@ import com.calendar.base.availablity.BaseAvailabilityRule
 import com.calendar.base.calendar.RegionalType
 import com.calendar.base.model.AgendaDays
 import com.calendar.base.model.DayItem
+import com.calendar.base.model.MonthItem
 import com.calendar.base.types.CalendarType
 
 /**
@@ -52,9 +53,17 @@ data class CalendarProperties(
         regionalType == RegionalType.Jalali && calendarOrientation == HORIZONTAL
 
     internal fun isCheckInSelect() = selectedCheckIn != null && selectedCheckOut == null
+
     internal fun isCheckOutSelect() = selectedCheckIn != null && selectedCheckOut != null
 
-    fun getToday(): DayItem = regionalType.calendar.getToday()
+    internal fun getToday(): DayItem = regionalType.calendar.getToday()
+
+    internal fun findMonthInAgendaList(monthItem: MonthItem) = agendaDays.firstOrNull {
+        it.daysList.firstOrNull { day ->
+            day.year == monthItem.getYear &&
+                    day.month == monthItem.getMonth
+        } != null
+    }
 
     companion object {
         const val HORIZONTAL = RecyclerView.HORIZONTAL
