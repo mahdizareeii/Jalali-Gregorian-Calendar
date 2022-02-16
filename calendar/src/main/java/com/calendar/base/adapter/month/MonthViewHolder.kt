@@ -44,7 +44,6 @@ internal class MonthViewHolder(
         if (adapter == null) {
             initRecyclerView()
         }
-        initAgendaDesc(monthItem)
         monthItem.listener = object : MonthItemListener {
             override fun onDataSetChanged() {
                 adapter?.notifyDataSetChanged()
@@ -53,6 +52,7 @@ internal class MonthViewHolder(
         adapter?.submitList(monthItem.generateDays(calendarProperties.customDays))
         txtMonth.text = String.format("${monthItem.getYear} - ${monthItem.getMonthName}")
         initArrows(monthSize, position, listener)
+        initAgendaDesc(monthItem)
     }
 
     private fun initRecyclerView() {
