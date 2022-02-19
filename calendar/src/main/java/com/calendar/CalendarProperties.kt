@@ -86,8 +86,8 @@ class CalendarProperties {
         customDays: ArrayList<Day>,
         selectedCheckIn: Day? = null,
         selectedCheckOut: Day? = null,
-        selectedMultipleDay: ArrayList<Day>,
-        selectedSingle: Day?
+        selectedMultipleDay: ArrayList<Day> = arrayListOf(),
+        selectedSingle: Day? = null
     ) : this(
         regionalType = regionalType,
         calendarType = calendarType,
@@ -112,15 +112,13 @@ class CalendarProperties {
         regionalType: RegionalType,
         calendarType: CalendarType,
         calendarOrientation: Int,
-        @IntRange(from = 1) minDaysInRangeSelection: Int = 1,
         availabilityRule: BaseAvailabilityRule,
-        agendaRangeDays: ArrayList<AgendaDayRange>
+        agendaRangeDays: ArrayList<AgendaDayRange> = arrayListOf()
     ) : this(
         regionalType = regionalType,
         calendarType = calendarType,
         calendarOrientation = calendarOrientation,
         showDaysPrice = false,
-        minDaysInRangeSelection = minDaysInRangeSelection,
         availabilityRule = availabilityRule
     ) {
         dayViewHolderType = DayViewHolderType.AgendaRangeDaysViewHolder
@@ -139,8 +137,8 @@ class CalendarProperties {
         customDays: ArrayList<Day>,
         selectedCheckIn: Day? = null,
         selectedCheckOut: Day? = null,
-        selectedMultipleDay: ArrayList<Day>,
-        selectedSingle: Day?
+        selectedMultipleDay: ArrayList<Day> = arrayListOf(),
+        selectedSingle: Day? = null
     ) : this(
         regionalType = regionalType,
         calendarType = calendarType,
@@ -168,8 +166,8 @@ class CalendarProperties {
         availabilityRule: BaseAvailabilityRule,
         selectedCheckIn: Day? = null,
         selectedCheckOut: Day? = null,
-        selectedMultipleDay: ArrayList<Day>,
-        selectedSingle: Day?
+        selectedMultipleDay: ArrayList<Day> = arrayListOf(),
+        selectedSingle: Day? = null
     ) : this(
         regionalType = regionalType,
         calendarType = calendarType,
