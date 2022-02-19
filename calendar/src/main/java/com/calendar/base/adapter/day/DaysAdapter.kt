@@ -6,10 +6,7 @@ import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
 import com.calendar.CalendarProperties
 import com.calendar.R
-import com.calendar.base.adapter.day.viewholder.AgendaDaysPriceViewHolder
-import com.calendar.base.adapter.day.viewholder.AgendaRangeDaysViewHolder
-import com.calendar.base.adapter.day.viewholder.DayPriceViewHolder
-import com.calendar.base.adapter.day.viewholder.DayViewHolder
+import com.calendar.base.adapter.day.viewholder.*
 import com.calendar.base.model.Day
 import com.calendar.utils.dp
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -37,18 +34,23 @@ internal class DaysAdapter(
             }
         }
 
-        return when {
-            properties.isAgendaDays && properties.showDaysPrice -> AgendaDaysPriceViewHolder(
+        return when (properties.dayViewHolderType) {
+            DayViewHolderType.AgendaDaysPriceViewHolder -> AgendaDaysPriceViewHolder(
                 view = view,
                 properties = properties,
                 listener = daysAdapterListener
             )
-            properties.isAgendaRangeDays && !properties.showDaysPrice -> AgendaRangeDaysViewHolder(
+            DayViewHolderType.AgendaRangeDaysViewHolder -> AgendaRangeDaysViewHolder(
                 view = view,
                 properties = properties,
                 listener = daysAdapterListener
             )
-            properties.showDaysPrice -> DayPriceViewHolder(
+            DayViewHolderType.DayPriceViewHolder -> DayPriceViewHolder(
+                view = view,
+                properties = properties,
+                listener = daysAdapterListener
+            )
+            DayViewHolderType.DayViewHolder -> DayViewHolder(
                 view = view,
                 properties = properties,
                 listener = daysAdapterListener

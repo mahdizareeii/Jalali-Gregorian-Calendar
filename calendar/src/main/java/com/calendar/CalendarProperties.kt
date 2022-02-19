@@ -2,6 +2,7 @@ package com.calendar
 
 import androidx.annotation.IntRange
 import androidx.recyclerview.widget.RecyclerView
+import com.calendar.base.adapter.day.viewholder.DayViewHolderType
 import com.calendar.base.availablity.BaseAvailabilityRule
 import com.calendar.base.calendar.RegionalType
 import com.calendar.base.model.Day
@@ -40,6 +41,12 @@ class CalendarProperties {
     //for single selection
     var selectedSingle: Day? = null
 
+    //for AgendaDaysPriceViewHolder
+    var agendaDays: ArrayList<AgendaDays> = ArrayList()
+
+    //for AgendaRangeDaysViewHolder
+    var agendaRangeDays: ArrayList<AgendaDayRange> = ArrayList()
+
     private constructor(
         regionalType: RegionalType,
         calendarType: CalendarType,
@@ -65,12 +72,6 @@ class CalendarProperties {
         this.selectedMultipleDay = selectedMultipleDay
         this.selectedSingle = selectedSingle
     }
-
-    //for show flag for custom days
-    var agendaDays: ArrayList<AgendaDays> = ArrayList()
-
-    //for show flag for custom days
-    var agendaRangeDays: ArrayList<AgendaDayRange> = ArrayList()
 
     /**
      * AgendaDaysPriceViewHolder
@@ -100,6 +101,7 @@ class CalendarProperties {
         selectedMultipleDay = selectedMultipleDay,
         selectedSingle = selectedSingle
     ) {
+        dayViewHolderType = DayViewHolderType.AgendaDaysPriceViewHolder
         this.agendaDays = agendaDays
     }
 
@@ -121,6 +123,7 @@ class CalendarProperties {
         minDaysInRangeSelection = minDaysInRangeSelection,
         availabilityRule = availabilityRule
     ) {
+        dayViewHolderType = DayViewHolderType.AgendaRangeDaysViewHolder
         this.agendaRangeDays = agendaRangeDays
     }
 
@@ -151,6 +154,7 @@ class CalendarProperties {
         selectedMultipleDay = selectedMultipleDay,
         selectedSingle = selectedSingle
     ) {
+        dayViewHolderType = DayViewHolderType.DayPriceViewHolder
     }
 
     /**
@@ -178,10 +182,10 @@ class CalendarProperties {
         selectedMultipleDay = selectedMultipleDay,
         selectedSingle = selectedSingle
     ) {
+        dayViewHolderType = DayViewHolderType.DayViewHolder
     }
 
-    internal val isAgendaDays get() = !agendaDays.isNullOrEmpty()
-    internal val isAgendaRangeDays get() = !agendaRangeDays.isNullOrEmpty()
+    internal var dayViewHolderType = DayViewHolderType.Unknown
 
     internal fun calendarIsReverse() =
         regionalType == RegionalType.Jalali && calendarOrientation == HORIZONTAL

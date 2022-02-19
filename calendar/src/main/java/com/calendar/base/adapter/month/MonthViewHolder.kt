@@ -10,6 +10,7 @@ import com.calendar.CalendarProperties
 import com.calendar.R
 import com.calendar.base.adapter.day.DaysAdapter
 import com.calendar.base.adapter.day.DaysAdapterListener
+import com.calendar.base.adapter.day.viewholder.DayViewHolderType
 import com.calendar.base.calendar.RegionalType
 import com.calendar.base.model.Month
 import com.calendar.base.model.MonthItemListener
@@ -100,7 +101,7 @@ internal class MonthViewHolder(
     }
 
     private fun initAgendaDesc(month: Month) {
-        if (!properties.isAgendaDays) return
+        if (properties.dayViewHolderType != DayViewHolderType.AgendaDaysPriceViewHolder) return
         val agendaDays = properties.findMonthInAgendaList(month)
         val agendaVisibility = agendaDays != null
         imgEndAgenda.isVisible = false
@@ -111,7 +112,7 @@ internal class MonthViewHolder(
     }
 
     private fun initAgendaRangeDesc(month: Month) {
-        if (!properties.isAgendaRangeDays) return
+        if (properties.dayViewHolderType != DayViewHolderType.AgendaRangeDaysViewHolder) return
         val agendaRangeDays = properties.findMonthInAgendaRangeList(month)
         val agendaRangeVisibility = agendaRangeDays != null
         imgEndAgenda.isVisible = agendaRangeVisibility
