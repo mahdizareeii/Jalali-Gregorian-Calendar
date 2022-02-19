@@ -1,12 +1,12 @@
 package com.calendar.base.types.singleselection
 
-import androidx.core.content.ContextCompat
 import com.calendar.CalendarProperties
 import com.calendar.R
 import com.calendar.base.adapter.day.DayViewHolder
 import com.calendar.base.adapter.day.DaysAdapterListener
 import com.calendar.base.model.DayItem
 import com.calendar.base.types.CalendarType
+import com.calendar.utils.setBackgroundFromDrawable
 
 class SingleSelection(
     private val singleSelectionListener: SingleSelectionListener
@@ -31,8 +31,8 @@ class SingleSelection(
         properties: CalendarProperties
     ) {
         if (checkAvailability(viewHolder, dayItem, properties)) {
-            viewHolder.bgDay.background = ContextCompat.getDrawable(
-                context, getDayBackground(
+            viewHolder.bgDay.setBackgroundFromDrawable(
+                getDayBackground(
                     currentItem = dayItem,
                     selectedSingle = properties.selectedSingle
                 )

@@ -8,6 +8,7 @@ import com.calendar.R
 import com.calendar.base.adapter.day.DayViewHolder
 import com.calendar.base.adapter.day.DaysAdapterListener
 import com.calendar.base.model.DayItem
+import com.calendar.utils.setBackgroundFromDrawable
 import com.calendar.utils.setMutableDrawableColor
 
 /**
@@ -67,6 +68,14 @@ abstract class CalendarType {
         )
     }
 
+    private fun initRangeAgendaDays(
+        viewHolder: DayViewHolder,
+        dayItem: DayItem,
+        properties: CalendarProperties
+    ) {
+
+    }
+
     private fun textColor(
         viewHolder: DayViewHolder,
         currentItem: DayItem,
@@ -87,23 +96,18 @@ abstract class CalendarType {
     }
 
     private fun setAvailableBackground(viewHolder: DayViewHolder) {
-        viewHolder.bgDay.background = ContextCompat.getDrawable(
-            context,
+        viewHolder.bgDay.setBackgroundFromDrawable(
             R.drawable.bg_day
-        )?.apply {
-            alpha = 255
-        }
+        )
         viewHolder.txtDay.alpha = 1f
         viewHolder.txtPrice.alpha = 1f
     }
 
     private fun setUnAvailableBackground(viewHolder: DayViewHolder) {
-        viewHolder.bgDay.background = ContextCompat.getDrawable(
-            context,
-            R.drawable.bg_disabled_date
-        )?.apply {
+        viewHolder.bgDay.setBackgroundFromDrawable(
+            id = R.drawable.bg_disabled_date,
             alpha = 0X3C
-        }
+        )
         viewHolder.txtDay.alpha = 0.3f
         viewHolder.txtPrice.alpha = 0.3f
     }

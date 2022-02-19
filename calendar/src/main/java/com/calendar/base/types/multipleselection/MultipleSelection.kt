@@ -1,12 +1,12 @@
 package com.calendar.base.types.multipleselection
 
-import androidx.core.content.ContextCompat
 import com.calendar.CalendarProperties
 import com.calendar.R
 import com.calendar.base.adapter.day.DayViewHolder
 import com.calendar.base.adapter.day.DaysAdapterListener
 import com.calendar.base.model.DayItem
 import com.calendar.base.types.CalendarType
+import com.calendar.utils.setBackgroundFromDrawable
 
 class MultipleSelection(
     private val multipleSelectionListener: MultipleSelectionListener
@@ -31,8 +31,7 @@ class MultipleSelection(
         properties: CalendarProperties
     ) {
         if (checkAvailability(viewHolder, dayItem, properties)) {
-            viewHolder.bgDay.background = ContextCompat.getDrawable(
-                context,
+            viewHolder.bgDay.setBackgroundFromDrawable(
                 getDayBackground(
                     currentItem = dayItem,
                     selectedDays = properties.selectedMultipleDayItem
@@ -53,7 +52,7 @@ class MultipleSelection(
         selectedDays: ArrayList<DayItem>?
     ): Int {
         return if (selectedDays?.any { it == currentItem } == true) {
-            R.drawable.bg_day_single_selected
+            R.drawable.bg_day_selected
         } else R.drawable.bg_day
     }
 
