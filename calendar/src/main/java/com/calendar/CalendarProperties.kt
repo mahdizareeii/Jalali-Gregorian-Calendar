@@ -8,6 +8,9 @@ import com.calendar.base.model.AgendaDays
 import com.calendar.base.model.DayItem
 import com.calendar.base.model.MonthItem
 import com.calendar.base.types.CalendarType
+import com.calendar.base.types.multipleselection.MultipleSelection
+import com.calendar.base.types.rangeslelection.RangeSelection
+import com.calendar.base.types.singleselection.SingleSelection
 
 /**
  *  @property regionalType set regional type of calendar
@@ -23,7 +26,7 @@ data class CalendarProperties(
     val showDaysPrice: Boolean,
     @IntRange(from = 1) val minDaysInRangeSelection: Int = 1,
     val availabilityRule: BaseAvailabilityRule,
-    //for highlight custom days
+    //for show flag for custom days
     val agendaDays: ArrayList<AgendaDays> = ArrayList(),
     //for set custom days pricing and etc
     var customDays: ArrayList<DayItem> = ArrayList(),
@@ -63,6 +66,43 @@ data class CalendarProperties(
             day.year == monthItem.getYear &&
                     day.month == monthItem.getMonth
         } != null
+    }
+
+    /**
+     * @return selection state base on CalendarType
+     * @param currentItem the current day item
+     */
+    internal fun isDaySelected(
+        currentItem: DayItem
+    ): Boolean {
+        return when (calendarType::class.java) {
+            RangeSelection::class.java -> {
+                if (selectedCheckIn != null && selectedCheckOut != null)
+                    return currentItem >= selectedCheckIn!! && currentItem <= selectedCheckOut!!
+
+                if (selectedCheckIn != null)
+                    return currentItem == selectedCheckIn
+
+                if (selectedCheckOut != null)
+                    return currentItem == selectedCheckOut
+
+                return false
+            }
+
+            SingleSelection::class.java -> {
+                return if (selectedSingle != null)
+                    selectedSingle == currentItem
+                else false
+            }
+
+            MultipleSelection::class.java -> {
+                selectedMultipleDayItem.any {
+                    it == currentItem
+                }
+            }
+
+            else -> false
+        }
     }
 
     companion object {

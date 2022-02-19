@@ -32,9 +32,9 @@ class MainActivity : AppCompatActivity(), RangeSelectionListener {
                     unAvailableDisableDays = true
                 ),
                 customDays = arrayListOf(
-                    DayItem(1400, 11, 26, false, 550000.0, isHoliday = false, isDisable = false),
-                    DayItem(1400, 11, 27, false, 12300.0, isHoliday = true, isDisable = false),
-                    DayItem(1400, 11, 28, false, 430000.0, isHoliday = true, isDisable = true),
+                    DayItem(1400, 12, 26, false, 550000.0, isHoliday = false, isDisable = false),
+                    DayItem(1400, 12, 27, false, 12300.0, isHoliday = true, isDisable = false),
+                    DayItem(1400, 12, 28, false, 430000.0, isHoliday = true, isDisable = true),
                     DayItem(1400, 12, 5, false, 78893.0, isHoliday = false, isDisable = false),
                     DayItem(1400, 12, 6, false, 99999.0, isHoliday = false, isDisable = false),
                     DayItem(1400, 12, 7, false, 100000.0, isHoliday = false, isDisable = false),
@@ -42,22 +42,14 @@ class MainActivity : AppCompatActivity(), RangeSelectionListener {
                     DayItem(1400, 12, 15, false, 456000.0, isHoliday = false, isDisable = true),
                     DayItem(1400, 12, 29, false, 500000.0, isHoliday = true, isDisable = false),
                     DayItem(1401, 1, 1, false, 100000.0, isHoliday = false, isDisable = true),
+                    DayItem(1401, 1, 12, false, 100000.0, isHoliday = false, isDisable = true),
                 ),
                 agendaDays = arrayListOf(
                     AgendaDays(
                         id = "0",
                         title = "روز های تحت دستور",
                         color = "#fb3449",
-                        daysList = listOf(
-                            DayItem(1400,11,29,false),
-                            DayItem(1400,11,30,false),
-                            DayItem(1400,12,1,false),
-                            DayItem(1401,1,1,false),
-                            DayItem(1401,1,2,false),
-                            DayItem(1401,1,3,false),
-                            DayItem(1401,1,4,false),
-                            DayItem(1401,2,4,false),
-                        )
+                        daysList = agendaList()
                     )
                 )
             )
@@ -72,6 +64,14 @@ class MainActivity : AppCompatActivity(), RangeSelectionListener {
 
     override fun onCheckOutSelected(dayItem: DayItem) {
         Toast.makeText(this, dayItem.toString(), Toast.LENGTH_SHORT).show()
+    }
+
+    private fun agendaList() = arrayListOf<DayItem>().apply {
+        for (i in 1..29) {
+            add(
+                DayItem(1400, 12, i, false)
+            )
+        }
     }
 
 

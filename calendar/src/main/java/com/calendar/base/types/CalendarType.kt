@@ -8,9 +8,6 @@ import com.calendar.R
 import com.calendar.base.adapter.day.DayViewHolder
 import com.calendar.base.adapter.day.DaysAdapterListener
 import com.calendar.base.model.DayItem
-import com.calendar.base.types.multipleselection.MultipleSelection
-import com.calendar.base.types.rangeslelection.RangeSelection
-import com.calendar.base.types.singleselection.SingleSelection
 import com.calendar.utils.setMutableDrawableColor
 
 /**
@@ -59,7 +56,7 @@ abstract class CalendarType {
         properties: CalendarProperties
     ) {
         viewHolder.imgStartAgenda.isVisible =
-            !isSelected(dayItem, properties) && properties.imgStartAgendaVisibility(dayItem)
+            !properties.isDaySelected(dayItem) && properties.imgStartAgendaVisibility(dayItem)
         viewHolder.imgStartAgenda.setMutableDrawableColor(
             properties.imgStartAgendaColor(dayItem)
         )
@@ -75,7 +72,7 @@ abstract class CalendarType {
             when {
                 currentItem.isHoliday -> R.color.red
                 else -> {
-                    if (isSelected(currentItem, properties)) R.color.white
+                    if (properties.isDaySelected(currentItem)) R.color.white
                     else R.color.secondary
                 }
             }
@@ -104,45 +101,6 @@ abstract class CalendarType {
         }
         viewHolder.txtDay.alpha = 0.3f
         viewHolder.txtPrice.alpha = 0.3f
-    }
-
-    /**
-     * @return selection state base on CalendarType
-     * @param currentItem the current day item
-     * @param properties for check the properties base on CalendarType
-     */
-    private fun isSelected(
-        currentItem: DayItem,
-        properties: CalendarProperties
-    ): Boolean {
-        return when (properties.calendarType::class.java) {
-            RangeSelection::class.java -> {
-                if (properties.selectedCheckIn != null && properties.selectedCheckOut != null)
-                    return currentItem >= properties.selectedCheckIn!! && currentItem <= properties.selectedCheckOut!!
-
-                if (properties.selectedCheckIn != null)
-                    return currentItem == properties.selectedCheckIn
-
-                if (properties.selectedCheckOut != null)
-                    return currentItem == properties.selectedCheckOut
-
-                return false
-            }
-
-            SingleSelection::class.java -> {
-                return if (properties.selectedSingle != null)
-                    properties.selectedSingle == currentItem
-                else false
-            }
-
-            MultipleSelection::class.java -> {
-                properties.selectedMultipleDayItem.any {
-                    it == currentItem
-                }
-            }
-
-            else -> false
-        }
     }
 
     internal fun checkAvailability(
