@@ -36,8 +36,7 @@ internal class AgendaDaysPriceViewHolder(
         it.agendaList.any { day -> day == currentDay }
     }
 
-    private fun imgStartAgendaColor(currentDay: Day) =
-        properties.agendaDays.firstOrNull {
-            it.agendaList.firstOrNull { day -> day == currentDay } != null
-        }?.getAgendaColor()
+    private fun imgStartAgendaColor(currentDay: Day) = properties.agendaDays.firstOrNull {
+        it.agendaList.firstOrNull { day -> day == currentDay } != null
+    }?.getAgendaColor()
 }
