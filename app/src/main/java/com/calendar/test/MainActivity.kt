@@ -49,8 +49,14 @@ class MainActivity : AppCompatActivity(), RangeSelectionListener {
                         id = "0",
                         title = "روز های تحت دستور",
                         color = "#fb3449",
-                        daysList = agendaList()
-                    )
+                        daysList = agendaList(12, 1400)
+                    ),
+                    AgendaDays(
+                        id = "1",
+                        title = "روز های خلوت",
+                        color = "#27ae60",
+                        daysList = agendaList(1, 1401)
+                    ),
                 )
             )
         )
@@ -66,10 +72,10 @@ class MainActivity : AppCompatActivity(), RangeSelectionListener {
         Toast.makeText(this, dayItem.toString(), Toast.LENGTH_SHORT).show()
     }
 
-    private fun agendaList() = arrayListOf<DayItem>().apply {
+    private fun agendaList(month: Int, year: Int) = arrayListOf<DayItem>().apply {
         for (i in 1..29) {
             add(
-                DayItem(1400, 12, i, false)
+                DayItem(year, month, i, false)
             )
         }
     }
