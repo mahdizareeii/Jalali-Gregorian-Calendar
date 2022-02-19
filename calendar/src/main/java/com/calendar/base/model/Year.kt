@@ -3,7 +3,7 @@ package com.calendar.base.model
 import com.calendar.base.calendar.BaseCalendar
 import java.util.*
 
-data class YearItem(
+data class Year(
     val calendar: BaseCalendar,
     val year: Int,
 ) {

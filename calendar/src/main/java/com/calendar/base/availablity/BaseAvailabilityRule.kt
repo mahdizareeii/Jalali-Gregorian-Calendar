@@ -1,6 +1,6 @@
 package com.calendar.base.availablity
 
-import com.calendar.base.model.DayItem
+import com.calendar.base.model.Day
 import com.calendar.CalendarProperties
 
 open class BaseAvailabilityRule(
@@ -9,13 +9,13 @@ open class BaseAvailabilityRule(
 ) {
 
     open fun isAvailable(
-        currentItem: DayItem,
+        currentDay: Day,
         properties: CalendarProperties
     ): Boolean {
         val fromToday =
-            availableFromToday && checkAvailabilityFromToday(currentItem, properties.getToday())
+            availableFromToday && checkAvailabilityFromToday(currentDay, properties.getToday())
 
-        val disableDays = unAvailableDisableDays && currentItem.isDisable
+        val disableDays = unAvailableDisableDays && currentDay.isDisable
 
         return if (availableFromToday && !unAvailableDisableDays) fromToday
         else if (unAvailableDisableDays && !availableFromToday) disableDays
@@ -24,7 +24,7 @@ open class BaseAvailabilityRule(
     }
 
     fun checkAvailabilityFromToday(
-        currentItem: DayItem,
-        today: DayItem
-    ) = currentItem >= today
+        currentDay: Day,
+        today: Day
+    ) = currentDay >= today
 }

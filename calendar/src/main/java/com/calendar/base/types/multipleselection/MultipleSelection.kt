@@ -2,9 +2,9 @@ package com.calendar.base.types.multipleselection
 
 import com.calendar.CalendarProperties
 import com.calendar.R
-import com.calendar.base.adapter.day.DayViewHolder
+import com.calendar.base.adapter.day.viewholder.DayViewHolder
 import com.calendar.base.adapter.day.DaysAdapterListener
-import com.calendar.base.model.DayItem
+import com.calendar.base.model.Day
 import com.calendar.base.types.CalendarType
 import com.calendar.utils.setBackgroundFromDrawable
 
@@ -14,7 +14,7 @@ class MultipleSelection(
 
     override val onDayClickListener: (
         viewHolder: DayViewHolder,
-        dayItem: DayItem,
+        day: Day,
         properties: CalendarProperties,
         listener: DaysAdapterListener
     ) -> Unit
@@ -27,47 +27,47 @@ class MultipleSelection(
 
     override fun dayBackground(
         viewHolder: DayViewHolder,
-        dayItem: DayItem,
+        day: Day,
         properties: CalendarProperties
     ) {
-        if (checkAvailability(viewHolder, dayItem, properties)) {
+        if (checkAvailability(viewHolder, day, properties)) {
             viewHolder.bgDay.setBackgroundFromDrawable(
                 getDayBackground(
-                    currentItem = dayItem,
-                    selectedDays = properties.selectedMultipleDayItem
+                    currentDay = day,
+                    selectedDays = properties.selectedMultipleDay
                 )
             )
         }
     }
 
     override fun isDaySelected(
-        currentItem: DayItem,
+        currentDay: Day,
         properties: CalendarProperties
-    ): Boolean = properties.selectedMultipleDayItem.any {
-        it == currentItem
+    ): Boolean = properties.selectedMultipleDay.any {
+        it == currentDay
     }
 
     private fun getDayBackground(
-        currentItem: DayItem,
-        selectedDays: ArrayList<DayItem>?
+        currentDay: Day,
+        selectedDays: ArrayList<Day>?
     ): Int {
-        return if (selectedDays?.any { it == currentItem } == true) {
+        return if (selectedDays?.any { it == currentDay } == true) {
             R.drawable.bg_day_selected
         } else R.drawable.bg_day
     }
 
     private fun onDayClicked(
         property: CalendarProperties,
-        currentItem: DayItem,
+        currentDay: Day,
         listener: MultipleSelectionListener
     ) {
         property.apply {
-            if (property.selectedMultipleDayItem.any { it == currentItem }) {
-                property.selectedMultipleDayItem.remove(currentItem)
+            if (property.selectedMultipleDay.any { it == currentDay }) {
+                property.selectedMultipleDay.remove(currentDay)
             } else {
-                property.selectedMultipleDayItem.add(currentItem)
+                property.selectedMultipleDay.add(currentDay)
             }
-            listener.onSelectedDays(property.selectedMultipleDayItem)
+            listener.onSelectedDays(property.selectedMultipleDay)
         }
     }
 }

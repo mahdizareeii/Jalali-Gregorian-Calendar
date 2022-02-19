@@ -1,6 +1,6 @@
 package com.calendar.utils
 
-import com.calendar.base.model.DayItem
+import com.calendar.base.model.Day
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -117,7 +117,7 @@ object DateUtil {
         }
     }
 
-    fun diffDaysJalali(start: DayItem?, end: DayItem?): Int {
+    fun diffDaysJalali(start: Day?, end: Day?): Int {
         val startGregorian = jalaliToGregorian(
             year = start?.year ?: 0,
             month = start?.month ?: 0,
@@ -138,7 +138,7 @@ object DateUtil {
         return operateDiffs(startDate, endDate)[1].toInt()
     }
 
-    fun diffDaysGregorian(start: DayItem?, end: DayItem?): Int {
+    fun diffDaysGregorian(start: Day?, end: Day?): Int {
         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.US)
         sdf.timeZone = TimeZone.getTimeZone("UTC")
         val startDate = sdf.parse("${start?.year ?: 0}-${start?.month ?: 0}-${start?.day ?: 0}")

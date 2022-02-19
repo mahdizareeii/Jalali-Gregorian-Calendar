@@ -4,13 +4,11 @@ import androidx.annotation.IntRange
 import androidx.recyclerview.widget.RecyclerView
 import com.calendar.base.availablity.BaseAvailabilityRule
 import com.calendar.base.calendar.RegionalType
-import com.calendar.base.model.AgendaDays
-import com.calendar.base.model.DayItem
-import com.calendar.base.model.MonthItem
+import com.calendar.base.model.Day
+import com.calendar.base.model.Month
+import com.calendar.base.model.agenda.AgendaDayRange
+import com.calendar.base.model.agenda.AgendaDays
 import com.calendar.base.types.CalendarType
-import com.calendar.base.types.multipleselection.MultipleSelection
-import com.calendar.base.types.rangeslelection.RangeSelection
-import com.calendar.base.types.singleselection.SingleSelection
 
 /**
  *  @property regionalType set regional type of calendar
@@ -28,28 +26,31 @@ data class CalendarProperties(
     val availabilityRule: BaseAvailabilityRule,
     //for show flag for custom days
     val agendaDays: ArrayList<AgendaDays> = ArrayList(),
+    //for show flag for custom days
+    val agendaRangeDays: ArrayList<AgendaDayRange> = ArrayList(),
     //for set custom days pricing and etc
-    var customDays: ArrayList<DayItem> = ArrayList(),
+    var customDays: ArrayList<Day> = ArrayList(),
 
     //for range selection
-    var selectedCheckIn: DayItem? = null,
-    var selectedCheckOut: DayItem? = null,
+    var selectedCheckIn: Day? = null,
+    var selectedCheckOut: Day? = null,
 
     //for multiple selection
-    val selectedMultipleDayItem: ArrayList<DayItem> = ArrayList(),
+    val selectedMultipleDay: ArrayList<Day> = ArrayList(),
 
     //for single selection
-    var selectedSingle: DayItem? = null
+    var selectedSingle: Day? = null
 ) {
-    internal fun txtPriceVisibility(currentItem: DayItem) =
-        showDaysPrice && selectedCheckOut != currentItem
 
-    internal fun imgStartAgendaVisibility(currentItem: DayItem) =
-        agendaDays.any { it.daysList.any { day -> day == currentItem } }
+    internal val isAgendaDays get() = !agendaDays.isNullOrEmpty()
+    internal val isAgendaRangeDays get() = !agendaRangeDays.isNullOrEmpty()
 
-    internal fun imgStartAgendaColor(currentItem: DayItem) =
+    internal fun txtPriceVisibility(currentDay: Day) =
+        showDaysPrice && selectedCheckOut != currentDay
+
+    internal fun imgStartAgendaColor(currentDay: Day) =
         agendaDays.firstOrNull {
-            it.daysList.firstOrNull { day -> day == currentItem } != null
+            it.agendaList.firstOrNull { day -> day == currentDay } != null
         }?.getAgendaColor()
 
     internal fun calendarIsReverse() =
@@ -59,12 +60,21 @@ data class CalendarProperties(
 
     internal fun isCheckOutSelect() = selectedCheckIn != null && selectedCheckOut != null
 
-    internal fun getToday(): DayItem = regionalType.calendar.getToday()
+    internal fun getToday(): Day = regionalType.calendar.getToday()
 
-    internal fun findMonthInAgendaList(monthItem: MonthItem) = agendaDays.firstOrNull {
-        it.daysList.firstOrNull { day ->
-            day.year == monthItem.getYear &&
-                    day.month == monthItem.getMonth
+    internal fun findMonthInAgendaList(month: Month) = agendaDays.firstOrNull {
+        it.agendaList.firstOrNull { day ->
+            day.year == month.getYear &&
+                    day.month == month.getMonth
+        } != null
+    }
+
+    internal fun findMonthInAgendaRangeList(month: Month) = agendaRangeDays.firstOrNull {
+        it.agendaRangeList.firstOrNull { range ->
+            range.startDate.year == month.getYear &&
+                    range.startDate.month == month.getMonth ||
+                    range.endDate.year == month.getYear &&
+                    range.endDate.month == month.getMonth
         } != null
     }
 

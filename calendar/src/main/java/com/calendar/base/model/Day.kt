@@ -1,14 +1,12 @@
 package com.calendar.base.model
 
 import android.view.View
-import com.calendar.utils.PriceFormatter
-import kotlin.math.abs
 
 /**
  * Gregorian date sample
- * @sample DayItem(2050,1,1)
+ * @sample Day(2050,1,1)
  * Jalali date sample
- * @sample DayItem(1420,1,1)
+ * @sample Day(1420,1,1)
  *
  * @param year hold every year that you give
  * @param month hold every month that you give
@@ -18,13 +16,12 @@ import kotlin.math.abs
  * @property gregorianMonth hold gregorian month of jalali
  * @property gregorianDay hold gregorian day of jalali
  */
-data class DayItem constructor(
+data class Day constructor(
     val year: Int?,
     val month: Int?,
     val day: Int?,
     val isGregorianDate: Boolean?
 ) {
-
     var gregorianYear: Int? = null
     var gregorianMonth: Int? = null
     var gregorianDay: Int? = null
@@ -63,7 +60,7 @@ data class DayItem constructor(
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as DayItem
+        other as Day
 
         if (year != other.year) return false
         if (month != other.month) return false
@@ -79,7 +76,7 @@ data class DayItem constructor(
         return result
     }
 
-    operator fun compareTo(other: DayItem?): Int {
+    operator fun compareTo(other: Day?): Int {
         return when {
             this === other -> 0
             year == other?.year && month == other?.month && day == other?.day -> 0
@@ -96,17 +93,6 @@ data class DayItem constructor(
             }
             else -> -1
         }
-    }
-
-    /**
-     * @return formatted price of date as string
-     */
-    fun getPrice(): String {
-        val price = if (discount != null && discount != 0.0)
-            ((price ?: 0.0) - ((price ?: 0.0) * ((discount ?: 0.0) / 100))).div(1000)
-        else
-            (price ?: 0.0).div(1000)
-        return if (price <= 0.0) "-" else PriceFormatter.formatPrice(abs(price))
     }
 
     fun isNotNull() = year != null && month != null && day != null

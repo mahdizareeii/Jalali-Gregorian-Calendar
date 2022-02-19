@@ -1,6 +1,6 @@
 package com.calendar.base.calendar
 
-import com.calendar.base.model.DayItem
+import com.calendar.base.model.Day
 import com.calendar.utils.DateUtil
 import java.util.*
 
@@ -82,14 +82,14 @@ class MyJalaliCalendar : BaseCalendar() {
         //calendar.clear()
     }
 
-    override fun getToday(): DayItem {
+    override fun getToday(): Day {
         val todayCalendar = Calendar.getInstance()
         val today = DateUtil.gregorianToJalali(
             todayCalendar.get(Calendar.YEAR),
             todayCalendar.get(Calendar.MONTH) + 1,
             todayCalendar.get(Calendar.DAY_OF_MONTH)
         )
-        return DayItem(today[0], today[1], today[2], false)
+        return Day(today[0], today[1], today[2], false)
     }
 
     override fun getNewInstanceOfCalendar(): BaseCalendar = MyJalaliCalendar()

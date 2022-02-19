@@ -2,9 +2,9 @@ package com.calendar.base.types.singleselection
 
 import com.calendar.CalendarProperties
 import com.calendar.R
-import com.calendar.base.adapter.day.DayViewHolder
+import com.calendar.base.adapter.day.viewholder.DayViewHolder
 import com.calendar.base.adapter.day.DaysAdapterListener
-import com.calendar.base.model.DayItem
+import com.calendar.base.model.Day
 import com.calendar.base.types.CalendarType
 import com.calendar.utils.setBackgroundFromDrawable
 
@@ -14,7 +14,7 @@ class SingleSelection(
 
     override val onDayClickListener: (
         viewHolder: DayViewHolder,
-        dayItem: DayItem,
+        day: Day,
         properties: CalendarProperties,
         listener: DaysAdapterListener
     ) -> Unit
@@ -27,13 +27,13 @@ class SingleSelection(
 
     override fun dayBackground(
         viewHolder: DayViewHolder,
-        dayItem: DayItem,
+        day: Day,
         properties: CalendarProperties
     ) {
-        if (checkAvailability(viewHolder, dayItem, properties)) {
+        if (checkAvailability(viewHolder, day, properties)) {
             viewHolder.bgDay.setBackgroundFromDrawable(
                 getDayBackground(
-                    currentItem = dayItem,
+                    currentDay = day,
                     selectedSingle = properties.selectedSingle
                 )
             )
@@ -41,17 +41,17 @@ class SingleSelection(
     }
 
     override fun isDaySelected(
-        currentItem: DayItem,
+        currentDay: Day,
         properties: CalendarProperties
-    ): Boolean = properties.selectedSingle != null && properties.selectedSingle == currentItem
+    ): Boolean = properties.selectedSingle != null && properties.selectedSingle == currentDay
 
     private fun getDayBackground(
-        currentItem: DayItem,
-        selectedSingle: DayItem?
+        currentDay: Day,
+        selectedSingle: Day?
     ): Int {
         return if (selectedSingle != null) {
             when (selectedSingle) {
-                currentItem -> R.drawable.bg_day_single_selected
+                currentDay -> R.drawable.bg_day_single_selected
                 else -> R.drawable.bg_day
             }
         } else {
@@ -61,16 +61,16 @@ class SingleSelection(
 
     private fun onDayClicked(
         property: CalendarProperties,
-        currentItem: DayItem,
+        currentDay: Day,
         listener: SingleSelectionListener
     ) {
         property.apply {
-            if (selectedSingle == currentItem) {
+            if (selectedSingle == currentDay) {
                 selectedSingle = null
                 listener.onDaySelected(null)
             } else {
-                selectedSingle = currentItem
-                listener.onDaySelected(currentItem)
+                selectedSingle = currentDay
+                listener.onDaySelected(currentDay)
             }
         }
     }

@@ -4,12 +4,12 @@ import com.calendar.base.calendar.BaseCalendar
 import com.calendar.base.calendar.MyGregorianCalendar
 import java.util.*
 
-data class MonthItem(
+data class Month(
     private val calendar: BaseCalendar,
     private val month: Int,
     private val year: Int
 ) {
-    private val days = ArrayList<DayItem>()
+    private val days = ArrayList<Day>()
 
     var listener: MonthItemListener? = null
 
@@ -24,15 +24,15 @@ data class MonthItem(
     val getMonth get() = calendar.getMonth()
     val getMonthName get() = calendar.getMonthName()
 
-    fun generateDays(customDays: List<DayItem>): List<DayItem> {
+    fun generateDays(customDays: List<Day>): List<Day> {
         if (days.isNullOrEmpty()) {
             days.addAll(
                 calendar.generateDays().map {
                     if (it == -1) {
                         //shift days
-                        DayItem(null, null, null, null)
+                        Day(null, null, null, null)
                     } else {
-                        val day = DayItem(
+                        val day = Day(
                             year = calendar.getYear(),
                             month = calendar.getMonth(),
                             day = it,

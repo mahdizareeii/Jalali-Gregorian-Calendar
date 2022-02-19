@@ -1,7 +1,7 @@
 package com.calendar.base.availablity
 
 import com.calendar.base.calendar.MyJalaliCalendar
-import com.calendar.base.model.DayItem
+import com.calendar.base.model.Day
 import com.calendar.CalendarProperties
 import com.calendar.utils.DateUtil
 
@@ -11,53 +11,53 @@ class RangePriceSelectionAvailabilityRule(
 ) : BaseAvailabilityRule(availableFromToday, unAvailableDisableDays) {
 
     override fun isAvailable(
-        currentItem: DayItem,
+        currentDay: Day,
         properties: CalendarProperties
     ): Boolean {
         return when {
             properties.isCheckInSelect() -> {
-                checkAvailabilityFromToday(currentItem, properties.getToday()) &&
+                checkAvailabilityFromToday(currentDay, properties.getToday()) &&
                         getDifDaysFromCheckIn(
-                            currentItem,
+                            currentDay,
                             properties
                         ) >= properties.minDaysInRangeSelection &&
                         !properties.customDays.any {
-                            it < currentItem && properties.selectedCheckIn!! < it && it.isDisable
+                            it < currentDay && properties.selectedCheckIn!! < it && it.isDisable
                         } &&
                         !properties.customDays.any {
-                            it >= currentItem && properties.selectedCheckIn!! > it && it.isDisable
+                            it >= currentDay && properties.selectedCheckIn!! > it && it.isDisable
                         }
             }
             properties.isCheckOutSelect() -> {
-                if (currentItem.isDisable && currentItem == properties.selectedCheckOut) true
-                else super.isAvailable(currentItem, properties)
+                if (currentDay.isDisable && currentDay == properties.selectedCheckOut) true
+                else super.isAvailable(currentDay, properties)
             }
-            else -> super.isAvailable(currentItem, properties)
+            else -> super.isAvailable(currentDay, properties)
         }
     }
 
-    private fun getDifDaysFromCheckIn(currentItem: DayItem, properties: CalendarProperties) =
-        if (currentItem.isNotNull() && currentItem > properties.selectedCheckIn) {
+    private fun getDifDaysFromCheckIn(currentDay: Day, properties: CalendarProperties) =
+        if (currentDay.isNotNull() && currentDay > properties.selectedCheckIn) {
             if (properties.regionalType.calendar is MyJalaliCalendar) {
                 DateUtil.diffDaysJalali(
                     properties.selectedCheckIn,
-                    currentItem
+                    currentDay
                 )
             } else {
                 DateUtil.diffDaysGregorian(
                     properties.selectedCheckIn,
-                    currentItem,
+                    currentDay,
                 )
             }
-        } else if (currentItem.isNotNull() && currentItem < properties.selectedCheckIn)
+        } else if (currentDay.isNotNull() && currentDay < properties.selectedCheckIn)
             if (properties.regionalType.calendar is MyJalaliCalendar) {
                 DateUtil.diffDaysJalali(
-                    currentItem,
+                    currentDay,
                     properties.selectedCheckIn
                 )
             } else {
                 DateUtil.diffDaysGregorian(
-                    currentItem,
+                    currentDay,
                     properties.selectedCheckIn
                 )
             }

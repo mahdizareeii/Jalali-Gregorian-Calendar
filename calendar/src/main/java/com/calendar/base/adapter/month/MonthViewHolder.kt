@@ -11,7 +11,7 @@ import com.calendar.R
 import com.calendar.base.adapter.day.DaysAdapter
 import com.calendar.base.adapter.day.DaysAdapterListener
 import com.calendar.base.calendar.RegionalType
-import com.calendar.base.model.MonthItem
+import com.calendar.base.model.Month
 import com.calendar.base.model.MonthItemListener
 import com.calendar.utils.setMutableDrawableColor
 import com.google.android.flexbox.AlignItems
@@ -21,7 +21,7 @@ import com.google.android.flexbox.FlexboxLayoutManager
 
 internal class MonthViewHolder(
     view: View,
-    private val calendarProperties: CalendarProperties,
+    private val properties: CalendarProperties,
     private val daysAdapterListener: DaysAdapterListener
 ) : RecyclerView.ViewHolder(view) {
     private val context = view.context
@@ -31,33 +31,34 @@ internal class MonthViewHolder(
     private val txtMonth: AppCompatTextView = view.findViewById(R.id.txt_month)
     private val rvDays: RecyclerView = view.findViewById(R.id.rv_days)
     private val txtAgendaDesc: TextView = view.findViewById(R.id.txt_agenda_desc)
-    private val imgEndAgenda: ImageView = view.findViewById(R.id.img_end_agenda)
-    private val imgStartAgenda: ImageView = view.findViewById(R.id.img_start_agenda)
+    private val imgEndAgenda: ImageView = view.findViewById(R.id.img_end_month_agenda)
+    private val imgStartAgenda: ImageView = view.findViewById(R.id.img_start_month_agenda)
     private var adapter: DaysAdapter? = null
 
     fun bind(
         monthSize: Int,
         position: Int,
-        monthItem: MonthItem,
+        month: Month,
         listener: MonthAdapterListener
     ) {
         if (adapter == null) {
             initRecyclerView()
         }
-        monthItem.listener = object : MonthItemListener {
+        month.listener = object : MonthItemListener {
             override fun onDataSetChanged() {
                 adapter?.notifyDataSetChanged()
             }
         }
-        adapter?.submitList(monthItem.generateDays(calendarProperties.customDays))
-        txtMonth.text = String.format("${monthItem.getYear} - ${monthItem.getMonthName}")
+        adapter?.submitList(month.generateDays(properties.customDays))
+        txtMonth.text = String.format("${month.getYear} - ${month.getMonthName}")
         initArrows(monthSize, position, listener)
-        initAgendaDesc(monthItem)
+        initAgendaDesc(month)
+        initAgendaRangeDesc(month)
     }
 
     private fun initRecyclerView() {
         adapter = DaysAdapter(
-            calendarProperties,
+            properties,
             daysAdapterListener
         )
         rvDays.layoutManager = FlexboxLayoutManager(context).apply {
@@ -75,7 +76,7 @@ internal class MonthViewHolder(
         position: Int,
         listener: MonthAdapterListener
     ) {
-        val isGregorianCalendar = calendarProperties.regionalType == RegionalType.Gregorian
+        val isGregorianCalendar = properties.regionalType == RegionalType.Gregorian
         val arrowLeftVisibility = (position < monthSize - 1)
         val arrowRightVisibility = (position > 0)
 
@@ -98,8 +99,9 @@ internal class MonthViewHolder(
         }
     }
 
-    private fun initAgendaDesc(monthItem: MonthItem) {
-        val agendaDays = calendarProperties.findMonthInAgendaList(monthItem)
+    private fun initAgendaDesc(month: Month) {
+        if (properties.agendaDays.isNullOrEmpty()) return
+        val agendaDays = properties.findMonthInAgendaList(month)
         val agendaVisibility = agendaDays != null
         imgEndAgenda.isVisible = false
         imgStartAgenda.isVisible = agendaVisibility
@@ -108,7 +110,15 @@ internal class MonthViewHolder(
         txtAgendaDesc.text = agendaDays?.title ?: "-"
     }
 
-    private fun initAgendaRangeDesc() {
-        //TODO
+    private fun initAgendaRangeDesc(month: Month) {
+        if (properties.agendaRangeDays.isNullOrEmpty()) return
+        val agendaRangeDays = properties.findMonthInAgendaRangeList(month)
+        val agendaRangeVisibility = agendaRangeDays != null
+        imgEndAgenda.isVisible = agendaRangeVisibility
+        imgStartAgenda.isVisible = agendaRangeVisibility
+        txtAgendaDesc.isVisible = agendaRangeVisibility
+        imgStartAgenda.setMutableDrawableColor(agendaRangeDays?.getAgendaColor())
+        imgEndAgenda.setMutableDrawableColor(agendaRangeDays?.getAgendaColor())
+        txtAgendaDesc.text = agendaRangeDays?.title ?: "-"
     }
 }
