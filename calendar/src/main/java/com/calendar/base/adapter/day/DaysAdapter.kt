@@ -38,17 +38,17 @@ internal class DaysAdapter(
         }
 
         return when {
-            properties.showDaysPrice -> DayPriceViewHolder(
-                view = view,
-                properties = properties,
-                listener = daysAdapterListener
-            )
             properties.isAgendaDays && properties.showDaysPrice -> AgendaDaysPriceViewHolder(
                 view = view,
                 properties = properties,
                 listener = daysAdapterListener
             )
-            properties.isAgendaRangeDays -> AgendaRangeDaysViewHolder(
+            properties.isAgendaRangeDays && !properties.showDaysPrice -> AgendaRangeDaysViewHolder(
+                view = view,
+                properties = properties,
+                listener = daysAdapterListener
+            )
+            properties.showDaysPrice -> DayPriceViewHolder(
                 view = view,
                 properties = properties,
                 listener = daysAdapterListener

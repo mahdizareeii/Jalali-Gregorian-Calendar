@@ -26,13 +26,13 @@ class MainActivity : AppCompatActivity(), RangeSelectionListener {
                 regionalType = RegionalType.Jalali,
                 calendarType = RangeSelection(this),
                 calendarOrientation = VERTICAL,
-                showDaysPrice = true,
+//                showDaysPrice = false,
                 minDaysInRangeSelection = 2,
                 availabilityRule = RangePriceSelectionAvailabilityRule(
                     availableFromToday = true,
                     unAvailableDisableDays = true
                 ),
-                customDays = arrayListOf(
+                /*customDays = arrayListOf(
                     Day(1400, 12, 26, false, 550000.0, isHoliday = false, isDisable = false),
                     Day(1400, 12, 27, false, 12300.0, isHoliday = true, isDisable = false),
                     Day(1400, 12, 28, false, 430000.0, isHoliday = true, isDisable = true),
@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity(), RangeSelectionListener {
                     Day(1400, 12, 29, false, 500000.0, isHoliday = true, isDisable = false),
                     Day(1401, 1, 1, false, 100000.0, isHoliday = false, isDisable = true),
                     Day(1401, 1, 12, false, 100000.0, isHoliday = false, isDisable = true),
-                ),
+                ),*/
                 agendaRangeDays = arrayListOf(
                     AgendaDayRange(
                         id = "1",
