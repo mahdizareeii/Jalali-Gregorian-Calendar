@@ -1,11 +1,11 @@
 package com.calendar.base.types.withoutselection
 
 import androidx.core.content.ContextCompat
+import com.calendar.CalendarProperties
 import com.calendar.R
 import com.calendar.base.adapter.day.DayViewHolder
 import com.calendar.base.adapter.day.DaysAdapterListener
 import com.calendar.base.model.DayItem
-import com.calendar.CalendarProperties
 import com.calendar.base.types.CalendarType
 
 class WithoutSelection(
@@ -31,5 +31,10 @@ class WithoutSelection(
             )
         }
     }
+
+    override fun isDaySelected(
+        currentItem: DayItem,
+        properties: CalendarProperties
+    ): Boolean = false
 
 }

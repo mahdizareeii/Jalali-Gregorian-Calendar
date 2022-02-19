@@ -1,11 +1,11 @@
 package com.calendar.base.types.singleselection
 
 import androidx.core.content.ContextCompat
+import com.calendar.CalendarProperties
 import com.calendar.R
 import com.calendar.base.adapter.day.DayViewHolder
 import com.calendar.base.adapter.day.DaysAdapterListener
 import com.calendar.base.model.DayItem
-import com.calendar.CalendarProperties
 import com.calendar.base.types.CalendarType
 
 class SingleSelection(
@@ -40,6 +40,11 @@ class SingleSelection(
         }
     }
 
+    override fun isDaySelected(
+        currentItem: DayItem,
+        properties: CalendarProperties
+    ): Boolean = properties.selectedSingle != null && properties.selectedSingle == currentItem
+
     private fun getDayBackground(
         currentItem: DayItem,
         selectedSingle: DayItem?
@@ -60,8 +65,13 @@ class SingleSelection(
         listener: SingleSelectionListener
     ) {
         property.apply {
-            selectedSingle = currentItem
-            listener.onDaySelected(currentItem)
+            if (selectedSingle == currentItem) {
+                selectedSingle = null
+                listener.onDaySelected(null)
+            } else {
+                selectedSingle = currentItem
+                listener.onDaySelected(currentItem)
+            }
         }
     }
 

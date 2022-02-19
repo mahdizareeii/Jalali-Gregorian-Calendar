@@ -31,6 +31,11 @@ abstract class CalendarType {
         properties: CalendarProperties,
     )
 
+    internal abstract fun isDaySelected(
+        currentItem: DayItem,
+        properties: CalendarProperties
+    ): Boolean
+
     internal open fun bind(
         viewHolder: DayViewHolder,
         dayItem: DayItem,
@@ -56,7 +61,7 @@ abstract class CalendarType {
         properties: CalendarProperties
     ) {
         viewHolder.imgStartAgenda.isVisible =
-            !properties.isDaySelected(dayItem) && properties.imgStartAgendaVisibility(dayItem)
+            !isDaySelected(dayItem, properties) && properties.imgStartAgendaVisibility(dayItem)
         viewHolder.imgStartAgenda.setMutableDrawableColor(
             properties.imgStartAgendaColor(dayItem)
         )
@@ -72,7 +77,7 @@ abstract class CalendarType {
             when {
                 currentItem.isHoliday -> R.color.red
                 else -> {
-                    if (properties.isDaySelected(currentItem)) R.color.white
+                    if (isDaySelected(currentItem, properties)) R.color.white
                     else R.color.secondary
                 }
             }

@@ -1,11 +1,11 @@
 package com.calendar.base.types.rangeslelection
 
 import androidx.core.content.ContextCompat
+import com.calendar.CalendarProperties
 import com.calendar.R
 import com.calendar.base.adapter.day.DayViewHolder
 import com.calendar.base.adapter.day.DaysAdapterListener
 import com.calendar.base.model.DayItem
-import com.calendar.CalendarProperties
 import com.calendar.base.types.CalendarType
 
 class RangeSelection(
@@ -34,6 +34,24 @@ class RangeSelection(
                 )
             )
         }
+    }
+
+    override fun isDaySelected(
+        currentItem: DayItem,
+        properties: CalendarProperties
+    ): Boolean {
+        properties.apply {
+            if (selectedCheckIn != null && selectedCheckOut != null)
+                return currentItem >= selectedCheckIn!! && currentItem <= selectedCheckOut!!
+
+            if (selectedCheckIn != null)
+                return currentItem == selectedCheckIn
+
+            if (selectedCheckOut != null)
+                return currentItem == selectedCheckOut
+        }
+
+        return false
     }
 
     private fun getDayBackground(

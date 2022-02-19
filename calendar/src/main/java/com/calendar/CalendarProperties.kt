@@ -68,43 +68,6 @@ data class CalendarProperties(
         } != null
     }
 
-    /**
-     * @return selection state base on CalendarType
-     * @param currentItem the current day item
-     */
-    internal fun isDaySelected(
-        currentItem: DayItem
-    ): Boolean {
-        return when (calendarType::class.java) {
-            RangeSelection::class.java -> {
-                if (selectedCheckIn != null && selectedCheckOut != null)
-                    return currentItem >= selectedCheckIn!! && currentItem <= selectedCheckOut!!
-
-                if (selectedCheckIn != null)
-                    return currentItem == selectedCheckIn
-
-                if (selectedCheckOut != null)
-                    return currentItem == selectedCheckOut
-
-                return false
-            }
-
-            SingleSelection::class.java -> {
-                return if (selectedSingle != null)
-                    selectedSingle == currentItem
-                else false
-            }
-
-            MultipleSelection::class.java -> {
-                selectedMultipleDayItem.any {
-                    it == currentItem
-                }
-            }
-
-            else -> false
-        }
-    }
-
     companion object {
         const val HORIZONTAL = RecyclerView.HORIZONTAL
         const val VERTICAL = RecyclerView.VERTICAL
