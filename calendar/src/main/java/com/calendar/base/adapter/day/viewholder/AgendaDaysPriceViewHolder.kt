@@ -15,7 +15,7 @@ internal class AgendaDaysPriceViewHolder(
 
     override fun bind(day: Day) {
         super.bind(day)
-        initAgendaDay(this,day)
+        initAgendaDay(this, day)
     }
 
     private fun initAgendaDay(
@@ -28,11 +28,16 @@ internal class AgendaDaysPriceViewHolder(
         viewHolder.imgEndAgenda.isVisible = false
 
         viewHolder.imgStartAgenda.setMutableDrawableColor(
-            properties.imgStartAgendaColor(day)
+            imgStartAgendaColor(day)
         )
     }
 
     private fun imgStartAgendaVisibility(currentDay: Day) = properties.agendaDays.any {
         it.agendaList.any { day -> day == currentDay }
     }
+
+    private fun imgStartAgendaColor(currentDay: Day) =
+        properties.agendaDays.firstOrNull {
+            it.agendaList.firstOrNull { day -> day == currentDay } != null
+        }?.getAgendaColor()
 }

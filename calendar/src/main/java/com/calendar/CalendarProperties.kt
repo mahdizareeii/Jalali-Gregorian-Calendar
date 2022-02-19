@@ -45,14 +45,6 @@ data class CalendarProperties(
     internal val isAgendaDays get() = !agendaDays.isNullOrEmpty()
     internal val isAgendaRangeDays get() = !agendaRangeDays.isNullOrEmpty()
 
-    internal fun txtPriceVisibility(currentDay: Day) =
-        showDaysPrice && selectedCheckOut != currentDay
-
-    internal fun imgStartAgendaColor(currentDay: Day) =
-        agendaDays.firstOrNull {
-            it.agendaList.firstOrNull { day -> day == currentDay } != null
-        }?.getAgendaColor()
-
     internal fun calendarIsReverse() =
         regionalType == RegionalType.Jalali && calendarOrientation == HORIZONTAL
 

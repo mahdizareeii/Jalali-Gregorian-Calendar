@@ -100,7 +100,7 @@ internal class MonthViewHolder(
     }
 
     private fun initAgendaDesc(month: Month) {
-        if (properties.agendaDays.isNullOrEmpty()) return
+        if (!properties.isAgendaDays) return
         val agendaDays = properties.findMonthInAgendaList(month)
         val agendaVisibility = agendaDays != null
         imgEndAgenda.isVisible = false
@@ -111,7 +111,7 @@ internal class MonthViewHolder(
     }
 
     private fun initAgendaRangeDesc(month: Month) {
-        if (properties.agendaRangeDays.isNullOrEmpty()) return
+        if (!properties.isAgendaRangeDays) return
         val agendaRangeDays = properties.findMonthInAgendaRangeList(month)
         val agendaRangeVisibility = agendaRangeDays != null
         imgEndAgenda.isVisible = agendaRangeVisibility
