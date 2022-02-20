@@ -1,6 +1,7 @@
 package com.calendar.base.calendar
 
 import com.calendar.base.model.Day
+import com.calendar.base.model.Month
 import java.util.*
 
 class MyGregorianCalendar : BaseCalendar() {
@@ -13,30 +14,14 @@ class MyGregorianCalendar : BaseCalendar() {
             "July", "August", "September", "October", "November", "December"
         )
 
-    override fun init() {
-
+    override fun set(field: Int, value: Int) {
+        calendar.set(field, value)
     }
 
-    override fun firstDayPositionInWeek(): Int {
-        calendar.set(Calendar.DAY_OF_MONTH, 1)
-        val position = calendar.get(Calendar.DAY_OF_WEEK)
-        return if (position == 7) 0 else position
-    }
+    override fun get(field: Int) = calendar.get(field)
 
-    override fun generateDays(): List<Int> {
-        val days = ArrayList<Int>()
-        val countOfDays = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
-
-        //shift days
-        repeat(firstDayPositionInWeek()) {
-            days.add(-1)
-        }
-
-        for (day in 1..countOfDays) {
-            days.add(day)
-        }
-
-        return days
+    override fun clear() {
+        calendar.clear()
     }
 
     override fun getYear(): Int = calendar.get(Calendar.YEAR)
@@ -47,14 +32,12 @@ class MyGregorianCalendar : BaseCalendar() {
         return nameOfMonths.getOrNull(calendar.get(Calendar.MONTH)) ?: "Unknown"
     }
 
-    override fun set(field: Int, value: Int) {
-        calendar.set(field, value)
-    }
+    override fun getNewInstanceOfCalendar(): BaseCalendar = MyGregorianCalendar()
 
-    override fun get(field: Int) = calendar.get(field)
-
-    override fun clear() {
-        calendar.clear()
+    override fun getFirstDayPositionInWeek(): Int {
+        calendar.set(Calendar.DAY_OF_MONTH, 1)
+        val position = calendar.get(Calendar.DAY_OF_WEEK)
+        return if (position == 7) 0 else position
     }
 
     override fun getToday(): Day {
@@ -67,6 +50,41 @@ class MyGregorianCalendar : BaseCalendar() {
         )
     }
 
-    override fun getNewInstanceOfCalendar(): BaseCalendar = MyGregorianCalendar()
+    override fun getNextDates(field: Int, value: Int): List<Month> {
+        val today = Calendar.getInstance()
+        val next = Calendar.getInstance().apply {
+            set(field, get(field) + value)
+        }
+
+        val todayYear = today.get(Calendar.YEAR)
+        val todayMonth = today.get(Calendar.MONTH) + 1
+        val nextYear = next.get(Calendar.YEAR)
+        val nextMonth = next.get(Calendar.MONTH) + 1
+
+        return getMonthsBetweenDateRange(
+            field,
+            value,
+            todayMonth,
+            todayYear,
+            nextMonth,
+            nextYear
+        )
+    }
+
+    override fun generateDays(): List<Int> {
+        val days = ArrayList<Int>()
+        val countOfDays = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
+
+        //shift days
+        repeat(getFirstDayPositionInWeek()) {
+            days.add(-1)
+        }
+
+        for (day in 1..countOfDays) {
+            days.add(day)
+        }
+
+        return days
+    }
 
 }

@@ -7,7 +7,13 @@ import java.util.*
 abstract class BaseCalendar {
 
     abstract val nameOfMonths: List<String>
-    abstract fun init()
+    abstract fun set(field: Int, value: Int)
+    abstract fun get(field: Int): Int
+    abstract fun clear()
+    abstract fun getYear(): Int
+    abstract fun getMonth(): Int
+    abstract fun getMonthName(): String
+    protected abstract fun getNewInstanceOfCalendar(): BaseCalendar
 
     /** you must set month like this
      *  calendar.set(Calendar.MONTH, month)
@@ -15,20 +21,9 @@ abstract class BaseCalendar {
      *
      *  @return position of day in week
      */
-    abstract fun firstDayPositionInWeek(): Int
+    abstract fun getFirstDayPositionInWeek(): Int
 
-    /**
-     * @return list of days of month
-     */
-    abstract fun generateDays(): List<Int>
-    abstract fun getYear(): Int
-    abstract fun getMonth(): Int
-    abstract fun getMonthName(): String
-    abstract fun set(field: Int, value: Int)
-    abstract fun get(field: Int): Int
-    abstract fun clear()
     abstract fun getToday(): Day
-    protected abstract fun getNewInstanceOfCalendar(): BaseCalendar
 
     /**
      *  you can increase up month and year with set field and you will get next dates
@@ -36,28 +31,32 @@ abstract class BaseCalendar {
      *  @param value the value that increase up field
      *  @return a list that contain months
      */
-    fun getNextDates(field: Int, value: Int): List<Month> {
+    abstract fun getNextDates(field: Int, value: Int): List<Month>
+
+    /**
+     * @return list of days of month
+     */
+    abstract fun generateDays(): List<Int>
+
+    fun getMonthsBetweenDateRange(
+        field: Int,
+        value: Int,
+        startMonth: Int,
+        startYear: Int,
+        nextMonth: Int,
+        nextYear: Int
+    ): List<Month> {
         val months = ArrayList<Month>()
-        val today = Calendar.getInstance()
-        val next = Calendar.getInstance().apply {
-            set(field, get(field) + value)
-        }
-
-        val todayYear = today.get(Calendar.YEAR)
-        val todayMonth = today.get(Calendar.MONTH) + 1
-        val nextYear = next.get(Calendar.YEAR)
-        val nextMonth = next.get(Calendar.MONTH) + 1
-
-        if (todayYear == nextYear) {
+        if (startYear == nextYear) {
             if (field == Calendar.MONTH)
-                for (month in todayMonth..nextMonth) {
-                    months.add(Month(getNewInstanceOfCalendar(), month, todayYear))
+                for (month in startMonth..nextMonth) {
+                    months.add(Month(getNewInstanceOfCalendar(), month, startYear))
                 }
         } else {
             if (field == Calendar.YEAR)
-                for (year in todayYear..nextYear) {
-                    if (year == todayYear)
-                        for (month in todayMonth..12) {
+                for (year in startYear..nextYear) {
+                    if (year == startYear)
+                        for (month in startMonth..12) {
                             months.add(Month(getNewInstanceOfCalendar(), month, year))
                         }
                     else
@@ -67,10 +66,10 @@ abstract class BaseCalendar {
                 }
             else if (field == Calendar.MONTH) {
                 var tempMonth = value
-                var tempYear = todayYear
+                var tempYear = startYear
                 while (tempMonth >= 12) {
-                    if (tempYear == todayYear)
-                        for (month in todayMonth..12)
+                    if (tempYear == startYear)
+                        for (month in startMonth..12)
                             months.add(Month(getNewInstanceOfCalendar(), month, tempYear))
                     else
                         for (month in 1..12)

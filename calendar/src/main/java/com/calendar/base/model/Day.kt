@@ -11,10 +11,6 @@ import android.view.View
  * @param year hold every year that you give
  * @param month hold every month that you give
  * @param day hold every day that you give
- *
- * @property gregorianYear hold gregorian year of jalali
- * @property gregorianMonth hold gregorian month of jalali
- * @property gregorianDay hold gregorian day of jalali
  */
 data class Day constructor(
     val year: Int?,
@@ -22,9 +18,6 @@ data class Day constructor(
     val day: Int?,
     val isGregorianDate: Boolean?
 ) {
-    var gregorianYear: Int? = null
-    var gregorianMonth: Int? = null
-    var gregorianDay: Int? = null
 
     var price: Double? = null
     var discount: Double? = null

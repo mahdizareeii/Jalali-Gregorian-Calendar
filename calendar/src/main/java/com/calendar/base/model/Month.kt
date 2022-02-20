@@ -16,8 +16,7 @@ data class Month(
     init {
         calendar.clear()
         calendar.set(Calendar.YEAR, year)
-        calendar.set(Calendar.MONTH, month)
-        calendar.init()
+        calendar.set(Calendar.MONTH, month -1)
     }
 
     val getYear get() = calendar.getYear()
