@@ -35,7 +35,7 @@ class CalendarView @JvmOverloads constructor(
     }
 
     /**
-     * @param calendarProperties set properties of calendar
+     * @param properties set properties of calendar
      */
     fun initCalendar(
         properties: CalendarProperties

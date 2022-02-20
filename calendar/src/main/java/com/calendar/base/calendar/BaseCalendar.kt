@@ -44,9 +44,9 @@ abstract class BaseCalendar {
         }
 
         val todayYear = today.get(Calendar.YEAR)
-        val todayMonth = today.get(Calendar.MONTH)
+        val todayMonth = today.get(Calendar.MONTH) + 1
         val nextYear = next.get(Calendar.YEAR)
-        val nextMonth = next.get(Calendar.MONTH)
+        val nextMonth = next.get(Calendar.MONTH) + 1
 
         if (todayYear == nextYear) {
             if (field == Calendar.MONTH)
@@ -56,22 +56,32 @@ abstract class BaseCalendar {
         } else {
             if (field == Calendar.YEAR)
                 for (year in todayYear..nextYear) {
-                    for (month in 0..11)
-                        months.add(Month(getNewInstanceOfCalendar(), month + 1, year))
+                    if (year == todayYear)
+                        for (month in todayMonth..12) {
+                            months.add(Month(getNewInstanceOfCalendar(), month, year))
+                        }
+                    else
+                        for (month in 1..12) {
+                            months.add(Month(getNewInstanceOfCalendar(), month, year))
+                        }
                 }
             else if (field == Calendar.MONTH) {
                 var tempMonth = value
                 var tempYear = todayYear
                 while (tempMonth >= 12) {
-                    for (month in 0..11)
-                        months.add(Month(getNewInstanceOfCalendar(), month + 1, tempYear))
+                    if (tempYear == todayYear)
+                        for (month in todayMonth..12)
+                            months.add(Month(getNewInstanceOfCalendar(), month, tempYear))
+                    else
+                        for (month in 1..12)
+                            months.add(Month(getNewInstanceOfCalendar(), month, tempYear))
                     tempMonth -= 12
                     tempYear++
                 }
 
                 if (tempMonth != 0)
-                    for (month in 0..tempMonth)
-                        months.add(Month(getNewInstanceOfCalendar(), month + 1, tempYear))
+                    for (month in 1..tempMonth)
+                        months.add(Month(getNewInstanceOfCalendar(), month, tempYear))
             }
         }
         return months

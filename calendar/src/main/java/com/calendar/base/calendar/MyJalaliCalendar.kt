@@ -79,7 +79,7 @@ class MyJalaliCalendar : BaseCalendar() {
     override fun get(field: Int) = calendar.get(field)
 
     override fun clear() {
-        //calendar.clear()
+        calendar.clear()
     }
 
     override fun getToday(): Day {
