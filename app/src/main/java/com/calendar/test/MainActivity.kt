@@ -6,13 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import com.calendar.CalendarProperties
 import com.calendar.CalendarProperties.Companion.VERTICAL
 import com.calendar.CalendarView
-import com.calendar.base.availablity.RangePriceSelectionAvailabilityRule
-import com.calendar.base.calendar.RegionalType
-import com.calendar.base.model.Day
-import com.calendar.base.model.DayRange
-import com.calendar.base.model.agenda.AgendaDayRange
-import com.calendar.base.types.rangeslelection.RangeSelection
-import com.calendar.base.types.rangeslelection.RangeSelectionListener
+import com.calendar.availablity.RangePriceSelectionAvailabilityRule
+import com.calendar.calendar.RegionalType
+import com.calendar.model.Day
+import com.calendar.model.DayRange
+import com.calendar.model.agenda.AgendaDayRange
+import com.calendar.types.rangeslelection.RangeSelection
+import com.calendar.types.rangeslelection.RangeSelectionListener
 import java.util.*
 
 class MainActivity : AppCompatActivity(), RangeSelectionListener {

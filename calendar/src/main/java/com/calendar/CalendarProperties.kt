@@ -2,14 +2,14 @@ package com.calendar
 
 import androidx.annotation.IntRange
 import androidx.recyclerview.widget.RecyclerView
-import com.calendar.base.adapter.day.viewholder.DayViewHolderType
-import com.calendar.base.availablity.BaseAvailabilityRule
-import com.calendar.base.calendar.RegionalType
-import com.calendar.base.model.Day
-import com.calendar.base.model.Month
-import com.calendar.base.model.agenda.AgendaDayRange
-import com.calendar.base.model.agenda.AgendaDays
-import com.calendar.base.types.CalendarType
+import com.calendar.adapter.day.viewholder.DayViewHolderType
+import com.calendar.availablity.BaseAvailabilityRule
+import com.calendar.calendar.RegionalType
+import com.calendar.model.Day
+import com.calendar.model.Month
+import com.calendar.model.agenda.AgendaDayRange
+import com.calendar.model.agenda.AgendaDays
+import com.calendar.types.CalendarType
 
 /**
  *  @property regionalType set regional type of calendar

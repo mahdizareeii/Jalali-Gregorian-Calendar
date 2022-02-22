@@ -1,0 +1,3 @@
+package com.calendar.types.withoutselection
+
+interface WithoutSelectionListener

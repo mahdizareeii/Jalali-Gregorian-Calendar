@@ -6,9 +6,9 @@ import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.calendar.base.adapter.month.MonthAdapter
-import com.calendar.base.adapter.month.MonthAdapterListener
-import com.calendar.base.calendar.BaseCalendar
+import com.calendar.adapter.month.MonthAdapter
+import com.calendar.adapter.month.MonthAdapterListener
+import com.calendar.calendar.BaseCalendar
 
 class CalendarView @JvmOverloads constructor(
     context: Context,

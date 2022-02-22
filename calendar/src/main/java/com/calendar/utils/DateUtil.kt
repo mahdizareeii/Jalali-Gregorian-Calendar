@@ -1,6 +1,6 @@
 package com.calendar.utils
 
-import com.calendar.base.model.Day
+import com.calendar.model.Day
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
