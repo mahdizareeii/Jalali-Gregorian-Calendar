@@ -55,20 +55,20 @@ internal class AgendaRangeDaysViewHolder(
     }
 
     private fun getStartAgendaRange(currentDay: Day) = properties.agendaRangeDays.firstOrNull {
-        it.agendaRangeList.any { range ->
+        it.agendaRangeList.firstOrNull { range ->
             currentDay == range.startDate
-        }
+        } != null
     }
 
     private fun getMiddleAgendaRange(currentDay: Day) = properties.agendaRangeDays.firstOrNull {
-        it.agendaRangeList.any { range ->
+        it.agendaRangeList.firstOrNull { range ->
             currentDay > range.startDate && currentDay < range.endDate
-        }
+        } != null
     }
 
     private fun getEndAgendaRange(currentDay: Day) = properties.agendaRangeDays.firstOrNull {
-        it.agendaRangeList.any { range ->
+        it.agendaRangeList.firstOrNull { range ->
             currentDay == range.endDate
-        }
+        } != null
     }
 }

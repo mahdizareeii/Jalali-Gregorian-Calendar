@@ -22,21 +22,18 @@ internal class AgendaDaysPriceViewHolder(
         viewHolder: DayViewHolder,
         day: Day
     ) {
+        val startAgenda = getStartAgenda(day)
         viewHolder.imgStartAgenda.isVisible =
-            !properties.calendarType.isDaySelected(day, properties) && imgStartAgendaVisibility(day)
+            !properties.calendarType.isDaySelected(day, properties) && startAgenda != null
 
         viewHolder.imgEndAgenda.isVisible = false
 
         viewHolder.imgStartAgenda.setMutableDrawableColor(
-            imgStartAgendaColor(day)
+            startAgenda?.getAgendaColor()
         )
     }
 
-    private fun imgStartAgendaVisibility(currentDay: Day) = properties.agendaDays.any {
-        it.agendaList.any { day -> day == currentDay }
-    }
-
-    private fun imgStartAgendaColor(currentDay: Day) = properties.agendaDays.firstOrNull {
+    private fun getStartAgenda(currentDay: Day) = properties.agendaDays.firstOrNull {
         it.agendaList.firstOrNull { day -> day == currentDay } != null
-    }?.getAgendaColor()
+    }
 }
