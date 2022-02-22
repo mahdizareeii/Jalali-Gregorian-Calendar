@@ -101,18 +101,13 @@ class MyJalaliCalendar() : BaseCalendar() {
             next.get(Calendar.DAY_OF_MONTH)
         )
 
-        val todayYear = todayJalali[0]
-        val todayMonth = todayJalali[1]
-        val nextYear = nextJalali[0]
-        val nextMonth = nextJalali[1]
-
         return getMonthsBetweenDateRange(
             field,
             value,
-            todayMonth,
-            todayYear,
-            nextMonth,
-            nextYear
+            startMonth = todayJalali[1],
+            startYear = todayJalali[0],
+            nextMonth = nextJalali[1],
+            nextYear = nextJalali[0]
         )
     }
 

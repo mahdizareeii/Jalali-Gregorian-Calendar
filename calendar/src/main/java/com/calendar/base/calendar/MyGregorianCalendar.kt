@@ -56,18 +56,13 @@ class MyGregorianCalendar : BaseCalendar() {
             set(field, get(field) + value)
         }
 
-        val todayYear = today.get(Calendar.YEAR)
-        val todayMonth = today.get(Calendar.MONTH) + 1
-        val nextYear = next.get(Calendar.YEAR)
-        val nextMonth = next.get(Calendar.MONTH) + 1
-
         return getMonthsBetweenDateRange(
-            field,
-            value,
-            todayMonth,
-            todayYear,
-            nextMonth,
-            nextYear
+            field = field,
+            value = value,
+            startMonth = today.get(Calendar.MONTH) + 1,
+            startYear = today.get(Calendar.YEAR),
+            nextMonth = next.get(Calendar.MONTH) + 1,
+            nextYear = next.get(Calendar.YEAR)
         )
     }
 
