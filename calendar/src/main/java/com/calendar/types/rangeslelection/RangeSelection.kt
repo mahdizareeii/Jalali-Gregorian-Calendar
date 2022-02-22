@@ -86,10 +86,10 @@ class RangeSelection(
         listener: RangeSelectionListener
     ) {
         property.apply {
-            if (showDaysPrice && selectedCheckIn == currentDay) {
+            if (selectedCheckIn == currentDay) {
                 selectedCheckIn = null
                 selectedCheckOut = null
-            } else if (showDaysPrice && isCheckOutSelect() && currentDay == selectedCheckOut && currentDay.isDisable) {
+            } else if (isCheckOutSelect() && currentDay == selectedCheckOut && currentDay.isDisable) {
                 return
             } else if (selectedCheckIn == currentDay || selectedCheckIn == null || isCheckOutSelect()) {
                 selectedCheckIn = currentDay
