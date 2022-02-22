@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.calendar.base.adapter.month.MonthAdapter
 import com.calendar.base.adapter.month.MonthAdapterListener
 import com.calendar.base.calendar.BaseCalendar
-import com.calendar.base.types.CalendarProperties
 
 class CalendarView @JvmOverloads constructor(
     context: Context,
@@ -26,10 +25,18 @@ class CalendarView @JvmOverloads constructor(
         recyclerView = this.findViewById(R.id.rv_months)
     }
 
+    /**
+     *  you can increase up month and year with set field and you will get next dates
+     *  @param field the field that you want increase up
+     *  @param value the value that increase up field
+     */
     fun submitNextDates(field: Int, value: Int) {
         adapter.submitList(calendar.getNextDates(field, value))
     }
 
+    /**
+     * @param calendarProperties set properties of calendar
+     */
     fun initCalendar(
         calendarProperties: CalendarProperties
     ) {

@@ -1,12 +1,12 @@
 package com.calendar.base.types.rangeslelection
 
-import androidx.core.content.ContextCompat
+import com.calendar.CalendarProperties
 import com.calendar.R
 import com.calendar.base.adapter.day.DayViewHolder
 import com.calendar.base.adapter.day.DaysAdapterListener
 import com.calendar.base.model.DayItem
-import com.calendar.base.types.CalendarProperties
 import com.calendar.base.types.CalendarType
+import com.calendar.utils.setBackgroundFromDrawable
 
 class RangeSelection(
     private val rangeSelectionListener: RangeSelectionListener
@@ -26,14 +26,32 @@ class RangeSelection(
         properties: CalendarProperties
     ) {
         if (checkAvailability(viewHolder, dayItem, properties)) {
-            viewHolder.bgDay.background = ContextCompat.getDrawable(
-                context, getDayBackground(
+            viewHolder.bgDay.setBackgroundFromDrawable(
+                getDayBackground(
                     currentItem = dayItem,
                     checkIn = properties.selectedCheckIn,
                     checkOut = properties.selectedCheckOut
                 )
             )
         }
+    }
+
+    override fun isDaySelected(
+        currentItem: DayItem,
+        properties: CalendarProperties
+    ): Boolean {
+        properties.apply {
+            if (selectedCheckIn != null && selectedCheckOut != null)
+                return currentItem >= selectedCheckIn!! && currentItem <= selectedCheckOut!!
+
+            if (selectedCheckIn != null)
+                return currentItem == selectedCheckIn
+
+            if (selectedCheckOut != null)
+                return currentItem == selectedCheckOut
+        }
+
+        return false
     }
 
     private fun getDayBackground(
@@ -47,7 +65,7 @@ class RangeSelection(
                 checkOut == currentItem -> R.drawable.bg_day_range_end
                 else ->
                     if (checkIn < currentItem && checkOut > currentItem)
-                        R.drawable.bg_day_single_selected
+                        R.drawable.bg_day_selected
                     else R.drawable.bg_day
             }
         } else {

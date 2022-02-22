@@ -53,7 +53,8 @@
         <com.calendar.utils.SquareView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_days"
@@ -63,6 +64,12 @@
                 tools:itemCount="37"
                 tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 tools:listitem="@layout/item_calendar_day" />
+
+            <include
+                layout="@layout/item_agenda"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp" />
         </com.calendar.utils.SquareView>
     </LinearLayout>
 

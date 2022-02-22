@@ -1,12 +1,13 @@
 package com.calendar.base.types.withoutselection
 
 import androidx.core.content.ContextCompat
+import com.calendar.CalendarProperties
 import com.calendar.R
 import com.calendar.base.adapter.day.DayViewHolder
 import com.calendar.base.adapter.day.DaysAdapterListener
 import com.calendar.base.model.DayItem
-import com.calendar.base.types.CalendarProperties
 import com.calendar.base.types.CalendarType
+import com.calendar.utils.setBackgroundFromDrawable
 
 class WithoutSelection(
     private val withoutSelectionListener: WithoutSelectionListener
@@ -26,10 +27,13 @@ class WithoutSelection(
         properties: CalendarProperties
     ) {
         if (checkAvailability(viewHolder, dayItem, properties)) {
-            viewHolder.bgDay.background = ContextCompat.getDrawable(
-                context, R.drawable.bg_day
-            )
+            viewHolder.bgDay.setBackgroundFromDrawable(R.drawable.bg_day)
         }
     }
+
+    override fun isDaySelected(
+        currentItem: DayItem,
+        properties: CalendarProperties
+    ): Boolean = false
 
 }

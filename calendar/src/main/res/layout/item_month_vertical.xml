@@ -35,4 +35,10 @@
         tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         tools:listitem="@layout/item_calendar_day" />
 
+    <include
+        layout="@layout/item_agenda"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp" />
+
 </LinearLayout>

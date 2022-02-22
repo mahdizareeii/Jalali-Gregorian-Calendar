@@ -2,16 +2,18 @@ package com.calendar.base.adapter.month
 
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.calendar.CalendarProperties
 import com.calendar.R
 import com.calendar.base.adapter.day.DaysAdapter
 import com.calendar.base.adapter.day.DaysAdapterListener
 import com.calendar.base.calendar.RegionalType
 import com.calendar.base.model.MonthItem
 import com.calendar.base.model.MonthItemListener
-import com.calendar.base.types.CalendarProperties
+import com.calendar.utils.setMutableDrawableColor
 import com.google.android.flexbox.AlignItems
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
@@ -28,6 +30,9 @@ internal class MonthViewHolder(
     private val arrowRight: ImageView? = view.findViewById(R.id.arrow_right) ?: null
     private val txtMonth: AppCompatTextView = view.findViewById(R.id.txt_month)
     private val rvDays: RecyclerView = view.findViewById(R.id.rv_days)
+    private val txtAgendaDesc: TextView = view.findViewById(R.id.txt_agenda_desc)
+    private val imgEndAgenda: ImageView = view.findViewById(R.id.img_end_agenda)
+    private val imgStartAgenda: ImageView = view.findViewById(R.id.img_start_agenda)
     private var adapter: DaysAdapter? = null
 
     fun bind(
@@ -47,6 +52,7 @@ internal class MonthViewHolder(
         adapter?.submitList(monthItem.generateDays(calendarProperties.customDays))
         txtMonth.text = String.format("${monthItem.getYear} - ${monthItem.getMonthName}")
         initArrows(monthSize, position, listener)
+        initAgendaDesc(monthItem)
     }
 
     private fun initRecyclerView() {
@@ -90,5 +96,19 @@ internal class MonthViewHolder(
             else
                 listener.onRightArrowClicked()
         }
+    }
+
+    private fun initAgendaDesc(monthItem: MonthItem) {
+        val agendaDays = calendarProperties.findMonthInAgendaList(monthItem)
+        val agendaVisibility = agendaDays != null
+        imgEndAgenda.isVisible = false
+        imgStartAgenda.isVisible = agendaVisibility
+        txtAgendaDesc.isVisible = agendaVisibility
+        imgStartAgenda.setMutableDrawableColor(agendaDays?.getAgendaColor())
+        txtAgendaDesc.text = agendaDays?.title ?: "-"
+    }
+
+    private fun initAgendaRangeDesc() {
+        //TODO
     }
 }

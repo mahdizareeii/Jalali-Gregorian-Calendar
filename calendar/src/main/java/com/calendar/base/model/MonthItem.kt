@@ -1,12 +1,13 @@
 package com.calendar.base.model
 
 import com.calendar.base.calendar.BaseCalendar
+import com.calendar.base.calendar.MyGregorianCalendar
 import java.util.*
 
 data class MonthItem(
-    val calendar: BaseCalendar,
-    val month: Int,
-    val year: Int
+    private val calendar: BaseCalendar,
+    private val month: Int,
+    private val year: Int
 ) {
     private val days = ArrayList<DayItem>()
 
@@ -20,22 +21,26 @@ data class MonthItem(
     }
 
     val getYear get() = calendar.getYear()
+    val getMonth get() = calendar.getMonth()
     val getMonthName get() = calendar.getMonthName()
 
     fun generateDays(customDays: List<DayItem>): List<DayItem> {
         if (days.isNullOrEmpty()) {
             days.addAll(
                 calendar.generateDays().map {
-                    val day = DayItem(
-                        year = calendar.getYear(),
-                        month = calendar.getMonth(),
-                        day = it
-                    )
+                    if (it == -1) {
+                        //shift days
+                        DayItem(null, null, null, null)
+                    } else {
+                        val day = DayItem(
+                            year = calendar.getYear(),
+                            month = calendar.getMonth(),
+                            day = it,
+                            isGregorianDate = calendar is MyGregorianCalendar
+                        )
 
-                    if (it == -1)
-                        DayItem(null, null, null)
-                    else
                         customDays.firstOrNull { customDay -> customDay == day } ?: day
+                    }
                 }
             )
         }

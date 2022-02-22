@@ -62,7 +62,8 @@ class MyGregorianCalendar : BaseCalendar() {
         return DayItem(
             todayCalendar.get(Calendar.YEAR),
             todayCalendar.get(Calendar.MONTH) + 1,
-            todayCalendar.get(Calendar.DAY_OF_MONTH)
+            todayCalendar.get(Calendar.DAY_OF_MONTH),
+            true
         )
     }
 

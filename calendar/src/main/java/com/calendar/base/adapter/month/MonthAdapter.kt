@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.calendar.R
 import com.calendar.base.model.MonthItem
 import com.calendar.base.adapter.day.DaysAdapterListener
-import com.calendar.base.types.CalendarProperties
+import com.calendar.CalendarProperties
 
 internal class MonthAdapter(
     private val calendarProperties: CalendarProperties,
