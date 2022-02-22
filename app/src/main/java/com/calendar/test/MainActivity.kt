@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.calendar.CalendarProperties
+import com.calendar.CalendarProperties.Companion.HORIZONTAL
 import com.calendar.CalendarProperties.Companion.VERTICAL
 import com.calendar.CalendarView
 import com.calendar.availablity.RangePriceSelectionAvailabilityRule
