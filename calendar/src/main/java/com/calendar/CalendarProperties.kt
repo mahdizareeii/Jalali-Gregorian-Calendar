@@ -19,8 +19,8 @@ import com.calendar.types.CalendarType
  *  @property availabilityRule for decision of check days availability
  */
 class CalendarProperties {
-    var regionalType: RegionalType
-    var calendarType: CalendarType
+    val regionalType: RegionalType
+    val calendarType: CalendarType
     var calendarOrientation: Int = 0
     var showDaysPrice: Boolean = false
 
