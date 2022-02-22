@@ -7,6 +7,7 @@ import com.calendar.R
 import com.calendar.adapter.day.DaysAdapterListener
 import com.calendar.model.Day
 import com.calendar.utils.setBackgroundFromDrawable
+import com.calendar.utils.setMutableDrawableColor
 
 internal class AgendaRangeDaysViewHolder(
     view: View,
@@ -46,6 +47,12 @@ internal class AgendaRangeDaysViewHolder(
 
         viewHolder.imgStartAgenda.isVisible = start
         viewHolder.imgEndAgenda.isVisible = end
+        imgStartAgenda.setMutableDrawableColor(
+            imgAgendaRangeColor(day)
+        )
+        imgEndAgenda.setMutableDrawableColor(
+            imgAgendaRangeColor(day)
+        )
         viewHolder.bgDay.setBackgroundFromDrawable(background)
     }
 
@@ -66,4 +73,8 @@ internal class AgendaRangeDaysViewHolder(
             currentDay == range.endDate
         }
     }
+
+    private fun imgAgendaRangeColor(currentDay: Day) = properties.agendaRangeDays.firstOrNull {
+        it.agendaRangeList.firstOrNull { range -> range.startDate == currentDay || range.endDate == currentDay } != null
+    }?.getAgendaColor()
 }
