@@ -9,7 +9,7 @@ import android.view.View
  * @sample Day(1420,1,1)
  *
  * @param year hold every year that you give
- * @param month hold every month that you give
+ * @param month hold every month that you give (must be start with 1)
  * @param day hold every day that you give
  */
 data class Day constructor(

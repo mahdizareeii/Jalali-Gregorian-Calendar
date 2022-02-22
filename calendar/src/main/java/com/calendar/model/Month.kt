@@ -4,6 +4,16 @@ import com.calendar.calendar.BaseCalendar
 import com.calendar.calendar.MyGregorianCalendar
 import java.util.*
 
+/**
+ * Gregorian date sample
+ * @sample Month(gregorianInstance,2050,0)
+ * Jalali date sample
+ * @sample Month(jalaliInstance,1420,0)
+ *
+ * @param calendar hold the instance of calendar
+ * @param year hold every year that you give
+ * @param month hold every month that you give (must be start with 0)
+ */
 data class Month(
     private val calendar: BaseCalendar,
     private val month: Int,
