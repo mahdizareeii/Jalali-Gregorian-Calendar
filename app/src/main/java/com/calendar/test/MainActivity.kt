@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity(), RangeSelectionListener {
             )
         )
 
-        calendar.submitNextDates(Calendar.MONTH, 1)
+        calendar.submitNextDates(Calendar.MONTH, 80)
     }
 
     override fun onCheckInSelected(day: Day) {

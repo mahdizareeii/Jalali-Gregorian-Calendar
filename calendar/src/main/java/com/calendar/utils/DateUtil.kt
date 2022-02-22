@@ -77,27 +77,6 @@ object DateUtil {
         return intArrayOf(gregorianYear, gregorianMonth, gregorianDay)
     }
 
-    /**
-     * @return count of jalali month
-     */
-    fun getJalaliMonthCount(year: Int, month: Int): Int {
-        return if (month <= 6) {
-            31
-        } else if (month in 7..11) {
-            30
-        } else {
-            if (isLeapYear(year))
-                30
-            else 29
-        }
-    }
-
-    private fun isLeapYear(year: Int): Boolean {
-        return arrayOf(1, 5, 9, 13, 17, 22, 26, 30).any {
-            it == year % 33
-        }
-    }
-
     fun diffDaysJalali(start: Day?, end: Day?): Int {
         val startGregorian = jalaliToGregorian(
             year = start?.year ?: 0,

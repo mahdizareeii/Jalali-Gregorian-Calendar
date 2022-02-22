@@ -119,7 +119,7 @@ class MyJalaliCalendar() : BaseCalendar() {
     override fun generateDays(): List<Int> {
         val days = ArrayList<Int>()
 
-        val countOfDays = DateUtil.getJalaliMonthCount(
+        val countOfDays = getJalaliMonthCount(
             persianDate[0],
             persianDate[1] + 1
         )
@@ -150,5 +150,23 @@ class MyJalaliCalendar() : BaseCalendar() {
         }
 
         return calendar.get(Calendar.DAY_OF_WEEK)
+    }
+
+    private fun getJalaliMonthCount(year: Int, month: Int): Int {
+        return if (month <= 6) {
+            31
+        } else if (month in 7..11) {
+            30
+        } else {
+            if (isLeapYear(year))
+                30
+            else 29
+        }
+    }
+
+    private fun isLeapYear(year: Int): Boolean {
+        return arrayOf(1, 5, 9, 13, 17, 22, 26, 30).any {
+            it == year % 33
+        }
     }
 }
