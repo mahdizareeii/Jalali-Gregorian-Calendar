@@ -40,8 +40,8 @@ internal class AgendaRangeDaysViewHolder(
 
         val background = when {
             startAgendaVisibility -> R.drawable.bg_day_dashed_stroke_start
-            endAgendaVisibility -> R.drawable.bg_day_dashed_stroke_end
             middleAgendaVisibility -> R.drawable.bg_day_dashed_stroke_middle
+            endAgendaVisibility -> R.drawable.bg_day_dashed_stroke_end
             else -> return
         }
 
@@ -64,7 +64,7 @@ internal class AgendaRangeDaysViewHolder(
 
     private fun getMiddleAgendaRange(currentDay: Day) = properties.agendaRangeDays.firstOrNull {
         it.agendaRangeList.any { range ->
-            currentDay >= range.startDate && currentDay <= range.endDate
+            currentDay > range.startDate && currentDay < range.endDate
         }
     }
 
