@@ -33,9 +33,7 @@ internal class AgendaRangeDaysViewHolder(
         )
 
         val startAgendaVisibility = !isDaySelected && startAgenda != null
-
         val middleAgendaVisibility = !isDaySelected && middleAgenda != null
-
         val endAgendaVisibility = !isDaySelected && endAgenda != null
 
         val background = when {
