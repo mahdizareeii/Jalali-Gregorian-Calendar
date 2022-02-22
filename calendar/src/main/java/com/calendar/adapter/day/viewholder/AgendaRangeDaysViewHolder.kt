@@ -23,58 +23,54 @@ internal class AgendaRangeDaysViewHolder(
         viewHolder: DayViewHolder,
         day: Day
     ) {
-        val start = !properties.calendarType.isDaySelected(
-            day,
-            properties
-        ) && startAgendaRangeVisibility(day)
+        val startAgenda = getStartAgendaRange(day)
+        val middleAgenda = getMiddleAgendaRange(day)
+        val endAgenda = getEndAgendaRange(day)
 
-        val middle = !properties.calendarType.isDaySelected(
+        val isDaySelected = properties.calendarType.isDaySelected(
             day,
             properties
-        ) && middleAgendaRangeVisibility(day)
+        )
 
-        val end = !properties.calendarType.isDaySelected(
-            day,
-            properties
-        ) && endAgendaRangeVisibility(day)
+        val startAgendaVisibility = !isDaySelected && startAgenda != null
+
+        val middleAgendaVisibility = !isDaySelected && middleAgenda != null
+
+        val endAgendaVisibility = !isDaySelected && endAgenda != null
 
         val background = when {
-            start -> R.drawable.bg_day_dashed_stroke_start
-            middle -> R.drawable.bg_day_dashed_stroke_middle
-            end -> R.drawable.bg_day_dashed_stroke_end
+            startAgendaVisibility -> R.drawable.bg_day_dashed_stroke_start
+            endAgendaVisibility -> R.drawable.bg_day_dashed_stroke_end
+            middleAgendaVisibility -> R.drawable.bg_day_dashed_stroke_middle
             else -> return
         }
 
-        viewHolder.imgStartAgenda.isVisible = start
-        viewHolder.imgEndAgenda.isVisible = end
+        viewHolder.imgStartAgenda.isVisible = startAgendaVisibility
+        viewHolder.imgEndAgenda.isVisible = endAgendaVisibility
         imgStartAgenda.setMutableDrawableColor(
-            imgAgendaRangeColor(day)
+            startAgenda?.getAgendaColor()
         )
         imgEndAgenda.setMutableDrawableColor(
-            imgAgendaRangeColor(day)
+            endAgenda?.getAgendaColor()
         )
         viewHolder.bgDay.setBackgroundFromDrawable(background)
     }
 
-    private fun startAgendaRangeVisibility(currentDay: Day) = properties.agendaRangeDays.any {
+    private fun getStartAgendaRange(currentDay: Day) = properties.agendaRangeDays.firstOrNull {
         it.agendaRangeList.any { range ->
             currentDay == range.startDate
         }
     }
 
-    private fun middleAgendaRangeVisibility(currentDay: Day) = properties.agendaRangeDays.any {
+    private fun getMiddleAgendaRange(currentDay: Day) = properties.agendaRangeDays.firstOrNull {
         it.agendaRangeList.any { range ->
             currentDay >= range.startDate && currentDay <= range.endDate
         }
     }
 
-    private fun endAgendaRangeVisibility(currentDay: Day) = properties.agendaRangeDays.any {
+    private fun getEndAgendaRange(currentDay: Day) = properties.agendaRangeDays.firstOrNull {
         it.agendaRangeList.any { range ->
             currentDay == range.endDate
         }
     }
-
-    private fun imgAgendaRangeColor(currentDay: Day) = properties.agendaRangeDays.firstOrNull {
-        it.agendaRangeList.firstOrNull { range -> range.startDate == currentDay || range.endDate == currentDay } != null
-    }?.getAgendaColor()
 }
