@@ -14,7 +14,7 @@
         android:layout_height="match_parent">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/img_end_agenda"
+            android:id="@+id/img_end_month_agenda"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top|start"
@@ -23,7 +23,7 @@
             tools:visibility="visible" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/img_start_agenda"
+            android:id="@+id/img_start_month_agenda"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top|end"
@@ -55,7 +55,9 @@
                 android:gravity="center"
                 android:textColor="#526576"
                 android:textSize="12sp"
-                tools:text="560" />
+                android:visibility="gone"
+                tools:text="560"
+                tools:visibility="visible" />
         </LinearLayout>
 
     </FrameLayout>
