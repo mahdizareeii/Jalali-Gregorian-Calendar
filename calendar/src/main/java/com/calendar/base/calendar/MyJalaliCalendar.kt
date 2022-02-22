@@ -39,7 +39,7 @@ class MyJalaliCalendar() : BaseCalendar() {
         when (field) {
             Calendar.YEAR -> persianDate[0] = value
             Calendar.MONTH -> persianDate[1] = value
-            Calendar.DAY_OF_MONTH -> persianDate[3] = value
+            Calendar.DAY_OF_MONTH -> persianDate[2] = value
             else -> {
             }
         }
@@ -58,11 +58,11 @@ class MyJalaliCalendar() : BaseCalendar() {
 
     override fun getYear(): Int = persianDate.getOrNull(0) ?: -1
 
-    override fun getMonth(): Int = persianDate.getOrNull(1) ?: -1
+    override fun getMonth(): Int = (persianDate.getOrNull(1) ?: -1)
 
     override fun getMonthName(): String {
         return nameOfMonths.getOrNull(
-            (persianDate.getOrNull(1) ?: -1) - 1
+            (persianDate.getOrNull(1) ?: -1)
         ) ?: "نا شناخته"
     }
 
@@ -84,42 +84,27 @@ class MyJalaliCalendar() : BaseCalendar() {
     }
 
     override fun getNextDates(field: Int, value: Int): List<Month> {
-        /*val todayGregorian = Calendar.getInstance()
-        val today = DateUtil.gregorianToJalali(
-            todayGregorian.get(Calendar.YEAR),
-            todayGregorian.get(Calendar.MONTH) + 1,
-            todayGregorian.get(Calendar.DAY_OF_MONTH)
-        )
-
-        val next = today
-        when (field) {
-            Calendar.YEAR -> next[0] = next[0].plus(value)
-            Calendar.MONTH -> {
-                if (next[1] < 12 && ((next[1] + value) <= 12)) {
-                    next[1] = next[1].plus(value)
-                } else {
-                    var tempMonth = value
-                    var tempYear = next[0]
-                    while (tempMonth >= 12) {
-                            for (month in 1..tempMonth)
-                                next[1] = next[1]++
-                        tempMonth -= 12
-                        tempYear++
-                        next[0] = next[0]++
-                    }
-
-                    if (tempMonth != 0)
-                        for (month in 1..tempMonth)
-                            next[1] = next[1]++
-                }
-            }
+        val today = Calendar.getInstance()
+        val next = Calendar.getInstance().apply {
+            set(field, get(field) + value)
         }
 
+        val todayJalali = DateUtil.gregorianToJalali(
+            today.get(Calendar.YEAR),
+            today.get(Calendar.MONTH) + 1,
+            today.get(Calendar.DAY_OF_MONTH)
+        )
 
-        val todayYear = today[0]
-        val todayMonth = today[1]
-        val nextYear = next[0]
-        val nextMonth = next[1]
+        val nextJalali = DateUtil.gregorianToJalali(
+            next.get(Calendar.YEAR),
+            next.get(Calendar.MONTH) + 1,
+            next.get(Calendar.DAY_OF_MONTH)
+        )
+
+        val todayYear = todayJalali[0]
+        val todayMonth = todayJalali[1]
+        val nextYear = nextJalali[0]
+        val nextMonth = nextJalali[1]
 
         return getMonthsBetweenDateRange(
             field,
@@ -128,8 +113,7 @@ class MyJalaliCalendar() : BaseCalendar() {
             todayYear,
             nextMonth,
             nextYear
-        )*/
-        return emptyList()
+        )
     }
 
     override fun generateDays(): List<Int> {
@@ -137,8 +121,7 @@ class MyJalaliCalendar() : BaseCalendar() {
 
         val countOfDays = DateUtil.getJalaliMonthCount(
             persianDate[0],
-            persianDate[1],
-            persianDate[2]
+            persianDate[1] + 1
         )
 
         //shift days
@@ -156,7 +139,7 @@ class MyJalaliCalendar() : BaseCalendar() {
     private fun getDayOfWeek(): Int {
         val gregorian = DateUtil.jalaliToGregorian(
             persianDate.getOrNull(0) ?: 0,
-            persianDate.getOrNull(1) ?: 0,
+            (persianDate.getOrNull(1) ?: 0) + 1,
             1,
         )
 

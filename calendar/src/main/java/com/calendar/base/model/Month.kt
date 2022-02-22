@@ -16,7 +16,8 @@ data class Month(
     init {
         calendar.clear()
         calendar.set(Calendar.YEAR, year)
-        calendar.set(Calendar.MONTH, month -1)
+        calendar.set(Calendar.MONTH, month - 1)
+        calendar.set(Calendar.DAY_OF_MONTH, 1)
     }
 
     val getYear get() = calendar.getYear()
@@ -33,7 +34,7 @@ data class Month(
                     } else {
                         val day = Day(
                             year = calendar.getYear(),
-                            month = calendar.getMonth(),
+                            month = calendar.getMonth() + 1,
                             day = it,
                             isGregorianDate = calendar is MyGregorianCalendar
                         )

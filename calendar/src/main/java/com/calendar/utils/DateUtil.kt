@@ -80,32 +80,13 @@ object DateUtil {
     /**
      * @return count of jalali month
      */
-    fun getJalaliMonthCount(year: Int, month: Int, day: Int): Int {
-        val gregorianDayMonth =
-            intArrayOf(0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334)
-        val gy2 = if (month > 2) (year + 1) else year
-        var days =
-            355666 + (365 * year) + ((gy2 + 3) / 4) - ((gy2 + 99) / 100) + ((gy2 + 399) / 400) + day + gregorianDayMonth[month - 1]
-        var jalaliYear = -1595 + (33 * (days / 12053))
-        days %= 12053
-        jalaliYear += 4 * (days / 1461)
-        days %= 1461
-        if (days > 365) {
-            jalaliYear += ((days - 1) / 365)
-            days = (days - 1) % 365
-        }
-        val jalaliMonth: Int = if (days < 186) {
-            1 + (days / 31)
-        } else {
-            7 + ((days - 186) / 30)
-        }
-
-        return if (jalaliMonth <= 6) {
+    fun getJalaliMonthCount(year: Int, month: Int): Int {
+        return if (month <= 6) {
             31
-        } else if (jalaliMonth in 7..11) {
+        } else if (month in 7..11) {
             30
         } else {
-            if (isLeapYear(jalaliYear))
+            if (isLeapYear(year))
                 30
             else 29
         }

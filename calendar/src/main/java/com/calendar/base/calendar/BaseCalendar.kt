@@ -78,6 +78,13 @@ abstract class BaseCalendar {
                     tempYear++
                 }
 
+                if ((startMonth == 12 || (value + startMonth >= 12)) && tempYear < nextYear) {
+                    for (month in startMonth..12) {
+                        months.add(Month(getNewInstanceOfCalendar(), month, tempYear))
+                    }
+                    tempYear++
+                }
+
                 if (tempMonth != 0)
                     for (month in 1..tempMonth)
                         months.add(Month(getNewInstanceOfCalendar(), month, tempYear))

@@ -26,7 +26,7 @@ class MyGregorianCalendar : BaseCalendar() {
 
     override fun getYear(): Int = calendar.get(Calendar.YEAR)
 
-    override fun getMonth(): Int = calendar.get(Calendar.MONTH) + 1
+    override fun getMonth(): Int = calendar.get(Calendar.MONTH)
 
     override fun getMonthName(): String {
         return nameOfMonths.getOrNull(calendar.get(Calendar.MONTH)) ?: "Unknown"
