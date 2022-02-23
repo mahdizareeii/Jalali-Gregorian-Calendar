@@ -12,6 +12,7 @@ import com.calendar.calendar.RegionalType
 import com.calendar.model.Day
 import com.calendar.model.DayRange
 import com.calendar.model.agenda.AgendaDayRange
+import com.calendar.model.agenda.AgendaDays
 import com.calendar.types.rangeslelection.RangeSelection
 import com.calendar.types.rangeslelection.RangeSelectionListener
 import java.util.*

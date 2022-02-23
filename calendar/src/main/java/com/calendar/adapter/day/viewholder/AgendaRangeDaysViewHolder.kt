@@ -2,18 +2,13 @@ package com.calendar.adapter.day.viewholder
 
 import android.graphics.Typeface
 import android.view.View
-import android.view.ViewGroup
 import android.widget.FrameLayout
-import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.isVisible
-import androidx.core.view.marginTop
-import androidx.core.view.updateLayoutParams
 import com.calendar.CalendarProperties
 import com.calendar.R
 import com.calendar.adapter.day.DaysAdapterListener
 import com.calendar.model.Day
-import com.calendar.utils.dp
 import com.calendar.utils.setBackgroundFromDrawable
 import com.calendar.utils.setMutableDrawableColor
 
@@ -54,11 +49,8 @@ internal class AgendaRangeDaysViewHolder(
             else -> return
         }
 
-        val margin = itemView.dp(2)
-        if (isAgendaRange) {
-            txtDay.setTypeface(txtDay.typeface, Typeface.BOLD)
-        } else {
-        }
+        if (isAgendaRange) txtDay.setTypeface(txtDay.typeface, Typeface.BOLD)
+
         imgStartAgenda.isVisible = startAgendaVisibility
         imgEndAgenda.isVisible = endAgendaVisibility
         imgStartAgenda.setMutableDrawableColor(
