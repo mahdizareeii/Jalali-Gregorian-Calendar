@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity(), RangeSelectionListener {
 
     private fun agendaRangeList1() = arrayListOf(
         DayRange(
-            startDate = Day(1400, 12, 1, false),
+            startDate = Day(1400, 12, 5, false),
             endDate = Day(1400, 12, 12, false)
         ),
         DayRange(
