@@ -20,7 +20,7 @@
 
     <include
         android:id="@+id/item_days"
-        layout="@layout/days"
+        layout="@layout/month_item_header_days"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp" />
@@ -33,10 +33,10 @@
         app:spanCount="7"
         tools:itemCount="37"
         tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        tools:listitem="@layout/item_calendar_day" />
+        tools:listitem="@layout/day_item_calendar" />
 
     <include
-        layout="@layout/item_agenda"
+        layout="@layout/month_item_agenda_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp" />

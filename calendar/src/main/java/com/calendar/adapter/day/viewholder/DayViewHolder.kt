@@ -21,11 +21,9 @@ internal open class DayViewHolder(
     val bgDay: SquareView = view.findViewById(R.id.bg_day)
     val txtDay: AppCompatTextView = view.findViewById(R.id.txt_day)
     val txtPrice: AppCompatTextView = view.findViewById(R.id.txt_price)
-    val imgStartAgenda: AppCompatImageView = view.findViewById(R.id.img_start_month_agenda)
-    val imgEndAgenda: AppCompatImageView = view.findViewById(R.id.img_end_month_agenda)
 
     open fun bind(day: Day) {
-        bgDay.visibility = day.dayVisibility
+        this.itemView.visibility = day.dayVisibility
         textColor(this, day)
         txtDay.text = day.day.toString()
         bgDay.setOnClickListener {

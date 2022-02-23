@@ -18,9 +18,9 @@ internal class MonthAdapter(
         return MonthViewHolder(
             view = LayoutInflater.from(parent.context).inflate(
                 if (properties.calendarOrientation == CalendarProperties.VERTICAL)
-                    R.layout.item_month_vertical
+                    R.layout.month_item_vertical
                 else
-                    R.layout.item_month_horizontal,
+                    R.layout.month_item_horizontal,
                 parent,
                 false
             ),

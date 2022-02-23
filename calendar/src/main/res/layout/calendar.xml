@@ -5,4 +5,4 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clipToPadding="false"
-    tools:listitem="@layout/item_month_vertical" />
+    tools:listitem="@layout/month_item_vertical" />

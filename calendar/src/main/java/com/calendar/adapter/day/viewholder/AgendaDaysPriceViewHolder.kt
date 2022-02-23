@@ -1,8 +1,10 @@
 package com.calendar.adapter.day.viewholder
 
 import android.view.View
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.isVisible
 import com.calendar.CalendarProperties
+import com.calendar.R
 import com.calendar.adapter.day.DaysAdapterListener
 import com.calendar.model.Day
 import com.calendar.utils.setMutableDrawableColor
@@ -12,23 +14,19 @@ internal class AgendaDaysPriceViewHolder(
     properties: CalendarProperties,
     listener: DaysAdapterListener
 ) : DayPriceViewHolder(view, properties, listener) {
+    private val imgDayAgenda: AppCompatImageView = view.findViewById(R.id.img_day_agenda)
 
     override fun bind(day: Day) {
         super.bind(day)
-        initAgendaDay(this, day)
+        initAgendaDay(day)
     }
 
-    private fun initAgendaDay(
-        viewHolder: DayViewHolder,
-        day: Day
-    ) {
+    private fun initAgendaDay(day: Day) {
         val startAgenda = getStartAgenda(day)
-        viewHolder.imgStartAgenda.isVisible =
+        imgDayAgenda.isVisible =
             !properties.calendarType.isDaySelected(day, properties) && startAgenda != null
 
-        viewHolder.imgEndAgenda.isVisible = false
-
-        viewHolder.imgStartAgenda.setMutableDrawableColor(
+        imgDayAgenda.setMutableDrawableColor(
             startAgenda?.getAgendaColor()
         )
     }

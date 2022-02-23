@@ -32,8 +32,8 @@ internal class MonthViewHolder(
     private val txtMonth: AppCompatTextView = view.findViewById(R.id.txt_month)
     private val rvDays: RecyclerView = view.findViewById(R.id.rv_days)
     private val txtAgendaDesc: TextView = view.findViewById(R.id.txt_agenda_desc)
-    private val imgEndAgenda: ImageView = view.findViewById(R.id.img_end_month_agenda)
-    private val imgStartAgenda: ImageView = view.findViewById(R.id.img_start_month_agenda)
+    private val imgEndAgenda: ImageView = view.findViewById(R.id.img_end_day_agenda_desc)
+    private val imgStartAgenda: ImageView = view.findViewById(R.id.img_start_day_agenda_desc)
     private var adapter: DaysAdapter? = null
 
     fun bind(

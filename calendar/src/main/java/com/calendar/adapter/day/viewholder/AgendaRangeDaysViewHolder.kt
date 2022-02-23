@@ -2,11 +2,18 @@ package com.calendar.adapter.day.viewholder
 
 import android.graphics.Typeface
 import android.view.View
+import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.LinearLayout
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.isVisible
+import androidx.core.view.marginTop
+import androidx.core.view.updateLayoutParams
 import com.calendar.CalendarProperties
 import com.calendar.R
 import com.calendar.adapter.day.DaysAdapterListener
 import com.calendar.model.Day
+import com.calendar.utils.dp
 import com.calendar.utils.setBackgroundFromDrawable
 import com.calendar.utils.setMutableDrawableColor
 
@@ -15,15 +22,16 @@ internal class AgendaRangeDaysViewHolder(
     properties: CalendarProperties,
     listener: DaysAdapterListener
 ) : DayViewHolder(view, properties, listener) {
+    private val bgAgendaDayRange: FrameLayout = view.findViewById(R.id.bg_agenda_day_range)
+    private val imgStartAgenda: AppCompatImageView = view.findViewById(R.id.img_start_day_agenda)
+    private val imgEndAgenda: AppCompatImageView = view.findViewById(R.id.img_end_day_agenda)
+
     override fun bind(day: Day) {
         super.bind(day)
-        initRangeAgendaDays(this, day)
+        initRangeAgendaDays(day)
     }
 
-    private fun initRangeAgendaDays(
-        viewHolder: DayViewHolder,
-        day: Day
-    ) {
+    private fun initRangeAgendaDays(day: Day) {
         val startAgenda = getStartAgendaRange(day)
         val middleAgenda = getMiddleAgendaRange(day)
         val endAgenda = getEndAgendaRange(day)
@@ -37,7 +45,7 @@ internal class AgendaRangeDaysViewHolder(
         val middleAgendaVisibility = !isDaySelected && middleAgenda != null
         val endAgendaVisibility = !isDaySelected && endAgenda != null
 
-        val isBoldText = startAgendaVisibility || middleAgendaVisibility || endAgendaVisibility
+        val isAgendaRange = startAgendaVisibility || middleAgendaVisibility || endAgendaVisibility
 
         val background = when {
             startAgendaVisibility -> R.drawable.bg_day_dashed_stroke_start
@@ -46,17 +54,20 @@ internal class AgendaRangeDaysViewHolder(
             else -> return
         }
 
-        if (isBoldText) txtDay.setTypeface(txtDay.typeface, Typeface.BOLD)
-
-        viewHolder.imgStartAgenda.isVisible = startAgendaVisibility
-        viewHolder.imgEndAgenda.isVisible = endAgendaVisibility
+        val margin = itemView.dp(2)
+        if (isAgendaRange) {
+            txtDay.setTypeface(txtDay.typeface, Typeface.BOLD)
+        } else {
+        }
+        imgStartAgenda.isVisible = startAgendaVisibility
+        imgEndAgenda.isVisible = endAgendaVisibility
         imgStartAgenda.setMutableDrawableColor(
             startAgenda?.getAgendaColor()
         )
         imgEndAgenda.setMutableDrawableColor(
             endAgenda?.getAgendaColor()
         )
-        viewHolder.bgDay.setBackgroundFromDrawable(background)
+        bgAgendaDayRange.setBackgroundFromDrawable(background)
     }
 
     private fun getStartAgendaRange(currentDay: Day) = properties.agendaRangeDays.firstOrNull {

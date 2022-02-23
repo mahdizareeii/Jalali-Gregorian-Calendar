@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
 import com.calendar.CalendarProperties
-import com.calendar.R
 import com.calendar.adapter.day.viewholder.*
 import com.calendar.model.Day
 import com.calendar.utils.dp
@@ -19,28 +18,30 @@ internal class DaysAdapter(
     private val dayList = ArrayList<Day>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DayViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(
-            R.layout.item_calendar_day,
+            properties.dayViewHolderType.layoutId,
             parent,
             false
         ).apply {
             updateLayoutParams<FlexboxLayoutManager.LayoutParams> {
-                width = (parent.measuredWidth / 7) - dp(2)
-                setMargins(
-                    dp(1),
-                    dp(1),
-                    dp(1),
-                    dp(1)
-                )
+                when (properties.dayViewHolderType) {
+                    DayViewHolderType.AgendaRangeDaysViewHolder -> {
+                        width = (parent.measuredWidth / 7)
+                    }
+                    else -> {
+                        width = (parent.measuredWidth / 7) - dp(2)
+                        setMargins(
+                            dp(1),
+                            dp(1),
+                            dp(1),
+                            dp(1)
+                        )
+                    }
+                }
             }
         }
 
         return when (properties.dayViewHolderType) {
-            DayViewHolderType.AgendaDaysPriceViewHolder -> AgendaDaysPriceViewHolder(
-                view = view,
-                properties = properties,
-                listener = daysAdapterListener
-            )
-            DayViewHolderType.AgendaRangeDaysViewHolder -> AgendaRangeDaysViewHolder(
+            DayViewHolderType.DayViewHolder -> DayViewHolder(
                 view = view,
                 properties = properties,
                 listener = daysAdapterListener
@@ -50,7 +51,12 @@ internal class DaysAdapter(
                 properties = properties,
                 listener = daysAdapterListener
             )
-            DayViewHolderType.DayViewHolder -> DayViewHolder(
+            DayViewHolderType.AgendaDaysPriceViewHolder -> AgendaDaysPriceViewHolder(
+                view = view,
+                properties = properties,
+                listener = daysAdapterListener
+            )
+            DayViewHolderType.AgendaRangeDaysViewHolder -> AgendaRangeDaysViewHolder(
                 view = view,
                 properties = properties,
                 listener = daysAdapterListener
