@@ -1,5 +1,6 @@
 package com.calendar.adapter.day.viewholder
 
+import android.graphics.Typeface
 import android.view.View
 import androidx.core.view.isVisible
 import com.calendar.CalendarProperties
@@ -36,12 +37,16 @@ internal class AgendaRangeDaysViewHolder(
         val middleAgendaVisibility = !isDaySelected && middleAgenda != null
         val endAgendaVisibility = !isDaySelected && endAgenda != null
 
+        val isBoldText = startAgendaVisibility || middleAgendaVisibility || endAgendaVisibility
+
         val background = when {
             startAgendaVisibility -> R.drawable.bg_day_dashed_stroke_start
             middleAgendaVisibility -> R.drawable.bg_day_dashed_stroke_middle
             endAgendaVisibility -> R.drawable.bg_day_dashed_stroke_end
             else -> return
         }
+
+        if (isBoldText) txtDay.setTypeface(null, Typeface.BOLD)
 
         viewHolder.imgStartAgenda.isVisible = startAgendaVisibility
         viewHolder.imgEndAgenda.isVisible = endAgendaVisibility
