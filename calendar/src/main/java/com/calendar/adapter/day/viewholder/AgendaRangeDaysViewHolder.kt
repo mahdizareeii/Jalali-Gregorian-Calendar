@@ -46,7 +46,7 @@ internal class AgendaRangeDaysViewHolder(
             else -> return
         }
 
-        if (isBoldText) txtDay.setTypeface(null, Typeface.BOLD)
+        if (isBoldText) txtDay.setTypeface(txtDay.typeface, Typeface.BOLD)
 
         viewHolder.imgStartAgenda.isVisible = startAgendaVisibility
         viewHolder.imgEndAgenda.isVisible = endAgendaVisibility
