@@ -18,7 +18,7 @@ open class BaseAvailabilityRule(
         val disableDays = unAvailableDisableDays && currentDay.isDisable
 
         return if (availableFromToday && !unAvailableDisableDays) fromToday
-        else if (unAvailableDisableDays && !availableFromToday) disableDays
+        else if (unAvailableDisableDays && !availableFromToday) !disableDays
         else if (availableFromToday && unAvailableDisableDays) fromToday && !disableDays
         else true
     }

@@ -7,6 +7,7 @@ import com.calendar.CalendarProperties
 import com.calendar.CalendarProperties.Companion.HORIZONTAL
 import com.calendar.CalendarProperties.Companion.VERTICAL
 import com.calendar.CalendarView
+import com.calendar.availablity.BaseAvailabilityRule
 import com.calendar.availablity.RangePriceSelectionAvailabilityRule
 import com.calendar.calendar.RegionalType
 import com.calendar.model.Day
@@ -29,8 +30,8 @@ class MainActivity : AppCompatActivity(), RangeSelectionListener {
                 calendarType = RangeSelection(this),
                 calendarOrientation = VERTICAL,
                 /*minDaysInRangeSelection = 2,*/
-                availabilityRule = RangePriceSelectionAvailabilityRule(
-                    availableFromToday = true,
+                availabilityRule = BaseAvailabilityRule(
+                    availableFromToday = false,
                     unAvailableDisableDays = true
                 ),
                 /*agendaDays = arrayListOf(
