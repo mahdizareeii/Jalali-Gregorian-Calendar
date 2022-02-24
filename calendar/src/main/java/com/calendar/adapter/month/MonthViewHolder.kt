@@ -87,16 +87,12 @@ internal class MonthViewHolder(
             if (isGregorianCalendar) arrowLeftVisibility else arrowRightVisibility
 
         arrowLeft?.setOnClickListener {
-            if (isGregorianCalendar)
-                listener.onRightArrowClicked()
-            else
-                listener.onLeftArrowClicked()
+            if (isGregorianCalendar) listener.onRightArrowClicked()
+            else listener.onLeftArrowClicked()
         }
         arrowRight?.setOnClickListener {
-            if (isGregorianCalendar)
-                listener.onLeftArrowClicked()
-            else
-                listener.onRightArrowClicked()
+            if (isGregorianCalendar) listener.onLeftArrowClicked()
+            else listener.onRightArrowClicked()
         }
     }
 
