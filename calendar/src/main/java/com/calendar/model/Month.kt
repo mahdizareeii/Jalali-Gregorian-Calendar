@@ -34,13 +34,17 @@ data class Month(
     val getMonth get() = calendar.getMonth()
     val getMonthName get() = calendar.getMonthName()
 
+    /**
+     * if you want to change shift day parameters
+     * @see Day.isNotEmptyDay method and refactor that depend on your parameters
+     */
     fun generateDays(customDays: List<Day>): List<Day> {
         if (days.isNullOrEmpty()) {
             days.addAll(
                 calendar.generateDays().map {
                     if (it == -1) {
                         //shift days
-                        Day(null, null, null, null)
+                        Day(-1, -1, -1, false)
                     } else {
                         val day = Day(
                             year = calendar.getYear(),

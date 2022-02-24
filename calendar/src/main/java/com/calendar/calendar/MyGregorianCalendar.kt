@@ -57,12 +57,8 @@ class MyGregorianCalendar : BaseCalendar() {
         }
 
         return getMonthsBetweenDateRange(
-            field = field,
-            value = value,
-            startMonth = today.get(Calendar.MONTH) + 1,
-            startYear = today.get(Calendar.YEAR),
-            nextMonth = next.get(Calendar.MONTH) + 1,
-            nextYear = next.get(Calendar.YEAR)
+            startDay = Day(today.get(Calendar.YEAR), today.get(Calendar.MONTH) + 1, 1, true),
+            endDay = Day(next.get(Calendar.YEAR), next.get(Calendar.MONTH) + 1, 1, true)
         )
     }
 

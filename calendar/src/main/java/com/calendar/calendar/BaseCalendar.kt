@@ -2,7 +2,6 @@ package com.calendar.calendar
 
 import com.calendar.model.Day
 import com.calendar.model.Month
-import java.util.*
 
 abstract class BaseCalendar {
 
@@ -39,55 +38,33 @@ abstract class BaseCalendar {
     abstract fun generateDays(): List<Int>
 
     fun getMonthsBetweenDateRange(
-        field: Int,
-        value: Int,
-        startMonth: Int,
-        startYear: Int,
-        nextMonth: Int,
-        nextYear: Int
+        startDay: Day,
+        endDay: Day
     ): List<Month> {
         val months = ArrayList<Month>()
-        if (startYear == nextYear) {
-            if (field == Calendar.MONTH)
-                for (month in startMonth..nextMonth) {
-                    months.add(Month(getNewInstanceOfCalendar(), month, startYear))
-                }
-        } else {
-            if (field == Calendar.YEAR)
-                for (year in startYear..nextYear) {
-                    if (year == startYear)
-                        for (month in startMonth..12) {
-                            months.add(Month(getNewInstanceOfCalendar(), month, year))
-                        }
-                    else
-                        for (month in 1..12) {
-                            months.add(Month(getNewInstanceOfCalendar(), month, year))
-                        }
-                }
-            else if (field == Calendar.MONTH) {
-                var tempMonth = value
-                var tempYear = startYear
-                while (tempMonth >= 12) {
-                    if (tempYear == startYear)
-                        for (month in startMonth..12)
-                            months.add(Month(getNewInstanceOfCalendar(), month, tempYear))
-                    else
-                        for (month in 1..12)
-                            months.add(Month(getNewInstanceOfCalendar(), month, tempYear))
-                    tempMonth -= 12
-                    tempYear++
-                }
+        when {
+            startDay.year == endDay.year -> {
+                for (month in startDay.month..endDay.month)
+                    months.add(Month(getNewInstanceOfCalendar(), month, startDay.year))
+            }
 
-                if ((startMonth == 12 || (value + startMonth >= 12)) && tempYear < nextYear) {
-                    for (month in startMonth..12) {
-                        months.add(Month(getNewInstanceOfCalendar(), month, tempYear))
+            startDay.year < endDay.year -> {
+                for (year in startDay.year..endDay.year) {
+                    when (year) {
+                        startDay.year -> {
+                            for (month in startDay.month..12)
+                                months.add(Month(getNewInstanceOfCalendar(), month, year))
+                        }
+                        endDay.year -> {
+                            for (month in 1..endDay.month)
+                                months.add(Month(getNewInstanceOfCalendar(), month, year))
+                        }
+                        else -> {
+                            for (month in 1..12)
+                                months.add(Month(getNewInstanceOfCalendar(), month, year))
+                        }
                     }
-                    tempYear++
                 }
-
-                if (tempMonth != 0)
-                    for (month in 1..tempMonth)
-                        months.add(Month(getNewInstanceOfCalendar(), month, tempYear))
             }
         }
         return months

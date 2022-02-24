@@ -102,12 +102,8 @@ class MyJalaliCalendar() : BaseCalendar() {
         )
 
         return getMonthsBetweenDateRange(
-            field,
-            value,
-            startMonth = todayJalali[1],
-            startYear = todayJalali[0],
-            nextMonth = nextJalali[1],
-            nextYear = nextJalali[0]
+            startDay = Day(todayJalali[0], todayJalali[1], 1, false),
+            endDay = Day(nextJalali[0], nextJalali[1], 1, false)
         )
     }
 

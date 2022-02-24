@@ -37,29 +37,29 @@ class RangePriceSelectionAvailabilityRule(
     }
 
     private fun getDifDaysFromCheckIn(currentDay: Day, properties: CalendarProperties) =
-        if (currentDay.isNotNull() && currentDay > properties.selectedCheckIn) {
+        if (currentDay.isNotEmptyDay() && currentDay > properties.selectedCheckIn) {
             if (properties.regionalType.calendar is MyJalaliCalendar) {
                 DateUtil.diffDaysJalali(
                     properties.selectedCheckIn,
                     currentDay
-                )
+                )[1].toInt()
             } else {
                 DateUtil.diffDaysGregorian(
                     properties.selectedCheckIn,
                     currentDay,
-                )
+                )[1].toInt()
             }
-        } else if (currentDay.isNotNull() && currentDay < properties.selectedCheckIn)
+        } else if (currentDay.isNotEmptyDay() && currentDay < properties.selectedCheckIn)
             if (properties.regionalType.calendar is MyJalaliCalendar) {
                 DateUtil.diffDaysJalali(
                     currentDay,
                     properties.selectedCheckIn
-                )
+                )[1].toInt()
             } else {
                 DateUtil.diffDaysGregorian(
                     currentDay,
                     properties.selectedCheckIn
-                )
+                )[1].toInt()
             }
         else {
             properties.minDaysInRangeSelection
