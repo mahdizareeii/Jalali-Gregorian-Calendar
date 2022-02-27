@@ -48,7 +48,7 @@ class MyJalaliCalendar() : BaseCalendar() {
     override fun get(field: Int) = when (field) {
         Calendar.YEAR -> persianDate[0]
         Calendar.MONTH -> persianDate[1]
-        Calendar.DAY_OF_MONTH -> persianDate[3]
+        Calendar.DAY_OF_MONTH -> persianDate[2]
         else -> 0
     }
 
