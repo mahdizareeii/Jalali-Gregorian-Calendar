@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/drawable/bg_day.xml" value="0.169" />
+        <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/drawable/bg_day_dashed_stroke_end.xml" value="0.169" />
+        <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/drawable/bg_day_dashed_stroke_middle.xml" value="0.169" />
+        <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/drawable/bg_day_dashed_stroke_start.xml" value="0.169" />
+        <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/drawable/bg_day_range_end.xml" value="0.1575" />
+        <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/drawable/bg_day_range_start.xml" value="0.1575" />
+        <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/drawable/bg_day_selected.xml" value="0.1575" />
+        <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/drawable/bg_day_today.xml" value="0.1575" />
+        <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/drawable/popup_window_transparent.xml" value="0.14" />
+        <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/layout/calendar.xml" value="0.22531645569620254" />
+        <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/layout/date_tip_view.xml" value="0.67" />
+        <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/layout/day_item_calendar.xml" value="0.2282051282051282" />
+        <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/layout/day_item_calendar_agenda.xml" value="0.2282051282051282" />
+        <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/layout/day_item_calendar_agenda_range.xml" value="0.22531645569620254" />
+        <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/layout/days.xml" value="0.22531645569620254" />
+        <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/layout/item_agenda.xml" value="0.22531645569620254" />
+        <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/layout/item_calendar_day.xml" value="0.22531645569620254" />
+        <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/layout/item_calendar_day_agenda_range.xml" value="0.2282051282051282" />
+        <entry key="..\:/Users/m.zareei/AndroidStudioProjects/calendar/calendar/src/main/res/layout/month_item_agenda_desc.xml" value="0.2282051282051282" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK" />
+</project>
