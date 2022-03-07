@@ -141,6 +141,64 @@ class RangeSelection(
         }
     }
 
+    private fun getSelectedDays(property: CalendarProperties): Int {
+        return if (property.regionalType == RegionalType.Jalali)
+            DateUtil.diffDaysJalali(
+                property.selectedCheckIn ?: return 0,
+                property.selectedCheckOut ?: return 0
+            )[1].toInt()
+        else
+            DateUtil.diffDaysGregorian(
+                property.selectedCheckIn ?: return 0,
+                property.selectedCheckOut ?: return 0
+            )[1].toInt()
+    }
+
+    private fun createToolTip(view: View, text: CharSequence) {
+        val displayWidth = view.context.resources.displayMetrics.widthPixels
+        val displayHeight = view.context.resources.displayMetrics.heightPixels
+
+        view.doOnLayout {
+            val parent = view.parent as ViewGroup
+            val bubbleLayout = LayoutInflater
+                .from(view.context)
+                .inflate(R.layout.date_tip_view, parent, false) as BubbleLayout
+            bubbleLayout.findViewById<TextView>(R.id.tv_text).text = text
+            val location = IntArray(2)
+            view.getLocationInWindow(location)
+            val x = location[0]
+            val y = location[1]
+            val popupWindow = BubblePopupHelper.create(view.context, bubbleLayout)
+            val magicNumber = (view.width / 2).toFloat() - view.dp(4)
+
+            if (x < parent.width / 2) {
+                bubbleLayout.arrowPosition = magicNumber
+                popupWindow.showAtLocation(
+                    view,
+                    Gravity.START or Gravity.TOP,
+                    x,
+                    y - view.height
+                )
+            } else {
+                bubbleLayout.arrowPosition = bubbleLayout.apply {
+                    measure(
+                        View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                        View.MeasureSpec.makeMeasureSpec(
+                            (parent as? View)?.width ?: 100,
+                            View.MeasureSpec.AT_MOST
+                        )
+                    )
+                }.measuredWidth - magicNumber
+                popupWindow.showAtLocation(
+                    view,
+                    Gravity.END or Gravity.TOP,
+                    displayWidth - (x + view.width),
+                    y - view.height
+                )
+            }
+        }
+    }
+
     private fun createMinNightText(minNight: Int, context: Context): CharSequence {
         val spannableStringBuilder = SpannableStringBuilder()
         val s1 = SpannableString("حداقل شب رزرو:")
@@ -200,63 +258,5 @@ class RangeSelection(
                     0
                 )
             }
-    }
-
-    private fun getSelectedDays(property: CalendarProperties): Int {
-        return if (property.regionalType == RegionalType.Jalali)
-            DateUtil.diffDaysJalali(
-                property.selectedCheckIn ?: return 0,
-                property.selectedCheckOut ?: return 0
-            )[1].toInt()
-        else
-            DateUtil.diffDaysGregorian(
-                property.selectedCheckIn ?: return 0,
-                property.selectedCheckOut ?: return 0
-            )[1].toInt()
-    }
-
-    private fun createToolTip(view: View, text: CharSequence) {
-        val displayWidth = view.context.resources.displayMetrics.widthPixels
-        val displayHeight = view.context.resources.displayMetrics.heightPixels
-
-        view.doOnLayout {
-            val parent = view.parent as ViewGroup
-            val bubbleLayout = LayoutInflater
-                .from(view.context)
-                .inflate(R.layout.date_tip_view, parent, false) as BubbleLayout
-            bubbleLayout.findViewById<TextView>(R.id.tv_text).text = text
-            val location = IntArray(2)
-            view.getLocationInWindow(location)
-            val x = location[0]
-            val y = location[1]
-            val popupWindow = BubblePopupHelper.create(view.context, bubbleLayout)
-            val magicNumber = (view.width / 2).toFloat() - view.dp(4)
-
-            if (x < parent.width / 2) {
-                bubbleLayout.arrowPosition = magicNumber
-                popupWindow.showAtLocation(
-                    view,
-                    Gravity.START or Gravity.TOP,
-                    x,
-                    y - (displayWidth % view.width)
-                )
-            } else {
-                bubbleLayout.arrowPosition = bubbleLayout.apply {
-                    measure(
-                        View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
-                        View.MeasureSpec.makeMeasureSpec(
-                            (parent as? View)?.width ?: 100,
-                            View.MeasureSpec.AT_MOST
-                        )
-                    )
-                }.measuredWidth - magicNumber
-                popupWindow.showAtLocation(
-                    view,
-                    Gravity.END or Gravity.TOP,
-                    displayWidth - (x + view.width),
-                    y - (displayWidth % view.width)
-                )
-            }
-        }
     }
 }
