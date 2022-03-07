@@ -177,7 +177,7 @@ class RangeSelection(
                     view,
                     Gravity.START or Gravity.TOP,
                     x,
-                    y - view.height
+                    y - 110
                 )
             } else {
                 bubbleLayout.arrowPosition = bubbleLayout.apply {
@@ -193,7 +193,7 @@ class RangeSelection(
                     view,
                     Gravity.END or Gravity.TOP,
                     displayWidth - (x + view.width),
-                    y - view.height
+                    y - 110
                 )
             }
         }
