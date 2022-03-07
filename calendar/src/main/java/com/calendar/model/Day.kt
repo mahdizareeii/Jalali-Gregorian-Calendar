@@ -38,7 +38,7 @@ data class Day constructor(
         isGregorianDate: Boolean,
         price: Double?,
         isHoliday: Boolean = false,
-        isDisable: Boolean = true
+        isDisable: Boolean = false
     ) : this(year, month, day, isGregorianDate) {
         this.price = price
         this.isHoliday = isHoliday

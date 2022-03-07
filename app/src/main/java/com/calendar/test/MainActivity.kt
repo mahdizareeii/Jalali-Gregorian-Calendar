@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.calendar.CalendarProperties
-import com.calendar.CalendarProperties.Companion.HORIZONTAL
 import com.calendar.CalendarProperties.Companion.VERTICAL
 import com.calendar.CalendarView
 import com.calendar.availablity.BaseAvailabilityRule
@@ -12,8 +11,6 @@ import com.calendar.availablity.RangePriceSelectionAvailabilityRule
 import com.calendar.calendar.RegionalType
 import com.calendar.model.Day
 import com.calendar.model.DayRange
-import com.calendar.model.agenda.AgendaDayRange
-import com.calendar.model.agenda.AgendaDays
 import com.calendar.types.rangeslelection.RangeSelection
 import com.calendar.types.rangeslelection.RangeSelectionListener
 import java.util.*
@@ -29,47 +26,14 @@ class MainActivity : AppCompatActivity(), RangeSelectionListener {
                 regionalType = RegionalType.Jalali,
                 calendarType = RangeSelection(this),
                 calendarOrientation = VERTICAL,
-                /*minDaysInRangeSelection = 2,*/
-                availabilityRule = BaseAvailabilityRule(
-                    availableFromToday = false,
-                    unAvailableDisableDays = true
+                showBubbleMessage = true,
+                availabilityRule = RangePriceSelectionAvailabilityRule(
+                    true,
+                    true
                 ),
-                /*agendaDays = arrayListOf(
-                    AgendaDays(
-                        "1",
-                        "تست",
-                        "#0091ff",
-                        agendaList(
-                            12,1400
-                        )
-                    )
-                ),
+                minDaysInRangeSelection = 2,
                 customDays = arrayListOf(
-                    Day(1400, 12, 26, false, 550000.0, isHoliday = false, isDisable = false),
-                    Day(1400, 12, 27, false, 12300.0, isHoliday = true, isDisable = false),
-                    Day(1400, 12, 28, false, 430000.0, isHoliday = true, isDisable = true),
-                    Day(1400, 12, 5, false, 78893.0, isHoliday = false, isDisable = false),
-                    Day(1400, 12, 6, false, 99999.0, isHoliday = false, isDisable = false),
-                    Day(1400, 12, 7, false, 100000.0, isHoliday = false, isDisable = false),
-                    Day(1400, 12, 8, false, 100000.0, isHoliday = false, isDisable = true),
-                    Day(1400, 12, 15, false, 456000.0, isHoliday = false, isDisable = true),
-                    Day(1400, 12, 29, false, 500000.0, isHoliday = true, isDisable = false),
-                    Day(1401, 1, 1, false, 100000.0, isHoliday = false, isDisable = true),
-                    Day(1401, 1, 12, false, 100000.0, isHoliday = false, isDisable = true),
-                )*/
-                agendaRangeDays = arrayListOf(
-                    AgendaDayRange(
-                        id = "1",
-                        title = "روز های پر تردد",
-                        color = "#0091ff",
-                        agendaRangeList = agendaRangeList1()
-                    ),
-                    AgendaDayRange(
-                        id = "2",
-                        title = "روزهای پر ترافیک",
-                        color = "#192B37",
-                        agendaRangeList = agendaRangeList2()
-                    )
+                    Day(1400,12,19,false,560000.0)
                 )
             )
         )

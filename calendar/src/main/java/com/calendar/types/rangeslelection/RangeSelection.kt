@@ -115,10 +115,11 @@ class RangeSelection(
                     selectedCheckIn = currentDay
                     selectedCheckOut = null
                     listener.onCheckInSelected(selectedCheckIn!!)
-                    createToolTip(
-                        viewHolder.itemView,
-                        createMinNightText(property.minDaysInRangeSelection, viewHolder.context)
-                    )
+                    if (property.showBubbleMessage)
+                        createToolTip(
+                            viewHolder.itemView,
+                            createMinNightText(property.minDaysInRangeSelection, viewHolder.context)
+                        )
                 }
                 else -> {
                     if (selectedCheckIn!! > currentDay) {
@@ -130,10 +131,11 @@ class RangeSelection(
                         selectedCheckOut = currentDay
                         listener.onCheckOutSelected(selectedCheckOut!!)
                     }
-                    createToolTip(
-                        viewHolder.itemView,
-                        getCountText(getSelectedDays(property), viewHolder.context)
-                    )
+                    if (property.showBubbleMessage)
+                        createToolTip(
+                            viewHolder.itemView,
+                            getCountText(getSelectedDays(property), viewHolder.context)
+                        )
                 }
             }
         }
@@ -214,6 +216,9 @@ class RangeSelection(
     }
 
     private fun createToolTip(view: View, text: CharSequence) {
+        val displayWidth = view.context.resources.displayMetrics.widthPixels
+        val displayHeight = view.context.resources.displayMetrics.heightPixels
+
         view.doOnLayout {
             val parent = view.parent as ViewGroup
             val bubbleLayout = LayoutInflater
@@ -224,7 +229,6 @@ class RangeSelection(
             view.getLocationInWindow(location)
             val x = location[0]
             val y = location[1]
-            val displayWidth = view.context.resources.displayMetrics.widthPixels
             val popupWindow = BubblePopupHelper.create(view.context, bubbleLayout)
             val magicNumber = (view.width / 2).toFloat() - view.dp(4)
 
@@ -234,7 +238,7 @@ class RangeSelection(
                     view,
                     Gravity.START or Gravity.TOP,
                     x,
-                    y - (view.height - (view.height / 4))
+                    y - (displayWidth % view.width)
                 )
             } else {
                 bubbleLayout.arrowPosition = bubbleLayout.apply {
@@ -250,7 +254,7 @@ class RangeSelection(
                     view,
                     Gravity.END or Gravity.TOP,
                     displayWidth - (x + view.width),
-                    y - (view.height - (view.height / 4))
+                    y - (displayWidth % view.width)
                 )
             }
         }
