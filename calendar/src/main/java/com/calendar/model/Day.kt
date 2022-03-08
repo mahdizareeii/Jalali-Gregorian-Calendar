@@ -23,8 +23,6 @@ data class Day constructor(
     var isHoliday: Boolean = false
     var isDisable: Boolean = false
 
-    val dayVisibility get() = if (day != -1) View.VISIBLE else View.INVISIBLE
-
     /**
      * @param price hold price of the date
      * @param isHoliday if be true the color of date in calendar will change

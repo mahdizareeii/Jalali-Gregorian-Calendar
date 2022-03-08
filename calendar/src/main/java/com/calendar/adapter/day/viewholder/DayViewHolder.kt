@@ -23,7 +23,7 @@ internal open class DayViewHolder(
     val txtPrice: AppCompatTextView = view.findViewById(R.id.txt_price)
 
     open fun bind(day: Day) {
-        this.itemView.visibility = day.dayVisibility
+        this.itemView.visibility = dayVisibility(day.day)
         textColor(this, day)
         txtDay.text = day.day.toString()
         bgDay.setOnClickListener {
@@ -36,6 +36,8 @@ internal open class DayViewHolder(
             listener
         )
     }
+
+    private fun dayVisibility(day:Int) = if (day != -1) View.VISIBLE else View.INVISIBLE
 
     private fun textColor(viewHolder: DayViewHolder, currentDay: Day) {
         val color = ContextCompat.getColor(
