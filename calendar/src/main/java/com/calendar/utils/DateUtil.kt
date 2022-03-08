@@ -10,6 +10,10 @@ object DateUtil {
     /**
      * @return IntArray of jalali date for example : intArrayOf(1450, 1, 1)
      */
+    fun gregorianToJalali(day: Day?): IntArray? {
+        day ?: return null
+        return gregorianToJalali(day.year, day.month, day.day)
+    }
     fun gregorianToJalali(year: Int, month: Int, day: Int): IntArray {
         val gregorianDayMonth: IntArray =
             intArrayOf(0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334)
@@ -39,6 +43,10 @@ object DateUtil {
     /**
      * @return IntArray of gregorian date for example : intArrayOf(2050, 1, 1)
      */
+    fun jalaliToGregorian(day: Day?): IntArray?{
+        day ?: return null
+        return jalaliToGregorian(day.year, day.month, day.day)
+    }
     fun jalaliToGregorian(year: Int, month: Int, day: Int): IntArray {
         val yearTemp = year + 1595
         var days =
