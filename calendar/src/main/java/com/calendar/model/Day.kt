@@ -1,7 +1,5 @@
 package com.calendar.model
 
-import android.view.View
-
 /**
  * Gregorian date sample
  * @sample Day(2050,1,1)
