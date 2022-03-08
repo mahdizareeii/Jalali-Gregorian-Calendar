@@ -84,10 +84,9 @@ class RangeSelection(
             when {
                 checkIn == currentDay -> R.drawable.bg_day_range_start
                 checkOut == currentDay -> R.drawable.bg_day_range_end
-                else ->
-                    if (checkIn < currentDay && checkOut > currentDay)
-                        R.drawable.bg_day_selected
-                    else R.drawable.bg_day
+                else -> if (checkIn < currentDay && checkOut > currentDay)
+                    R.drawable.bg_day_selected
+                else R.drawable.bg_day
             }
         } else {
             if (checkIn != null && checkIn == currentDay)

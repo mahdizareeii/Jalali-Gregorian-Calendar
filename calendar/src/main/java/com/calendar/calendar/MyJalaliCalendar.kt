@@ -10,11 +10,11 @@ class MyJalaliCalendar() : BaseCalendar() {
     var persianDate: IntArray = intArrayOf(0, 0, 0)
     var persianDateAsString: String? = null
 
-    constructor(year: Int, month: Int, day: Int) : this() {
+    constructor(gregorianYear: Int, gregorianMonth: Int, gregorianDay: Int) : this() {
         persianDate = DateUtil.gregorianToJalali(
-            year,
-            month,
-            day
+            gregorianYear,
+            gregorianMonth,
+            gregorianDay
         )
         persianDateAsString = persianDate.joinToString("-")
     }
