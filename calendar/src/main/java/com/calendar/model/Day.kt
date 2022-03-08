@@ -15,8 +15,7 @@ import android.view.View
 data class Day constructor(
     val year: Int,
     val month: Int,
-    val day: Int,
-    val isGregorianDate: Boolean
+    val day: Int
 ) {
 
     var price: Double? = null
@@ -35,11 +34,10 @@ data class Day constructor(
         year: Int,
         month: Int,
         day: Int,
-        isGregorianDate: Boolean,
         price: Double?,
         isHoliday: Boolean = false,
         isDisable: Boolean = false
-    ) : this(year, month, day, isGregorianDate) {
+    ) : this(year, month, day) {
         this.price = price
         this.isHoliday = isHoliday
         this.isDisable = isDisable

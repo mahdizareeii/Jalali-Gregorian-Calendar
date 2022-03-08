@@ -44,13 +44,12 @@ data class Month(
                 calendar.generateDays().map {
                     if (it == -1) {
                         //shift days
-                        Day(-1, -1, -1, false)
+                        Day(-1, -1, -1)
                     } else {
                         val day = Day(
                             year = calendar.getYear(),
                             month = calendar.getMonth() + 1,
-                            day = it,
-                            isGregorianDate = calendar is MyGregorianCalendar
+                            day = it
                         )
 
                         customDays.firstOrNull { customDay -> customDay == day } ?: day

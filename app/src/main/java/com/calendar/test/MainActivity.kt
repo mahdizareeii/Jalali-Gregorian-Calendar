@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.calendar.CalendarProperties
 import com.calendar.CalendarProperties.Companion.VERTICAL
 import com.calendar.CalendarView
-import com.calendar.availablity.BaseAvailabilityRule
 import com.calendar.availablity.RangePriceSelectionAvailabilityRule
 import com.calendar.calendar.RegionalType
 import com.calendar.model.Day
@@ -28,12 +27,12 @@ class MainActivity : AppCompatActivity(), RangeSelectionListener {
                 calendarOrientation = VERTICAL,
                 showBubbleMessage = true,
                 availabilityRule = RangePriceSelectionAvailabilityRule(
-                    true,
-                    true
+                    availableFromToday = true,
+                    unAvailableDisableDays = true
                 ),
                 minDaysInRangeSelection = 2,
                 customDays = arrayListOf(
-                    Day(1400,12,19,false,560000.0)
+                    Day(1400, 12, 19, 560000.0)
                 )
             )
         )
@@ -52,34 +51,34 @@ class MainActivity : AppCompatActivity(), RangeSelectionListener {
     private fun agendaList(month: Int, year: Int) = arrayListOf<Day>().apply {
         for (i in 1..29) {
             add(
-                Day(year, month, i, false)
+                Day(year, month, i)
             )
         }
     }
 
     private fun agendaRangeList1() = arrayListOf(
         DayRange(
-            startDate = Day(1400, 12, 5, false),
-            endDate = Day(1400, 12, 12, false)
+            startDate = Day(1400, 12, 5),
+            endDate = Day(1400, 12, 12)
         ),
         DayRange(
-            startDate = Day(1400, 12, 15, false),
-            endDate = Day(1400, 12, 18, false)
+            startDate = Day(1400, 12, 15),
+            endDate = Day(1400, 12, 18)
         )
     )
 
     private fun agendaRangeList2() = arrayListOf(
         DayRange(
-            startDate = Day(1400, 12, 25, false),
-            endDate = Day(1401, 1, 5, false)
+            startDate = Day(1400, 12, 25),
+            endDate = Day(1401, 1, 5)
         ),
         DayRange(
-            startDate = Day(1401, 2, 1, false),
-            endDate = Day(1401, 2, 6, false)
+            startDate = Day(1401, 2, 1),
+            endDate = Day(1401, 2, 6)
         ),
         DayRange(
-            startDate = Day(1401, 2, 10, false),
-            endDate = Day(1401, 2, 15, false)
+            startDate = Day(1401, 2, 10),
+            endDate = Day(1401, 2, 15)
         )
     )
 

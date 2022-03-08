@@ -80,7 +80,7 @@ class MyJalaliCalendar() : BaseCalendar() {
             todayCalendar.get(Calendar.MONTH) + 1,
             todayCalendar.get(Calendar.DAY_OF_MONTH)
         )
-        return Day(today[0], today[1], today[2], false)
+        return Day(today[0], today[1], today[2])
     }
 
     override fun getNextDates(field: Int, value: Int): List<Month> {
@@ -102,8 +102,8 @@ class MyJalaliCalendar() : BaseCalendar() {
         )
 
         return getMonthsBetweenDateRange(
-            startDay = Day(todayJalali[0], todayJalali[1], 1, false),
-            endDay = Day(nextJalali[0], nextJalali[1], 1, false)
+            startDay = Day(todayJalali[0], todayJalali[1], 1),
+            endDay = Day(nextJalali[0], nextJalali[1], 1)
         )
     }
 
