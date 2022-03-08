@@ -51,7 +51,7 @@ class SingleSelection(
     ): Int {
         return if (selectedSingle != null) {
             when (selectedSingle) {
-                currentDay -> R.drawable.bg_day_single_selected
+                currentDay -> R.drawable.bg_day_circular_single_selected
                 else -> R.drawable.bg_day
             }
         } else {
