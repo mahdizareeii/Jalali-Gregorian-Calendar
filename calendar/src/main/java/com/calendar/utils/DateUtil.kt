@@ -14,7 +14,9 @@ object DateUtil {
         day ?: return null
         return gregorianToJalali(day.year, day.month, day.day)
     }
-    fun gregorianToJalali(year: Int, month: Int, day: Int): IntArray {
+
+    fun gregorianToJalali(year: Int?, month: Int?, day: Int?): IntArray? {
+        if (year == null || month == null || day == null) return null
         val gregorianDayMonth: IntArray =
             intArrayOf(0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334)
         val gy2 = if (month > 2) (year + 1) else year
@@ -43,11 +45,13 @@ object DateUtil {
     /**
      * @return IntArray of gregorian date for example : intArrayOf(2050, 1, 1)
      */
-    fun jalaliToGregorian(day: Day?): IntArray?{
+    fun jalaliToGregorian(day: Day?): IntArray? {
         day ?: return null
         return jalaliToGregorian(day.year, day.month, day.day)
     }
-    fun jalaliToGregorian(year: Int, month: Int, day: Int): IntArray {
+
+    fun jalaliToGregorian(year: Int?, month: Int?, day: Int?): IntArray? {
+        if (year == null || month == null || day == null) return null
         val yearTemp = year + 1595
         var days =
             -355668 + (365 * yearTemp) + ((yearTemp / 33) * 8) + (((yearTemp % 33) + 3) / 4) + day + (if (month < 7) ((month - 1) * 31) else (((month - 7) * 30) + 186))
@@ -103,8 +107,8 @@ object DateUtil {
 
         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         sdf.timeZone = TimeZone.getTimeZone("UTC")
-        val startDate = sdf.parse("${startGregorian[0]}-${startGregorian[1]}-${startGregorian[2]}")
-        val endDate = sdf.parse("${endGregorian[0]}-${endGregorian[1]}-${endGregorian[2]}")
+        val startDate = sdf.parse("${startGregorian?.getOrNull(0)}-${startGregorian?.getOrNull(1)}-${startGregorian?.getOrNull(2)}")
+        val endDate = sdf.parse("${endGregorian?.getOrNull(0)}-${endGregorian?.getOrNull(1)}-${endGregorian?.getOrNull(2)}")
 
         return operateDiffs(startDate, endDate)
     }

@@ -20,23 +20,20 @@ class MainActivity : AppCompatActivity(), RangeSelectionListener {
         setContentView(R.layout.activity_main)
         val calendar = findViewById<CalendarView>(R.id.calendarView)
 
-        calendar.initCalendar(
-            CalendarProperties(
-                regionalType = RegionalType.Jalali,
-                calendarType = RangeSelection(this),
-                calendarOrientation = VERTICAL,
-                showBubbleMessage = true,
-                availabilityRule = RangePriceSelectionAvailabilityRule(
-                    availableFromToday = true,
-                    unAvailableDisableDays = true
-                ),
-                minDaysInRangeSelection = 2,
-                customDays = arrayListOf(
-                    Day(1400, 12, 19, 560000.0)
-                )
+        calendar.properties = CalendarProperties(
+            regionalType = RegionalType.Jalali,
+            calendarType = RangeSelection(this),
+            calendarOrientation = VERTICAL,
+            showBubbleMessage = true,
+            availabilityRule = RangePriceSelectionAvailabilityRule(
+                availableFromToday = true,
+                unAvailableDisableDays = true
+            ),
+            minDaysInRangeSelection = 2,
+            customDays = arrayListOf(
+                Day(1400, 12, 19, 560000.0)
             )
         )
-
         calendar.submitNextDates(Calendar.MONTH, 3)
     }
 

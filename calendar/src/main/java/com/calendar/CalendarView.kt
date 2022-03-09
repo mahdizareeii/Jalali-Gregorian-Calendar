@@ -16,8 +16,10 @@ class CalendarView @JvmOverloads constructor(
     defStyle: Int = 0
 ) : LinearLayout(context, attrs, defStyle) {
 
+    lateinit var properties: CalendarProperties
     private lateinit var calendar: BaseCalendar
     private lateinit var adapter: MonthAdapter
+    private lateinit var layoutManager: LinearLayoutManager
     private var recyclerView: RecyclerView
 
     init {
@@ -31,18 +33,26 @@ class CalendarView @JvmOverloads constructor(
      *  @param value the value that increase up field
      */
     fun submitNextDates(field: Int, value: Int) {
+        initCalendar()
         adapter.submitList(calendar.getNextDates(field, value))
     }
 
-    /**
-     * @param properties set properties of calendar
-     */
-    fun initCalendar(
-        properties: CalendarProperties
-    ) {
+    fun clearSelection() {
+        properties.selectedCheckIn = null
+        properties.selectedCheckOut = null
+        properties.selectedSingle = null
+        properties.selectedMultipleDay = arrayListOf()
+        adapter.onDaysNotifyDataSetChanged()
+    }
+
+    fun goToMonthPosition(position: Int) = recyclerView.scrollToPosition(position)
+
+    fun getCurrentMonthPosition() = layoutManager.findFirstVisibleItemPosition()
+
+    private fun initCalendar() {
         calendar = properties.regionalType.calendar
 
-        val layoutManager = LinearLayoutManager(
+        layoutManager = LinearLayoutManager(
             context,
             properties.calendarOrientation,
             properties.calendarIsReverse()
