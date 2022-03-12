@@ -18,9 +18,9 @@ class SingleSelection(
         properties: CalendarProperties,
         listener: DaysAdapterListener
     ) -> Unit
-        get() = { viewHolder, dayItem, properties, listener ->
-            if (checkAvailability(viewHolder, dayItem, properties)) {
-                onDayClicked(properties, dayItem, singleSelectionListener)
+        get() = { viewHolder, day, properties, listener ->
+            if (checkAvailability(viewHolder, day, properties)) {
+                onDayClicked(properties, day, singleSelectionListener)
                 listener.onDaysNotifyDataSetChanged()
             }
         }

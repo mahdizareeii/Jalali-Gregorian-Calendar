@@ -3,24 +3,29 @@ package com.calendar.availablity
 import com.calendar.calendar.MyJalaliCalendar
 import com.calendar.model.Day
 import com.calendar.CalendarProperties
+import com.calendar.types.rangeslelection.RangeSelection
 import com.calendar.utils.DateUtil
 
 class RangePriceSelectionAvailabilityRule(
-    availableFromToday: Boolean,
-    unAvailableDisableDays: Boolean
-) : BaseAvailabilityRule(availableFromToday, unAvailableDisableDays) {
+    availableFromToday: Boolean
+) : BaseAvailabilityRule(availableFromToday) {
 
     override fun isAvailable(
         currentDay: Day,
         properties: CalendarProperties
     ): Boolean {
+        val minDaysInRangeSelection = when (val type = properties.calendarType) {
+            is RangeSelection -> type.minDaysInRangeSelection
+            else -> 1
+        }
         return when {
             properties.isCheckInSelect() -> {
                 checkAvailabilityFromToday(currentDay, properties.getToday()) &&
                         getDifDaysFromCheckIn(
                             currentDay,
-                            properties
-                        ) >= properties.minDaysInRangeSelection &&
+                            properties,
+                            minDaysInRangeSelection
+                        ) >= minDaysInRangeSelection &&
                         !properties.customDays.any {
                             it < currentDay && properties.selectedCheckIn!! < it && it.isDisable
                         } &&
@@ -36,7 +41,11 @@ class RangePriceSelectionAvailabilityRule(
         }
     }
 
-    private fun getDifDaysFromCheckIn(currentDay: Day, properties: CalendarProperties) =
+    private fun getDifDaysFromCheckIn(
+        currentDay: Day,
+        properties: CalendarProperties,
+        minDaysInRangeSelection: Int
+    ) =
         if (currentDay.isNotEmptyDay() && currentDay > properties.selectedCheckIn) {
             if (properties.regionalType.calendar is MyJalaliCalendar) {
                 DateUtil.diffDaysJalali(
@@ -62,6 +71,6 @@ class RangePriceSelectionAvailabilityRule(
                 )[1].toInt()
             }
         else {
-            properties.minDaysInRangeSelection
+            minDaysInRangeSelection
         }
 }

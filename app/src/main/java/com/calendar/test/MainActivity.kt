@@ -22,14 +22,11 @@ class MainActivity : AppCompatActivity(), RangeSelectionListener {
 
         calendar.properties = CalendarProperties(
             regionalType = RegionalType.Jalali,
-            calendarType = RangeSelection(this),
+            calendarType = RangeSelection(1,true,this),
             calendarOrientation = VERTICAL,
-            showBubbleMessage = true,
             availabilityRule = RangePriceSelectionAvailabilityRule(
-                availableFromToday = true,
-                unAvailableDisableDays = true
+                availableFromToday = true
             ),
-            minDaysInRangeSelection = 2,
             customDays = arrayListOf(
                 Day(1400, 12, 19, 560000.0)
             )

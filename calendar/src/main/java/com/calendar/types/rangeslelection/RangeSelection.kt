@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.IntRange
 import androidx.core.content.ContextCompat
 import androidx.core.view.doOnLayout
 import com.calendar.CalendarProperties
@@ -25,6 +26,9 @@ import com.calendar.utils.dp
 import com.calendar.utils.setBackgroundFromDrawable
 
 class RangeSelection(
+    @IntRange(from = 1)
+    val minDaysInRangeSelection: Int = 1,
+    private val showBubbleMessage: Boolean,
     private val rangeSelectionListener: RangeSelectionListener
 ) : CalendarType() {
 
@@ -34,9 +38,9 @@ class RangeSelection(
         properties: CalendarProperties,
         listener: DaysAdapterListener
     ) -> Unit
-        get() = { viewHolder, dayItem, properties, listener ->
-            if (checkAvailability(viewHolder, dayItem, properties)) {
-                onDayClicked(viewHolder, properties, dayItem, rangeSelectionListener)
+        get() = { viewHolder, day, properties, listener ->
+            if (checkAvailability(viewHolder, day, properties)) {
+                onDayClicked(viewHolder, properties, day, rangeSelectionListener)
                 listener.onDaysNotifyDataSetChanged()
             }
         }
@@ -114,10 +118,10 @@ class RangeSelection(
                     selectedCheckIn = currentDay
                     selectedCheckOut = null
                     listener.onCheckInSelected(selectedCheckIn!!)
-                    if (property.showBubbleMessage)
+                    if (showBubbleMessage)
                         createToolTip(
                             viewHolder.itemView,
-                            createMinNightText(property.minDaysInRangeSelection, viewHolder.context)
+                            createMinNightText(minDaysInRangeSelection, viewHolder.context)
                         )
                 }
                 else -> {
@@ -130,7 +134,7 @@ class RangeSelection(
                         selectedCheckOut = currentDay
                         listener.onCheckOutSelected(selectedCheckOut!!)
                     }
-                    if (property.showBubbleMessage)
+                    if (showBubbleMessage)
                         createToolTip(
                             viewHolder.itemView,
                             getCountText(getSelectedDays(property), viewHolder.context)

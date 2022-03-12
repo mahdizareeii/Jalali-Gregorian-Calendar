@@ -1,6 +1,5 @@
 package com.calendar
 
-import androidx.annotation.IntRange
 import androidx.recyclerview.widget.RecyclerView
 import com.calendar.adapter.day.viewholder.DayViewHolderType
 import com.calendar.availablity.BaseAvailabilityRule
@@ -15,17 +14,13 @@ import com.calendar.types.CalendarType
  *  @property regionalType set regional type of calendar
  *  @property calendarType set calendar view type
  *  @property calendarOrientation set orientation of calendar (HORIZONTAL,VERTICAL)
- *  @property showBubbleMessage if be true the calendar will show bubble message when select date
  *  @property availabilityRule for decision of check days availability
  */
 class CalendarProperties {
     val regionalType: RegionalType
     val calendarType: CalendarType
     var calendarOrientation: Int = 0
-    var showBubbleMessage: Boolean = false
 
-    @IntRange(from = 1)
-    var minDaysInRangeSelection: Int = 1
     var availabilityRule: BaseAvailabilityRule
 
     //for set custom days pricing and etc
@@ -47,13 +42,11 @@ class CalendarProperties {
     //for AgendaRangeDaysViewHolder
     var agendaRangeDays: ArrayList<AgendaDayRange> = ArrayList()
 
-    private constructor(
+    constructor(
         regionalType: RegionalType,
         calendarType: CalendarType,
         calendarOrientation: Int,
         availabilityRule: BaseAvailabilityRule,
-        @IntRange(from = 1) minDaysInRangeSelection: Int = 1,
-        customDays: ArrayList<Day> = ArrayList(),
         selectedCheckIn: Day? = null,
         selectedCheckOut: Day? = null,
         selectedMultipleDay: ArrayList<Day> = ArrayList(),
@@ -63,12 +56,13 @@ class CalendarProperties {
         this.calendarType = calendarType
         this.calendarOrientation = calendarOrientation
         this.availabilityRule = availabilityRule
-        this.minDaysInRangeSelection = minDaysInRangeSelection
-        this.customDays = customDays
         this.selectedCheckIn = selectedCheckIn
         this.selectedCheckOut = selectedCheckOut
         this.selectedMultipleDay = selectedMultipleDay
         this.selectedSingle = selectedSingle
+        if (dayViewHolderType == DayViewHolderType.Unknown) {
+            dayViewHolderType = DayViewHolderType.DayViewHolder
+        }
     }
 
     /**
@@ -79,8 +73,6 @@ class CalendarProperties {
         calendarType: CalendarType,
         calendarOrientation: Int,
         availabilityRule: BaseAvailabilityRule,
-        showBubbleMessage: Boolean,
-        @IntRange(from = 1) minDaysInRangeSelection: Int = 1,
         agendaDays: ArrayList<AgendaDays>,
         customDays: ArrayList<Day>,
         selectedCheckIn: Day? = null,
@@ -92,8 +84,6 @@ class CalendarProperties {
         calendarType = calendarType,
         calendarOrientation = calendarOrientation,
         availabilityRule = availabilityRule,
-        minDaysInRangeSelection = minDaysInRangeSelection,
-        customDays = customDays,
         selectedCheckIn = selectedCheckIn,
         selectedCheckOut = selectedCheckOut,
         selectedMultipleDay = selectedMultipleDay,
@@ -101,7 +91,7 @@ class CalendarProperties {
     ) {
         dayViewHolderType = DayViewHolderType.AgendaDaysPriceViewHolder
         this.agendaDays = agendaDays
-        this.showBubbleMessage = showBubbleMessage
+        this.customDays = customDays
     }
 
     /**
@@ -117,38 +107,10 @@ class CalendarProperties {
         regionalType = regionalType,
         calendarType = calendarType,
         calendarOrientation = calendarOrientation,
-        availabilityRule = availabilityRule,
-        customDays = arrayListOf()
+        availabilityRule = availabilityRule
     ) {
         dayViewHolderType = DayViewHolderType.AgendaRangeDaysViewHolder
         this.agendaRangeDays = agendaRangeDays
-    }
-
-    /**
-     * DayViewHolder
-     */
-    constructor(
-        regionalType: RegionalType,
-        calendarType: CalendarType,
-        calendarOrientation: Int,
-        availabilityRule: BaseAvailabilityRule,
-        selectedCheckIn: Day? = null,
-        selectedCheckOut: Day? = null,
-        selectedMultipleDay: ArrayList<Day> = arrayListOf(),
-        selectedSingle: Day? = null
-    ) : this(
-        regionalType = regionalType,
-        calendarType = calendarType,
-        calendarOrientation = calendarOrientation,
-        availabilityRule = availabilityRule,
-        minDaysInRangeSelection = 1,
-        customDays = arrayListOf(),
-        selectedCheckIn = selectedCheckIn,
-        selectedCheckOut = selectedCheckOut,
-        selectedMultipleDay = selectedMultipleDay,
-        selectedSingle = selectedSingle
-    ) {
-        dayViewHolderType = DayViewHolderType.DayViewHolder
     }
 
     /**
@@ -158,28 +120,24 @@ class CalendarProperties {
         regionalType: RegionalType,
         calendarType: CalendarType,
         calendarOrientation: Int,
-        showBubbleMessage: Boolean,
         availabilityRule: BaseAvailabilityRule,
-        @IntRange(from = 1) minDaysInRangeSelection: Int = 1,
         customDays: ArrayList<Day>,
         selectedCheckIn: Day? = null,
         selectedCheckOut: Day? = null,
         selectedMultipleDay: ArrayList<Day> = arrayListOf(),
-        selectedSingle: Day? = null,
+        selectedSingle: Day? = null
     ) : this(
         regionalType = regionalType,
         calendarType = calendarType,
         calendarOrientation = calendarOrientation,
         availabilityRule = availabilityRule,
-        minDaysInRangeSelection = minDaysInRangeSelection,
-        customDays = customDays,
         selectedCheckIn = selectedCheckIn,
         selectedCheckOut = selectedCheckOut,
         selectedMultipleDay = selectedMultipleDay,
         selectedSingle = selectedSingle
     ) {
         dayViewHolderType = DayViewHolderType.DayPriceViewHolder
-        this.showBubbleMessage = showBubbleMessage
+        this.customDays = customDays
     }
 
     internal var dayViewHolderType = DayViewHolderType.Unknown
