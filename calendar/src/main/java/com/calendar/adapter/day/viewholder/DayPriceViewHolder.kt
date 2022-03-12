@@ -15,9 +15,9 @@ internal open class DayPriceViewHolder(
 ) : DayViewHolder(view, properties, listener) {
 
     override fun bind(day: Day, position: Int) {
-        super.bind(day, position)
         txtPrice.isVisible = txtPriceVisibility(day)
         txtPrice.text = getPrice(day)
+        super.bind(day, position)
     }
 
     private fun txtPriceVisibility(currentDay: Day) = properties.selectedCheckOut != currentDay
