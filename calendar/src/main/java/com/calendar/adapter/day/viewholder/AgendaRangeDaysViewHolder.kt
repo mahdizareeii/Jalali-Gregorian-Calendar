@@ -21,8 +21,8 @@ internal class AgendaRangeDaysViewHolder(
     private val imgStartAgenda: AppCompatImageView = view.findViewById(R.id.img_start_day_agenda)
     private val imgEndAgenda: AppCompatImageView = view.findViewById(R.id.img_end_day_agenda)
 
-    override fun bind(day: Day) {
-        super.bind(day)
+    override fun bind(day: Day, position: Int) {
+        super.bind(day, position)
         initRangeAgendaDays(day)
     }
 

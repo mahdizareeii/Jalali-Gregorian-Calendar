@@ -70,7 +70,7 @@ internal class DaysAdapter(
     }
 
     override fun onBindViewHolder(holder: DayViewHolder, position: Int) {
-        holder.bind(dayList[position])
+        holder.bind(dayList[position], position)
     }
 
     override fun getItemCount(): Int = dayList.size

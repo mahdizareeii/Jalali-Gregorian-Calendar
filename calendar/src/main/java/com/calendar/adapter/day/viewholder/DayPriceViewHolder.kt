@@ -14,8 +14,8 @@ internal open class DayPriceViewHolder(
     listener: DaysAdapterListener
 ) : DayViewHolder(view, properties, listener) {
 
-    override fun bind(day: Day) {
-        super.bind(day)
+    override fun bind(day: Day, position: Int) {
+        super.bind(day, position)
         txtPrice.isVisible = txtPriceVisibility(day)
         txtPrice.text = getPrice(day)
     }

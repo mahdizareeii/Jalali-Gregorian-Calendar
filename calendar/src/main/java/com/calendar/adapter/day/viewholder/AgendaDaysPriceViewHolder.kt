@@ -16,8 +16,8 @@ internal class AgendaDaysPriceViewHolder(
 ) : DayPriceViewHolder(view, properties, listener) {
     private val imgDayAgenda: AppCompatImageView = view.findViewById(R.id.img_day_agenda)
 
-    override fun bind(day: Day) {
-        super.bind(day)
+    override fun bind(day: Day, position: Int) {
+        super.bind(day, position)
         initAgendaDay(day)
     }
 
