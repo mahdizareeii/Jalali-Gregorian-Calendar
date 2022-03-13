@@ -1,7 +1,6 @@
 package com.calendar.model
 
 import com.calendar.calendar.BaseCalendar
-import com.calendar.calendar.MyGregorianCalendar
 import java.util.*
 
 /**
@@ -36,9 +35,9 @@ data class Month(
 
     /**
      * if you want to change shift day parameters
-     * @see Day.isNotEmptyDay method and refactor that depend on your parameters
+     * @see Day.isEmptyDay method and refactor that depend on your parameters
      */
-    fun generateDays(customDays: List<Day>): List<Day> {
+    fun generateDays(justAvailableCustomDays: Boolean, customDays: List<Day>): List<Day> {
         if (days.isNullOrEmpty()) {
             days.addAll(
                 calendar.generateDays().map {
@@ -52,7 +51,12 @@ data class Month(
                             day = it
                         )
 
-                        customDays.firstOrNull { customDay -> customDay == day } ?: day
+                        if (justAvailableCustomDays)
+                            customDays.firstOrNull { customDay -> customDay == day } ?: day.apply {
+                                status = DayStatus.UN_AVAILABLE
+                            }
+                        else
+                            customDays.firstOrNull { customDay -> customDay == day } ?: day
                     }
                 }
             )

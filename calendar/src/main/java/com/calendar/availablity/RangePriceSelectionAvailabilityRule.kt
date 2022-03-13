@@ -1,8 +1,9 @@
 package com.calendar.availablity
 
+import com.calendar.CalendarProperties
 import com.calendar.calendar.MyJalaliCalendar
 import com.calendar.model.Day
-import com.calendar.CalendarProperties
+import com.calendar.model.DayStatus
 import com.calendar.types.rangeslelection.RangeSelection
 import com.calendar.utils.DateUtil
 
@@ -20,21 +21,21 @@ class RangePriceSelectionAvailabilityRule(
         }
         return when {
             properties.isCheckInSelect() -> {
-                checkAvailabilityFromToday(currentDay, properties.getToday()) &&
-                        getDifDaysFromCheckIn(
-                            currentDay,
-                            properties,
-                            minDaysInRangeSelection
-                        ) >= minDaysInRangeSelection &&
-                        !properties.customDays.any {
-                            it < currentDay && properties.selectedCheckIn!! < it && it.isDisable
-                        } &&
-                        !properties.customDays.any {
-                            it >= currentDay && properties.selectedCheckIn!! > it && it.isDisable
-                        }
+                checkAvailabilityFromToday(
+                    currentDay,
+                    properties.getToday()
+                ) && getDifDaysFromCheckIn(
+                    currentDay,
+                    properties,
+                    minDaysInRangeSelection
+                ) >= minDaysInRangeSelection && !properties.customDays.any {
+                    it < currentDay && properties.selectedCheckIn!! < it && it.status != DayStatus.AVAILABLE
+                } && !properties.customDays.any {
+                    it >= currentDay && properties.selectedCheckIn!! > it && it.status != DayStatus.AVAILABLE
+                }
             }
             properties.isCheckOutSelect() -> {
-                if (currentDay.isDisable && currentDay == properties.selectedCheckOut) true
+                if (currentDay.status != DayStatus.AVAILABLE && currentDay == properties.selectedCheckOut) true
                 else super.isAvailable(currentDay, properties)
             }
             else -> super.isAvailable(currentDay, properties)
@@ -45,8 +46,9 @@ class RangePriceSelectionAvailabilityRule(
         currentDay: Day,
         properties: CalendarProperties,
         minDaysInRangeSelection: Int
-    ) =
-        if (currentDay.isNotEmptyDay() && currentDay > properties.selectedCheckIn) {
+    ): Int {
+        if (currentDay.isEmptyDay()) return minDaysInRangeSelection
+        return if (currentDay > properties.selectedCheckIn) {
             if (properties.regionalType.calendar is MyJalaliCalendar) {
                 DateUtil.diffDaysJalali(
                     properties.selectedCheckIn,
@@ -58,7 +60,7 @@ class RangePriceSelectionAvailabilityRule(
                     currentDay,
                 )[1].toInt()
             }
-        } else if (currentDay.isNotEmptyDay() && currentDay < properties.selectedCheckIn)
+        } else if (currentDay < properties.selectedCheckIn)
             if (properties.regionalType.calendar is MyJalaliCalendar) {
                 DateUtil.diffDaysJalali(
                     currentDay,
@@ -73,4 +75,5 @@ class RangePriceSelectionAvailabilityRule(
         else {
             minDaysInRangeSelection
         }
+    }
 }

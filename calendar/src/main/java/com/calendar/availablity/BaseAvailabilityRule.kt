@@ -2,6 +2,7 @@ package com.calendar.availablity
 
 import com.calendar.CalendarProperties
 import com.calendar.model.Day
+import com.calendar.model.DayStatus
 
 open class BaseAvailabilityRule(
     private val availableFromToday: Boolean
@@ -13,8 +14,8 @@ open class BaseAvailabilityRule(
     ): Boolean {
         val fromToday = checkAvailabilityFromToday(currentDay, properties.getToday())
         return when (availableFromToday) {
-            true -> fromToday && !currentDay.isDisable
-            false -> !currentDay.isDisable
+            true -> fromToday && currentDay.status == DayStatus.AVAILABLE
+            false -> currentDay.status == DayStatus.AVAILABLE
         }
     }
 

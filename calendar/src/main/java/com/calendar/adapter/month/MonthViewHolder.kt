@@ -50,7 +50,12 @@ internal class MonthViewHolder(
                 adapter?.notifyDataSetChanged()
             }
         }
-        adapter?.submitList(month.generateDays(properties.customDays))
+        adapter?.submitList(
+            month.generateDays(
+                properties.justAvailableCustomDays,
+                properties.customDays
+            )
+        )
         txtMonth.text = String.format("${month.getYear} - ${month.getMonthName}")
         initArrows(monthSize, position, listener)
         initAgendaDesc(month)
@@ -58,10 +63,7 @@ internal class MonthViewHolder(
     }
 
     private fun initRecyclerView() {
-        adapter = DaysAdapter(
-            properties,
-            daysAdapterListener
-        )
+        adapter = DaysAdapter(properties, daysAdapterListener)
         rvDays.layoutManager = FlexboxLayoutManager(context).apply {
             flexDirection = FlexDirection.ROW_REVERSE
             alignItems = AlignItems.CENTER

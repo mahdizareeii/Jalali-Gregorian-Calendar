@@ -10,6 +10,7 @@ import com.calendar.availablity.RangePriceSelectionAvailabilityRule
 import com.calendar.calendar.RegionalType
 import com.calendar.model.Day
 import com.calendar.model.DayRange
+import com.calendar.model.DayStatus
 import com.calendar.types.rangeslelection.RangeSelection
 import com.calendar.types.rangeslelection.RangeSelectionListener
 import java.util.*
@@ -22,14 +23,15 @@ class MainActivity : AppCompatActivity(), RangeSelectionListener {
 
         calendar.properties = CalendarProperties(
             regionalType = RegionalType.Jalali,
-            calendarType = RangeSelection(1,true,this),
+            calendarType = RangeSelection(2,true,this),
             calendarOrientation = VERTICAL,
             availabilityRule = RangePriceSelectionAvailabilityRule(
                 availableFromToday = true
             ),
             customDays = arrayListOf(
-                Day(1400, 12, 19, 560000.0)
-            )
+                Day(1400, 12, 28, 560000.0, status = DayStatus.UN_AVAILABLE)
+            ),
+            justAvailableCustomDays = false
         )
         calendar.submitNextDates(Calendar.MONTH, 3)
     }

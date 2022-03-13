@@ -22,6 +22,7 @@ class CalendarProperties {
     var calendarOrientation: Int = 0
 
     var availabilityRule: BaseAvailabilityRule
+    var justAvailableCustomDays: Boolean = false
 
     //for set custom days pricing and etc
     var customDays: ArrayList<Day> = ArrayList()
@@ -73,6 +74,7 @@ class CalendarProperties {
         calendarType: CalendarType,
         calendarOrientation: Int,
         availabilityRule: BaseAvailabilityRule,
+        justAvailableCustomDays: Boolean,
         agendaDays: ArrayList<AgendaDays>,
         customDays: ArrayList<Day>,
         selectedCheckIn: Day? = null,
@@ -90,6 +92,7 @@ class CalendarProperties {
         selectedSingle = selectedSingle
     ) {
         dayViewHolderType = DayViewHolderType.AgendaDaysPriceViewHolder
+        this.justAvailableCustomDays = justAvailableCustomDays
         this.agendaDays = agendaDays
         this.customDays = customDays
     }
@@ -121,6 +124,7 @@ class CalendarProperties {
         calendarType: CalendarType,
         calendarOrientation: Int,
         availabilityRule: BaseAvailabilityRule,
+        justAvailableCustomDays: Boolean,
         customDays: ArrayList<Day>,
         selectedCheckIn: Day? = null,
         selectedCheckOut: Day? = null,
@@ -137,6 +141,7 @@ class CalendarProperties {
         selectedSingle = selectedSingle
     ) {
         dayViewHolderType = DayViewHolderType.DayPriceViewHolder
+        this.justAvailableCustomDays = justAvailableCustomDays
         this.customDays = customDays
     }
 

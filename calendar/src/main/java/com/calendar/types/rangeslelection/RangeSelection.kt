@@ -18,6 +18,7 @@ import com.calendar.adapter.day.DaysAdapterListener
 import com.calendar.adapter.day.viewholder.DayViewHolder
 import com.calendar.calendar.RegionalType
 import com.calendar.model.Day
+import com.calendar.model.DayStatus
 import com.calendar.types.CalendarType
 import com.calendar.utils.DateUtil
 import com.calendar.utils.bubbleview.BubbleLayout
@@ -111,7 +112,7 @@ class RangeSelection(
                     selectedCheckIn = null
                     selectedCheckOut = null
                 }
-                isCheckOutSelect() && currentDay == selectedCheckOut && currentDay.isDisable -> {
+                isCheckOutSelect() && currentDay == selectedCheckOut && currentDay.status != DayStatus.AVAILABLE -> {
                     return
                 }
                 selectedCheckIn == currentDay || selectedCheckIn == null || isCheckOutSelect() -> {

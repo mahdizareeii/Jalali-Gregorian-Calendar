@@ -19,12 +19,12 @@ data class Day constructor(
     var price: Double? = null
     var discount: Double? = null
     var isHoliday: Boolean = false
-    var isDisable: Boolean = false
+    var status: DayStatus = DayStatus.AVAILABLE
 
     /**
      * @param price hold price of the date
      * @param isHoliday if be true the color of date in calendar will change
-     * @param isDisable if be true the date of calendar will disable
+     * @param status status of a day
      */
     constructor(
         year: Int,
@@ -32,11 +32,11 @@ data class Day constructor(
         day: Int,
         price: Double?,
         isHoliday: Boolean = false,
-        isDisable: Boolean = false
+        status: DayStatus = DayStatus.AVAILABLE
     ) : this(year, month, day) {
         this.price = price
         this.isHoliday = isHoliday
-        this.isDisable = isDisable
+        this.status = status
     }
 
     override fun toString(): String {
@@ -82,5 +82,5 @@ data class Day constructor(
         }
     }
 
-    fun isNotEmptyDay() = year != -1 && month != -1 && day != -1
+    fun isEmptyDay() = year == -1 && month == -1 && day == -1
 }
