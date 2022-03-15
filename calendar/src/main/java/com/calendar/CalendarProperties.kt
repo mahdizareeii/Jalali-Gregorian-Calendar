@@ -38,10 +38,10 @@ class CalendarProperties {
     var selectedSingle: Day? = null
 
     //for AgendaDaysPriceViewHolder
-    var agendaDays: ArrayList<AgendaDays> = ArrayList()
+    var agendaDays: List<AgendaDays> = listOf()
 
     //for AgendaRangeDaysViewHolder
-    var agendaRangeDays: ArrayList<AgendaDayRange> = ArrayList()
+    var agendaRangeDays: List<AgendaDayRange> = listOf()
 
     constructor(
         regionalType: RegionalType,
@@ -105,7 +105,7 @@ class CalendarProperties {
         calendarType: CalendarType,
         calendarOrientation: Int,
         availabilityRule: BaseAvailabilityRule,
-        agendaRangeDays: ArrayList<AgendaDayRange>
+        agendaRangeDays: List<AgendaDayRange>
     ) : this(
         regionalType = regionalType,
         calendarType = calendarType,

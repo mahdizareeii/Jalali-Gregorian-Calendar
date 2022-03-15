@@ -45,11 +45,19 @@ data class Month(
                         //shift days
                         Day(-1, -1, -1)
                     } else {
+                        //for set day in calendar to operate time stamp
+                        calendar.set(Calendar.DAY_OF_MONTH, it)
+
                         val day = Day(
                             year = calendar.getYear(),
                             month = calendar.getMonth() + 1,
                             day = it
                         )
+
+                        day.monthAsString = calendar.getMonthName()
+                        day.dayOfWeek = calendar.getDayOfWeek()
+                        day.dayOfWeekAsString = calendar.getDayOfWeekAsString()
+                        day.time = calendar.getTime()
 
                         if (justAvailableCustomDays)
                             customDays.firstOrNull { customDay -> customDay == day } ?: day.apply {

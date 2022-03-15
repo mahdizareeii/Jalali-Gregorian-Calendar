@@ -29,20 +29,21 @@ class MyJalaliCalendar() : BaseCalendar() {
         persianDateAsString = persianDate?.joinToString("-")
     }
 
-    override val nameOfMonths: List<String>
-        get() = listOf(
-            "فروردین",
-            "اردیبهشت",
-            "خرداد",
-            "تیر",
-            "مرداد",
-            "شهریور",
-            "مهر",
-            "آبان",
-            "آذر",
-            "دی",
-            "بهمن",
-            "اسفند"
+    override val nameOfMonths: Array<String>
+        get() = arrayOf(
+            "فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور",
+            "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"
+        )
+
+    override val dayOfWeeks: Array<String>
+        get() = arrayOf(
+            "یکشنبه",
+            "دوشنبه",
+            "سه‌شنبه",
+            "چهارشنبه",
+            "پنجشنبه",
+            "جمعه",
+            "شنبه",
         )
 
     override fun set(field: Int, value: Int) {
@@ -66,7 +67,23 @@ class MyJalaliCalendar() : BaseCalendar() {
         persianDate = intArrayOf(0, 0, 0)
     }
 
-    override fun getYear(): Int = persianDate?.getOrNull(0) ?: -1
+    override fun getDayOfWeek(): Int {
+        val gregorian = DateUtil.jalaliToGregorian(
+            persianDate?.getOrNull(0) ?: 0,
+            (persianDate?.getOrNull(1) ?: 0) + 1,
+            persianDate?.getOrNull(2) ?: 0,
+        )
+
+        val calendar = Calendar.getInstance().apply {
+            set(Calendar.YEAR, gregorian?.getOrNull(0) ?: 0)
+            set(Calendar.MONTH, (gregorian?.getOrNull(1) ?: 0) - 1)
+            set(Calendar.DAY_OF_MONTH, gregorian?.getOrNull(2) ?: 0)
+        }
+
+        return calendar.get(Calendar.DAY_OF_WEEK)
+    }
+
+    override fun getDayOfWeekAsString(): String = dayOfWeeks[getDayOfWeek() - 1]
 
     override fun getMonth(): Int = (persianDate?.getOrNull(1) ?: -1)
 
@@ -76,12 +93,7 @@ class MyJalaliCalendar() : BaseCalendar() {
         ) ?: "نا شناخته"
     }
 
-    override fun getNewInstanceOfCalendar(): BaseCalendar = MyJalaliCalendar()
-
-    override fun getFirstDayPositionInWeek(): Int {
-        val position = getDayOfWeek()
-        return if (position == 7) 0 else position
-    }
+    override fun getYear(): Int = persianDate?.getOrNull(0) ?: -1
 
     override fun getToday(): Day {
         val todayCalendar = Calendar.getInstance()
@@ -95,6 +107,19 @@ class MyJalaliCalendar() : BaseCalendar() {
             today?.getOrNull(1) ?: 0,
             today?.getOrNull(2) ?: 0
         )
+    }
+
+    override fun getTime(): Date {
+        val gregorian = DateUtil.jalaliToGregorian(
+            persianDate?.getOrNull(0) ?: 0,
+            (persianDate?.getOrNull(1) ?: 0) + 1,
+            persianDate?.getOrNull(2) ?: 0,
+        )
+        return Calendar.getInstance().apply {
+            set(Calendar.YEAR, gregorian?.getOrNull(0) ?: 0)
+            set(Calendar.MONTH, (gregorian?.getOrNull(1) ?: 0) -1)
+            set(Calendar.DAY_OF_MONTH, gregorian?.getOrNull(2) ?: 0)
+        }.time
     }
 
     override fun getNextDates(field: Int, value: Int): List<Month> {
@@ -149,20 +174,11 @@ class MyJalaliCalendar() : BaseCalendar() {
         return days
     }
 
-    private fun getDayOfWeek(): Int {
-        val gregorian = DateUtil.jalaliToGregorian(
-            persianDate?.getOrNull(0) ?: 0,
-            (persianDate?.getOrNull(1) ?: 0) + 1,
-            1,
-        )
+    override fun getNewInstanceOfCalendar(): BaseCalendar = MyJalaliCalendar()
 
-        val calendar = Calendar.getInstance().apply {
-            set(Calendar.YEAR, gregorian?.getOrNull(0) ?: 0)
-            set(Calendar.MONTH, (gregorian?.getOrNull(1) ?: 0) - 1)
-            set(Calendar.DAY_OF_MONTH, gregorian?.getOrNull(2) ?: 0)
-        }
-
-        return calendar.get(Calendar.DAY_OF_WEEK)
+    override fun getFirstDayPositionInWeek(): Int {
+        val position = getDayOfWeek()
+        return if (position == 7) 0 else position
     }
 
     private fun getJalaliMonthCount(year: Int, month: Int): Int {

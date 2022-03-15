@@ -1,5 +1,7 @@
 package com.calendar.model
 
+import java.util.*
+
 /**
  * Gregorian date sample
  * @sample Day(2050,1,1)
@@ -20,6 +22,10 @@ data class Day constructor(
     var discount: Double? = null
     var isHoliday: Boolean = false
     var status: DayStatus = DayStatus.AVAILABLE
+    var monthAsString: String = "-"
+    var dayOfWeek: Int = -1
+    var dayOfWeekAsString: String = ""
+    var time: Date? = null
 
     /**
      * @param price hold price of the date
@@ -81,6 +87,14 @@ data class Day constructor(
             else -> -1
         }
     }
+
+    fun toStringDay() = String.format(
+        Locale.getDefault(),
+        "%s, %s %s",
+        dayOfWeekAsString,
+        day,
+        monthAsString
+    )
 
     fun isEmptyDay() = year == -1 && month == -1 && day == -1
 }

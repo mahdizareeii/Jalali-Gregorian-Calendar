@@ -2,27 +2,22 @@ package com.calendar.calendar
 
 import com.calendar.model.Day
 import com.calendar.model.Month
+import java.util.*
 
 abstract class BaseCalendar {
 
-    abstract val nameOfMonths: List<String>
+    abstract val nameOfMonths: Array<String>
+    abstract val dayOfWeeks: Array<String>
     abstract fun set(field: Int, value: Int)
     abstract fun get(field: Int): Int?
     abstract fun clear()
-    abstract fun getYear(): Int
+    abstract fun getDayOfWeek(): Int
+    abstract fun getDayOfWeekAsString(): String
     abstract fun getMonth(): Int
     abstract fun getMonthName(): String
-    protected abstract fun getNewInstanceOfCalendar(): BaseCalendar
-
-    /** you must set month like this
-     *  calendar.set(Calendar.MONTH, month)
-     *  before call this method
-     *
-     *  @return position of day in week
-     */
-    abstract fun getFirstDayPositionInWeek(): Int
-
+    abstract fun getYear(): Int
     abstract fun getToday(): Day
+    abstract fun getTime(): Date
 
     /**
      *  you can increase up month and year with set field and you will get next dates
@@ -36,6 +31,16 @@ abstract class BaseCalendar {
      * @return list of days of month
      */
     abstract fun generateDays(): List<Int>
+
+    protected abstract fun getNewInstanceOfCalendar(): BaseCalendar
+
+    /** you must set month like this
+     *  calendar.set(Calendar.MONTH, month)
+     *  before call this method
+     *
+     *  @return position of day in week
+     */
+    protected abstract fun getFirstDayPositionInWeek(): Int
 
     fun getMonthsBetweenDateRange(
         startDay: Day,
