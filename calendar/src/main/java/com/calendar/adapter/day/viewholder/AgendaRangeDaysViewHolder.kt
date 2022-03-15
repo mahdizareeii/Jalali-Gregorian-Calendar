@@ -1,6 +1,9 @@
 package com.calendar.adapter.day.viewholder
 
+import android.graphics.Typeface
 import android.view.View
+import android.widget.FrameLayout
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.isVisible
 import com.calendar.CalendarProperties
 import com.calendar.R
@@ -14,67 +17,67 @@ internal class AgendaRangeDaysViewHolder(
     properties: CalendarProperties,
     listener: DaysAdapterListener
 ) : DayViewHolder(view, properties, listener) {
-    override fun bind(day: Day) {
-        super.bind(day)
-        initRangeAgendaDays(this, day)
+    private val bgAgendaDayRange: FrameLayout = view.findViewById(R.id.bg_agenda_day_range)
+    private val imgStartAgenda: AppCompatImageView = view.findViewById(R.id.img_start_day_agenda)
+    private val imgEndAgenda: AppCompatImageView = view.findViewById(R.id.img_end_day_agenda)
+
+    override fun bind(day: Day, position: Int) {
+        initRangeAgendaDays(day)
+        super.bind(day, position)
     }
 
-    private fun initRangeAgendaDays(
-        viewHolder: DayViewHolder,
-        day: Day
-    ) {
-        val start = !properties.calendarType.isDaySelected(
-            day,
-            properties
-        ) && startAgendaRangeVisibility(day)
+    private fun initRangeAgendaDays(day: Day) {
+        val startAgenda = getStartAgendaRange(day)
+        val middleAgenda = getMiddleAgendaRange(day)
+        val endAgenda = getEndAgendaRange(day)
 
-        val middle = !properties.calendarType.isDaySelected(
+        val isDaySelected = properties.calendarType.isDaySelected(
             day,
             properties
-        ) && middleAgendaRangeVisibility(day)
+        )
 
-        val end = !properties.calendarType.isDaySelected(
-            day,
-            properties
-        ) && endAgendaRangeVisibility(day)
+        val isAgendaRange = startAgenda != null || middleAgenda != null || endAgenda != null
+        val startAgendaVisibility = !isDaySelected && startAgenda != null
+        val middleAgendaVisibility = !isDaySelected && middleAgenda != null
+        val endAgendaVisibility = !isDaySelected && endAgenda != null
+
+        if (isAgendaRange) txtDay.typeface = Typeface.DEFAULT_BOLD
+        else txtDay.typeface = Typeface.DEFAULT
 
         val background = when {
-            start -> R.drawable.bg_day_dashed_stroke_start
-            middle -> R.drawable.bg_day_dashed_stroke_middle
-            end -> R.drawable.bg_day_dashed_stroke_end
-            else -> return
+            startAgendaVisibility -> R.drawable.bg_day_dashed_stroke_start
+            middleAgendaVisibility -> R.drawable.bg_day_dashed_stroke_middle
+            endAgendaVisibility -> R.drawable.bg_day_dashed_stroke_end
+            else -> 0
         }
+        if (background == 0) bgAgendaDayRange.setBackgroundResource(R.color.white)
+        else bgAgendaDayRange.setBackgroundFromDrawable(background)
 
-        viewHolder.imgStartAgenda.isVisible = start
-        viewHolder.imgEndAgenda.isVisible = end
+        imgStartAgenda.isVisible = startAgendaVisibility
+        imgEndAgenda.isVisible = endAgendaVisibility
         imgStartAgenda.setMutableDrawableColor(
-            imgAgendaRangeColor(day)
+            startAgenda?.getAgendaColor()
         )
         imgEndAgenda.setMutableDrawableColor(
-            imgAgendaRangeColor(day)
+            endAgenda?.getAgendaColor()
         )
-        viewHolder.bgDay.setBackgroundFromDrawable(background)
     }
 
-    private fun startAgendaRangeVisibility(currentDay: Day) = properties.agendaRangeDays.any {
-        it.agendaRangeList.any { range ->
+    private fun getStartAgendaRange(currentDay: Day) = properties.agendaRangeDays.firstOrNull {
+        it.agendaRangeList.firstOrNull { range ->
             currentDay == range.startDate
-        }
+        } != null
     }
 
-    private fun middleAgendaRangeVisibility(currentDay: Day) = properties.agendaRangeDays.any {
-        it.agendaRangeList.any { range ->
-            currentDay >= range.startDate && currentDay <= range.endDate
-        }
+    private fun getMiddleAgendaRange(currentDay: Day) = properties.agendaRangeDays.firstOrNull {
+        it.agendaRangeList.firstOrNull { range ->
+            currentDay > range.startDate && currentDay < range.endDate
+        } != null
     }
 
-    private fun endAgendaRangeVisibility(currentDay: Day) = properties.agendaRangeDays.any {
-        it.agendaRangeList.any { range ->
+    private fun getEndAgendaRange(currentDay: Day) = properties.agendaRangeDays.firstOrNull {
+        it.agendaRangeList.firstOrNull { range ->
             currentDay == range.endDate
-        }
+        } != null
     }
-
-    private fun imgAgendaRangeColor(currentDay: Day) = properties.agendaRangeDays.firstOrNull {
-        it.agendaRangeList.firstOrNull { range -> range.startDate == currentDay || range.endDate == currentDay } != null
-    }?.getAgendaColor()
 }

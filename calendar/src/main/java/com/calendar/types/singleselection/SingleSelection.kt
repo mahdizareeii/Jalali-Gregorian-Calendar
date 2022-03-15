@@ -18,9 +18,9 @@ class SingleSelection(
         properties: CalendarProperties,
         listener: DaysAdapterListener
     ) -> Unit
-        get() = { viewHolder, dayItem, properties, listener ->
-            if (checkAvailability(viewHolder, dayItem, properties)) {
-                onDayClicked(properties, dayItem, singleSelectionListener)
+        get() = { viewHolder, day, properties, listener ->
+            if (checkAvailability(viewHolder, day, properties)) {
+                onDayClicked(properties, day, singleSelectionListener)
                 listener.onDaysNotifyDataSetChanged()
             }
         }
@@ -51,7 +51,7 @@ class SingleSelection(
     ): Int {
         return if (selectedSingle != null) {
             when (selectedSingle) {
-                currentDay -> R.drawable.bg_day_single_selected
+                currentDay -> R.drawable.bg_day_circular_single_selected
                 else -> R.drawable.bg_day
             }
         } else {

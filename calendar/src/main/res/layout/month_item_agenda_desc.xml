@@ -15,16 +15,20 @@
         tools:text="sample" />
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/img_end_month_agenda"
+        android:id="@+id/img_end_day_agenda_desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_left_rectangle" />
+        android:visibility="gone"
+        app:srcCompat="@drawable/ic_left_rectangle"
+        tools:visibility="visible" />
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/img_start_month_agenda"
+        android:id="@+id/img_start_day_agenda_desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="2dp"
-        app:srcCompat="@drawable/ic_right_rectangle" />
+        android:visibility="gone"
+        app:srcCompat="@drawable/ic_right_rectangle"
+        tools:visibility="visible" />
 
 </LinearLayout>

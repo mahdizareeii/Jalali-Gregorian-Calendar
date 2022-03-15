@@ -1,8 +1,10 @@
 package com.calendar.adapter.day.viewholder
 
 import android.view.View
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.isVisible
 import com.calendar.CalendarProperties
+import com.calendar.R
 import com.calendar.adapter.day.DaysAdapterListener
 import com.calendar.model.Day
 import com.calendar.utils.setMutableDrawableColor
@@ -12,31 +14,24 @@ internal class AgendaDaysPriceViewHolder(
     properties: CalendarProperties,
     listener: DaysAdapterListener
 ) : DayPriceViewHolder(view, properties, listener) {
+    private val imgDayAgenda: AppCompatImageView = view.findViewById(R.id.img_day_agenda)
 
-    override fun bind(day: Day) {
-        super.bind(day)
-        initAgendaDay(this, day)
+    override fun bind(day: Day, position: Int) {
+        initAgendaDay(day)
+        super.bind(day, position)
     }
 
-    private fun initAgendaDay(
-        viewHolder: DayViewHolder,
-        day: Day
-    ) {
-        viewHolder.imgStartAgenda.isVisible =
-            !properties.calendarType.isDaySelected(day, properties) && imgStartAgendaVisibility(day)
+    private fun initAgendaDay(day: Day) {
+        val startAgenda = getStartAgenda(day)
+        imgDayAgenda.isVisible =
+            !properties.calendarType.isDaySelected(day, properties) && startAgenda != null
 
-        viewHolder.imgEndAgenda.isVisible = false
-
-        viewHolder.imgStartAgenda.setMutableDrawableColor(
-            imgStartAgendaColor(day)
+        imgDayAgenda.setMutableDrawableColor(
+            startAgenda?.getAgendaColor()
         )
     }
 
-    private fun imgStartAgendaVisibility(currentDay: Day) = properties.agendaDays.any {
-        it.agendaList.any { day -> day == currentDay }
-    }
-
-    private fun imgStartAgendaColor(currentDay: Day) = properties.agendaDays.firstOrNull {
+    private fun getStartAgenda(currentDay: Day) = properties.agendaDays.firstOrNull {
         it.agendaList.firstOrNull { day -> day == currentDay } != null
-    }?.getAgendaColor()
+    }
 }

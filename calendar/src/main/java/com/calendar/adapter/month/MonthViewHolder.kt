@@ -32,8 +32,8 @@ internal class MonthViewHolder(
     private val txtMonth: AppCompatTextView = view.findViewById(R.id.txt_month)
     private val rvDays: RecyclerView = view.findViewById(R.id.rv_days)
     private val txtAgendaDesc: TextView = view.findViewById(R.id.txt_agenda_desc)
-    private val imgEndAgenda: ImageView = view.findViewById(R.id.img_end_month_agenda)
-    private val imgStartAgenda: ImageView = view.findViewById(R.id.img_start_month_agenda)
+    private val imgEndAgenda: ImageView = view.findViewById(R.id.img_end_day_agenda_desc)
+    private val imgStartAgenda: ImageView = view.findViewById(R.id.img_start_day_agenda_desc)
     private var adapter: DaysAdapter? = null
 
     fun bind(
@@ -50,7 +50,12 @@ internal class MonthViewHolder(
                 adapter?.notifyDataSetChanged()
             }
         }
-        adapter?.submitList(month.generateDays(properties.customDays))
+        adapter?.submitList(
+            month.generateDays(
+                properties.justAvailableCustomDays,
+                properties.customDays
+            )
+        )
         txtMonth.text = String.format("${month.getYear} - ${month.getMonthName}")
         initArrows(monthSize, position, listener)
         initAgendaDesc(month)
@@ -58,10 +63,7 @@ internal class MonthViewHolder(
     }
 
     private fun initRecyclerView() {
-        adapter = DaysAdapter(
-            properties,
-            daysAdapterListener
-        )
+        adapter = DaysAdapter(properties, daysAdapterListener)
         rvDays.layoutManager = FlexboxLayoutManager(context).apply {
             flexDirection = FlexDirection.ROW_REVERSE
             alignItems = AlignItems.CENTER
@@ -87,16 +89,12 @@ internal class MonthViewHolder(
             if (isGregorianCalendar) arrowLeftVisibility else arrowRightVisibility
 
         arrowLeft?.setOnClickListener {
-            if (isGregorianCalendar)
-                listener.onRightArrowClicked()
-            else
-                listener.onLeftArrowClicked()
+            if (isGregorianCalendar) listener.onRightArrowClicked()
+            else listener.onLeftArrowClicked()
         }
         arrowRight?.setOnClickListener {
-            if (isGregorianCalendar)
-                listener.onLeftArrowClicked()
-            else
-                listener.onRightArrowClicked()
+            if (isGregorianCalendar) listener.onLeftArrowClicked()
+            else listener.onRightArrowClicked()
         }
     }
 

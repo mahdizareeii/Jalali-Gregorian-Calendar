@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.calendar.utils.bubbleview.BubbleLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="15dp"
+    android:paddingVertical="5dp"
+    app:bl_arrowDirection="bottom"
+    app:bl_arrowHeight="8dp"
+    app:bl_arrowPosition="0dp"
+    app:bl_arrowWidth="15dp"
+    app:bl_cornersRadius="8dp"
+    app:bl_strokeColor="#dddddd"
+    app:bl_strokeWidth="1dp">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:textColor="@color/secondary"
+        tools:text="۳ شب" />
+
+</com.calendar.utils.bubbleview.BubbleLayout>

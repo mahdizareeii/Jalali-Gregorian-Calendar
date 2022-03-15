@@ -1,6 +1,5 @@
 package com.calendar
 
-import androidx.annotation.IntRange
 import androidx.recyclerview.widget.RecyclerView
 import com.calendar.adapter.day.viewholder.DayViewHolderType
 import com.calendar.availablity.BaseAvailabilityRule
@@ -15,18 +14,15 @@ import com.calendar.types.CalendarType
  *  @property regionalType set regional type of calendar
  *  @property calendarType set calendar view type
  *  @property calendarOrientation set orientation of calendar (HORIZONTAL,VERTICAL)
- *  @property showDaysPrice if be true the calendar will show prices that you gave from customDays
  *  @property availabilityRule for decision of check days availability
  */
 class CalendarProperties {
     val regionalType: RegionalType
     val calendarType: CalendarType
     var calendarOrientation: Int = 0
-    var showDaysPrice: Boolean = false
 
-    @IntRange(from = 1)
-    var minDaysInRangeSelection: Int = 1
     var availabilityRule: BaseAvailabilityRule
+    var justAvailableCustomDays: Boolean = false
 
     //for set custom days pricing and etc
     var customDays: ArrayList<Day> = ArrayList()
@@ -42,19 +38,16 @@ class CalendarProperties {
     var selectedSingle: Day? = null
 
     //for AgendaDaysPriceViewHolder
-    var agendaDays: ArrayList<AgendaDays> = ArrayList()
+    var agendaDays: List<AgendaDays> = listOf()
 
     //for AgendaRangeDaysViewHolder
-    var agendaRangeDays: ArrayList<AgendaDayRange> = ArrayList()
+    var agendaRangeDays: List<AgendaDayRange> = listOf()
 
-    private constructor(
+    constructor(
         regionalType: RegionalType,
         calendarType: CalendarType,
         calendarOrientation: Int,
-        showDaysPrice: Boolean,
-        @IntRange(from = 1) minDaysInRangeSelection: Int = 1,
         availabilityRule: BaseAvailabilityRule,
-        customDays: ArrayList<Day> = ArrayList(),
         selectedCheckIn: Day? = null,
         selectedCheckOut: Day? = null,
         selectedMultipleDay: ArrayList<Day> = ArrayList(),
@@ -63,14 +56,14 @@ class CalendarProperties {
         this.regionalType = regionalType
         this.calendarType = calendarType
         this.calendarOrientation = calendarOrientation
-        this.showDaysPrice = showDaysPrice
-        this.minDaysInRangeSelection = minDaysInRangeSelection
         this.availabilityRule = availabilityRule
-        this.customDays = customDays
         this.selectedCheckIn = selectedCheckIn
         this.selectedCheckOut = selectedCheckOut
         this.selectedMultipleDay = selectedMultipleDay
         this.selectedSingle = selectedSingle
+        if (dayViewHolderType == DayViewHolderType.Unknown) {
+            dayViewHolderType = DayViewHolderType.DayViewHolder
+        }
     }
 
     /**
@@ -80,8 +73,8 @@ class CalendarProperties {
         regionalType: RegionalType,
         calendarType: CalendarType,
         calendarOrientation: Int,
-        @IntRange(from = 1) minDaysInRangeSelection: Int = 1,
         availabilityRule: BaseAvailabilityRule,
+        justAvailableCustomDays: Boolean,
         agendaDays: ArrayList<AgendaDays>,
         customDays: ArrayList<Day>,
         selectedCheckIn: Day? = null,
@@ -92,17 +85,16 @@ class CalendarProperties {
         regionalType = regionalType,
         calendarType = calendarType,
         calendarOrientation = calendarOrientation,
-        showDaysPrice = true,
-        minDaysInRangeSelection = minDaysInRangeSelection,
         availabilityRule = availabilityRule,
-        customDays = customDays,
         selectedCheckIn = selectedCheckIn,
         selectedCheckOut = selectedCheckOut,
         selectedMultipleDay = selectedMultipleDay,
         selectedSingle = selectedSingle
     ) {
         dayViewHolderType = DayViewHolderType.AgendaDaysPriceViewHolder
+        this.justAvailableCustomDays = justAvailableCustomDays
         this.agendaDays = agendaDays
+        this.customDays = customDays
     }
 
     /**
@@ -113,12 +105,11 @@ class CalendarProperties {
         calendarType: CalendarType,
         calendarOrientation: Int,
         availabilityRule: BaseAvailabilityRule,
-        agendaRangeDays: ArrayList<AgendaDayRange> = arrayListOf()
+        agendaRangeDays: List<AgendaDayRange>
     ) : this(
         regionalType = regionalType,
         calendarType = calendarType,
         calendarOrientation = calendarOrientation,
-        showDaysPrice = false,
         availabilityRule = availabilityRule
     ) {
         dayViewHolderType = DayViewHolderType.AgendaRangeDaysViewHolder
@@ -132,8 +123,8 @@ class CalendarProperties {
         regionalType: RegionalType,
         calendarType: CalendarType,
         calendarOrientation: Int,
-        @IntRange(from = 1) minDaysInRangeSelection: Int = 1,
         availabilityRule: BaseAvailabilityRule,
+        justAvailableCustomDays: Boolean,
         customDays: ArrayList<Day>,
         selectedCheckIn: Day? = null,
         selectedCheckOut: Day? = null,
@@ -143,44 +134,15 @@ class CalendarProperties {
         regionalType = regionalType,
         calendarType = calendarType,
         calendarOrientation = calendarOrientation,
-        showDaysPrice = false,
-        minDaysInRangeSelection = minDaysInRangeSelection,
         availabilityRule = availabilityRule,
-        customDays = customDays,
         selectedCheckIn = selectedCheckIn,
         selectedCheckOut = selectedCheckOut,
         selectedMultipleDay = selectedMultipleDay,
         selectedSingle = selectedSingle
     ) {
         dayViewHolderType = DayViewHolderType.DayPriceViewHolder
-    }
-
-    /**
-     * DayViewHolder
-     */
-    constructor(
-        regionalType: RegionalType,
-        calendarType: CalendarType,
-        calendarOrientation: Int,
-        @IntRange(from = 1) minDaysInRangeSelection: Int = 1,
-        availabilityRule: BaseAvailabilityRule,
-        selectedCheckIn: Day? = null,
-        selectedCheckOut: Day? = null,
-        selectedMultipleDay: ArrayList<Day> = arrayListOf(),
-        selectedSingle: Day? = null
-    ) : this(
-        regionalType = regionalType,
-        calendarType = calendarType,
-        calendarOrientation = calendarOrientation,
-        showDaysPrice = true,
-        minDaysInRangeSelection = minDaysInRangeSelection,
-        availabilityRule = availabilityRule,
-        selectedCheckIn = selectedCheckIn,
-        selectedCheckOut = selectedCheckOut,
-        selectedMultipleDay = selectedMultipleDay,
-        selectedSingle = selectedSingle
-    ) {
-        dayViewHolderType = DayViewHolderType.DayViewHolder
+        this.justAvailableCustomDays = justAvailableCustomDays
+        this.customDays = customDays
     }
 
     internal var dayViewHolderType = DayViewHolderType.Unknown

@@ -1,7 +1,6 @@
 package com.calendar.model
 
 import com.calendar.calendar.BaseCalendar
-import com.calendar.calendar.MyGregorianCalendar
 import java.util.*
 
 /**
@@ -34,22 +33,38 @@ data class Month(
     val getMonth get() = calendar.getMonth()
     val getMonthName get() = calendar.getMonthName()
 
-    fun generateDays(customDays: List<Day>): List<Day> {
+    /**
+     * if you want to change shift day parameters
+     * @see Day.isEmptyDay method and refactor that depend on your parameters
+     */
+    fun generateDays(justAvailableCustomDays: Boolean, customDays: List<Day>): List<Day> {
         if (days.isNullOrEmpty()) {
             days.addAll(
                 calendar.generateDays().map {
                     if (it == -1) {
                         //shift days
-                        Day(null, null, null, null)
+                        Day(-1, -1, -1)
                     } else {
+                        //for set day in calendar to operate time stamp
+                        calendar.set(Calendar.DAY_OF_MONTH, it)
+
                         val day = Day(
                             year = calendar.getYear(),
                             month = calendar.getMonth() + 1,
-                            day = it,
-                            isGregorianDate = calendar is MyGregorianCalendar
+                            day = it
                         )
 
-                        customDays.firstOrNull { customDay -> customDay == day } ?: day
+                        day.monthAsString = calendar.getMonthName()
+                        day.dayOfWeek = calendar.getDayOfWeek()
+                        day.dayOfWeekAsString = calendar.getDayOfWeekAsString()
+                        day.time = calendar.getTime()
+
+                        if (justAvailableCustomDays)
+                            customDays.firstOrNull { customDay -> customDay == day } ?: day.apply {
+                                status = DayStatus.UN_AVAILABLE
+                            }
+                        else
+                            customDays.firstOrNull { customDay -> customDay == day } ?: day
                     }
                 }
             )

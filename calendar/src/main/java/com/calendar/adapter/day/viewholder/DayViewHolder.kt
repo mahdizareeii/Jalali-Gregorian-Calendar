@@ -21,12 +21,10 @@ internal open class DayViewHolder(
     val bgDay: SquareView = view.findViewById(R.id.bg_day)
     val txtDay: AppCompatTextView = view.findViewById(R.id.txt_day)
     val txtPrice: AppCompatTextView = view.findViewById(R.id.txt_price)
-    val imgStartAgenda: AppCompatImageView = view.findViewById(R.id.img_start_month_agenda)
-    val imgEndAgenda: AppCompatImageView = view.findViewById(R.id.img_end_month_agenda)
 
-    open fun bind(day: Day) {
-        bgDay.visibility = day.dayVisibility
-        textColor(this, day)
+    open fun bind(day: Day, position: Int) {
+        this.itemView.visibility = dayVisibility(day.day)
+        textColor(this, day, position)
         txtDay.text = day.day.toString()
         bgDay.setOnClickListener {
             properties.calendarType.onDayClickListener.invoke(this, day, properties, listener)
@@ -39,10 +37,17 @@ internal open class DayViewHolder(
         )
     }
 
-    private fun textColor(viewHolder: DayViewHolder, currentDay: Day) {
+    private fun dayVisibility(day:Int) = if (day != -1) View.VISIBLE else View.INVISIBLE
+
+    private fun textColor(viewHolder: DayViewHolder, currentDay: Day, position: Int) {
         val color = ContextCompat.getColor(
             context,
             when {
+                position == 6 -> R.color.red
+                position == 13 -> R.color.red
+                position == 20 -> R.color.red
+                position == 27 -> R.color.red
+                position == 34 -> R.color.red
                 currentDay.isHoliday -> R.color.red
                 else -> {
                     if (properties.calendarType.isDaySelected(

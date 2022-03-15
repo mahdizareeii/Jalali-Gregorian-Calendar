@@ -1,6 +1,6 @@
 package com.calendar.model
 
-import android.view.View
+import java.util.*
 
 /**
  * Gregorian date sample
@@ -13,36 +13,36 @@ import android.view.View
  * @param day hold every day that you give
  */
 data class Day constructor(
-    val year: Int?,
-    val month: Int?,
-    val day: Int?,
-    val isGregorianDate: Boolean?
+    val year: Int,
+    val month: Int,
+    val day: Int
 ) {
 
     var price: Double? = null
     var discount: Double? = null
     var isHoliday: Boolean = false
-    var isDisable: Boolean = false
-
-    val dayVisibility get() = if (day != null) View.VISIBLE else View.INVISIBLE
+    var status: DayStatus = DayStatus.AVAILABLE
+    var monthAsString: String = "-"
+    var dayOfWeek: Int = -1
+    var dayOfWeekAsString: String = ""
+    var time: Date? = null
 
     /**
      * @param price hold price of the date
      * @param isHoliday if be true the color of date in calendar will change
-     * @param isDisable if be true the date of calendar will disable
+     * @param status status of a day
      */
     constructor(
-        year: Int?,
-        month: Int?,
-        day: Int?,
-        isGregorianDate: Boolean,
+        year: Int,
+        month: Int,
+        day: Int,
         price: Double?,
         isHoliday: Boolean = false,
-        isDisable: Boolean = true
-    ) : this(year, month, day, isGregorianDate) {
+        status: DayStatus = DayStatus.AVAILABLE
+    ) : this(year, month, day) {
         this.price = price
         this.isHoliday = isHoliday
-        this.isDisable = isDisable
+        this.status = status
     }
 
     override fun toString(): String {
@@ -63,24 +63,24 @@ data class Day constructor(
     }
 
     override fun hashCode(): Int {
-        var result = year ?: 0
-        result = 31 * result + (month ?: 0)
-        result = 31 * result + (day ?: 0)
+        var result = year
+        result = 31 * result + month
+        result = 31 * result + day
         return result
     }
 
     operator fun compareTo(other: Day?): Int {
         return when {
             this === other -> 0
-            year == other?.year && month == other?.month && day == other?.day -> 0
-            (year ?: 0) > (other?.year ?: 0) -> 1
+            year == other?.year && month == other.month && day == other.day -> 0
+            year > (other?.year ?: 0) -> 1
             year == other?.year -> {
                 when {
-                    month == other?.month -> {
-                        if ((day ?: 0) > (other?.day ?: 0)) 1
+                    month == other.month -> {
+                        if (day > other.day) 1
                         else -1
                     }
-                    (month ?: 0) > (other?.month ?: 0) -> 1
+                    month > other.month -> 1
                     else -> -1
                 }
             }
@@ -88,5 +88,13 @@ data class Day constructor(
         }
     }
 
-    fun isNotNull() = year != null && month != null && day != null
+    fun toStringDay() = String.format(
+        Locale.getDefault(),
+        "%s, %s %s",
+        dayOfWeekAsString,
+        day,
+        monthAsString
+    )
+
+    fun isEmptyDay() = year == -1 && month == -1 && day == -1
 }
