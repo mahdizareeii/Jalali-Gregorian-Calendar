@@ -16,10 +16,14 @@ class CalendarView @JvmOverloads constructor(
     defStyle: Int = 0
 ) : LinearLayout(context, attrs, defStyle) {
 
-    lateinit var properties: CalendarProperties
-    private lateinit var calendar: BaseCalendar
-    private lateinit var adapter: MonthAdapter
-    private lateinit var layoutManager: LinearLayoutManager
+    var properties: CalendarProperties? = null
+        set(value) {
+            field = value
+            adapter?.onDaysNotifyDataSetChanged()
+        }
+    private var calendar: BaseCalendar? = null
+    private var adapter: MonthAdapter? = null
+    private var layoutManager: LinearLayoutManager? = null
     private var recyclerView: RecyclerView
 
     init {
@@ -34,43 +38,47 @@ class CalendarView @JvmOverloads constructor(
      */
     fun submitNextDates(field: Int, value: Int) {
         initCalendar()
-        adapter.submitList(calendar.getNextDates(field, value))
+        adapter?.submitList(calendar?.getNextDates(field, value)!!)
     }
 
     fun clearSelection() {
-        properties.selectedCheckIn = null
-        properties.selectedCheckOut = null
-        properties.selectedSingle = null
-        properties.selectedMultipleDay = arrayListOf()
-        adapter.onDaysNotifyDataSetChanged()
+        properties?.selectedCheckIn = null
+        properties?.selectedCheckOut = null
+        properties?.selectedSingle = null
+        properties?.selectedMultipleDay = arrayListOf()
+        adapter?.onDaysNotifyDataSetChanged()
     }
 
     fun goToMonthPosition(position: Int) = recyclerView.scrollToPosition(position)
 
-    fun getCurrentMonthPosition() = layoutManager.findFirstVisibleItemPosition()
+    fun getCurrentMonthPosition() = layoutManager?.findFirstVisibleItemPosition() ?: 0
 
     private fun initCalendar() {
-        if (!this::properties.isInitialized)
+        if (properties == null)
             throw NullPointerException("you must init properties before call submitNextDates()")
-        calendar = properties.calendar!!
+        calendar = properties?.calendar!!
 
         layoutManager = LinearLayoutManager(
             context,
-            properties.calendarOrientation,
-            properties.calendarIsReverse()
+            properties?.calendarOrientation!!,
+            properties?.calendarIsReverse()!!
         )
 
-        adapter = MonthAdapter(properties, object : MonthAdapterListener {
+        adapter = MonthAdapter(properties!!, object : MonthAdapterListener {
             override fun onRightArrowClicked() {
-                layoutManager.scrollToPosition(layoutManager.findFirstVisibleItemPosition() - 1)
+                layoutManager?.scrollToPosition(
+                    (layoutManager?.findFirstVisibleItemPosition() ?: 0) - 1
+                )
             }
 
             override fun onLeftArrowClicked() {
-                layoutManager.scrollToPosition(layoutManager.findFirstVisibleItemPosition() + 1)
+                layoutManager?.scrollToPosition(
+                    (layoutManager?.findFirstVisibleItemPosition() ?: 0) + 1
+                )
             }
         })
 
-        if (properties.calendarOrientation == CalendarProperties.HORIZONTAL && recyclerView.onFlingListener == null)
+        if (properties?.calendarOrientation == CalendarProperties.HORIZONTAL && recyclerView.onFlingListener == null)
             PagerSnapHelper().attachToRecyclerView(recyclerView)
 
         recyclerView.setHasFixedSize(true)

@@ -111,6 +111,7 @@ class RangeSelection(
                 selectedCheckIn == currentDay -> {
                     selectedCheckIn = null
                     selectedCheckOut = null
+                    listener.onSelectsRemoved()
                 }
                 isCheckOutSelect() && currentDay == selectedCheckOut && currentDay.status != DayStatus.AVAILABLE -> {
                     return

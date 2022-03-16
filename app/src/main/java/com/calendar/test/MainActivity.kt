@@ -47,6 +47,10 @@ class MainActivity : AppCompatActivity(), RangeSelectionListener {
         Toast.makeText(this, day.toString(), Toast.LENGTH_SHORT).show()
     }
 
+    override fun onSelectsRemoved() {
+
+    }
+
     private fun agendaList(month: Int, year: Int, regionalType: RegionalType) =
         arrayListOf<Day>().apply {
             for (i in 1..29) {
