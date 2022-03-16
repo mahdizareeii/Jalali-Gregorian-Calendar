@@ -3,6 +3,9 @@ package com.calendar
 import androidx.recyclerview.widget.RecyclerView
 import com.calendar.adapter.day.viewholder.DayViewHolderType
 import com.calendar.availablity.BaseAvailabilityRule
+import com.calendar.calendar.BaseCalendar
+import com.calendar.calendar.MyGregorianCalendar
+import com.calendar.calendar.MyJalaliCalendar
 import com.calendar.calendar.RegionalType
 import com.calendar.model.Day
 import com.calendar.model.Month
@@ -42,6 +45,15 @@ class CalendarProperties {
 
     //for AgendaRangeDaysViewHolder
     var agendaRangeDays: List<AgendaDayRange> = listOf()
+
+    var calendar: BaseCalendar? = null
+        get() = if (field == null) {
+            field = when (regionalType) {
+                RegionalType.Jalali -> MyJalaliCalendar()
+                RegionalType.Gregorian -> MyGregorianCalendar()
+            }
+            field
+        } else field
 
     constructor(
         regionalType: RegionalType,
@@ -154,7 +166,7 @@ class CalendarProperties {
 
     internal fun isCheckOutSelect() = selectedCheckIn != null && selectedCheckOut != null
 
-    internal fun getToday(): Day = regionalType.calendar.getToday()
+    internal fun getToday(): Day = calendar?.getToday()!!
 
     internal fun findMonthInAgendaList(month: Month) = agendaDays.firstOrNull {
         it.agendaList.firstOrNull { day ->

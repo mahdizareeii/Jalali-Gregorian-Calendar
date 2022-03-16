@@ -10,7 +10,7 @@ import com.calendar.availablity.RangePriceSelectionAvailabilityRule
 import com.calendar.calendar.RegionalType
 import com.calendar.model.Day
 import com.calendar.model.DayRange
-import com.calendar.model.DayStatus
+import com.calendar.model.agenda.AgendaDayRange
 import com.calendar.types.rangeslelection.RangeSelection
 import com.calendar.types.rangeslelection.RangeSelectionListener
 import java.util.*
@@ -23,15 +23,18 @@ class MainActivity : AppCompatActivity(), RangeSelectionListener {
 
         calendar.properties = CalendarProperties(
             regionalType = RegionalType.Jalali,
-            calendarType = RangeSelection(2,true,this),
+            calendarType = RangeSelection(2, true, this),
             calendarOrientation = VERTICAL,
             availabilityRule = RangePriceSelectionAvailabilityRule(
                 availableFromToday = true
             ),
-            customDays = arrayListOf(
-                Day(1400, 12, 28, 560000.0, status = DayStatus.UN_AVAILABLE)
-            ),
-            justAvailableCustomDays = false
+            agendaRangeDays = listOf(
+                AgendaDayRange(
+                    title = "تست 1",
+                    color = "#2d2d2d",
+                    agendaRangeList = agendaRangeList1()
+                )
+            )
         )
         calendar.submitNextDates(Calendar.MONTH, 3)
     }
@@ -52,7 +55,7 @@ class MainActivity : AppCompatActivity(), RangeSelectionListener {
         }
     }
 
-    private fun agendaRangeList1() = arrayListOf(
+    private fun agendaRangeList1() = listOf(
         DayRange(
             startDate = Day(1400, 12, 5),
             endDate = Day(1400, 12, 12)
@@ -63,7 +66,7 @@ class MainActivity : AppCompatActivity(), RangeSelectionListener {
         )
     )
 
-    private fun agendaRangeList2() = arrayListOf(
+    private fun agendaRangeList2() = listOf(
         DayRange(
             startDate = Day(1400, 12, 25),
             endDate = Day(1401, 1, 5)

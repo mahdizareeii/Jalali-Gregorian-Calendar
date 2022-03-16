@@ -1,5 +1,6 @@
 package com.calendar.utils
 
+import androidx.annotation.IntRange
 import com.calendar.model.Day
 import java.text.SimpleDateFormat
 import java.util.*
@@ -15,7 +16,11 @@ object DateUtil {
         return gregorianToJalali(day.year, day.month, day.day)
     }
 
-    fun gregorianToJalali(year: Int?, month: Int?, day: Int?): IntArray? {
+    fun gregorianToJalali(
+        year: Int?,
+        @IntRange(from = 1, to = 12) month: Int?,
+        @IntRange(from = 1, to = 31) day: Int?
+    ): IntArray? {
         if (year == null || month == null || day == null) return null
         val gregorianDayMonth: IntArray =
             intArrayOf(0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334)
@@ -50,7 +55,11 @@ object DateUtil {
         return jalaliToGregorian(day.year, day.month, day.day)
     }
 
-    fun jalaliToGregorian(year: Int?, month: Int?, day: Int?): IntArray? {
+    fun jalaliToGregorian(
+        year: Int?,
+        @IntRange(from = 1, to = 12) month: Int?,
+        @IntRange(from = 1, to = 31) day: Int?
+    ): IntArray? {
         if (year == null || month == null || day == null) return null
         val yearTemp = year + 1595
         var days =
@@ -107,8 +116,16 @@ object DateUtil {
 
         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         sdf.timeZone = TimeZone.getTimeZone("UTC")
-        val startDate = sdf.parse("${startGregorian?.getOrNull(0)}-${startGregorian?.getOrNull(1)}-${startGregorian?.getOrNull(2)}")
-        val endDate = sdf.parse("${endGregorian?.getOrNull(0)}-${endGregorian?.getOrNull(1)}-${endGregorian?.getOrNull(2)}")
+        val startDate = sdf.parse(
+            "${startGregorian?.getOrNull(0)}-${startGregorian?.getOrNull(1)}-${
+                startGregorian?.getOrNull(2)
+            }"
+        )
+        val endDate = sdf.parse(
+            "${endGregorian?.getOrNull(0)}-${endGregorian?.getOrNull(1)}-${
+                endGregorian?.getOrNull(2)
+            }"
+        )
 
         return operateDiffs(startDate, endDate)
     }

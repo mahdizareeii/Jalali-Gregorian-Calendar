@@ -50,7 +50,9 @@ class CalendarView @JvmOverloads constructor(
     fun getCurrentMonthPosition() = layoutManager.findFirstVisibleItemPosition()
 
     private fun initCalendar() {
-        calendar = properties.regionalType.calendar
+        if (!this::properties.isInitialized)
+            throw NullPointerException("you must init properties before call submitNextDates()")
+        calendar = properties.calendar!!
 
         layoutManager = LinearLayoutManager(
             context,

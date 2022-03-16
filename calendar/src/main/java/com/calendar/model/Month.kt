@@ -1,6 +1,9 @@
 package com.calendar.model
 
 import com.calendar.calendar.BaseCalendar
+import com.calendar.calendar.MyGregorianCalendar
+import com.calendar.calendar.MyJalaliCalendar
+import com.calendar.calendar.RegionalType
 import java.util.*
 
 /**
@@ -25,7 +28,7 @@ data class Month(
     init {
         calendar.clear()
         calendar.set(Calendar.YEAR, year)
-        calendar.set(Calendar.MONTH, month - 1)
+        calendar.set(Calendar.MONTH, month)
         calendar.set(Calendar.DAY_OF_MONTH, 1)
     }
 
@@ -43,15 +46,20 @@ data class Month(
                 calendar.generateDays().map {
                     if (it == -1) {
                         //shift days
-                        Day(-1, -1, -1)
+                        Day(-1, -1, -1, RegionalType.Gregorian)
                     } else {
                         //for set day in calendar to operate time stamp
                         calendar.set(Calendar.DAY_OF_MONTH, it)
 
                         val day = Day(
                             year = calendar.getYear(),
-                            month = calendar.getMonth() + 1,
-                            day = it
+                            month = calendar.getMonth(),
+                            day = it,
+                            regionalType = when (calendar) {
+                                is MyJalaliCalendar -> RegionalType.Jalali
+                                is MyGregorianCalendar -> RegionalType.Gregorian
+                                else -> RegionalType.Gregorian
+                            }
                         )
 
                         day.monthAsString = calendar.getMonthName()
