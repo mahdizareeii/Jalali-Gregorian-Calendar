@@ -49,7 +49,7 @@ class RangePriceSelectionAvailabilityRule(
     ): Int {
         if (currentDay.isEmptyDay()) return minDaysInRangeSelection
         return if (currentDay > properties.selectedCheckIn) {
-            if (properties.regionalType.calendar is MyJalaliCalendar) {
+            if (properties.calendar is MyJalaliCalendar) {
                 DateUtil.diffDaysJalali(
                     properties.selectedCheckIn,
                     currentDay
@@ -61,7 +61,7 @@ class RangePriceSelectionAvailabilityRule(
                 )[1].toInt()
             }
         } else if (currentDay < properties.selectedCheckIn)
-            if (properties.regionalType.calendar is MyJalaliCalendar) {
+            if (properties.calendar is MyJalaliCalendar) {
                 DateUtil.diffDaysJalali(
                     currentDay,
                     properties.selectedCheckIn
