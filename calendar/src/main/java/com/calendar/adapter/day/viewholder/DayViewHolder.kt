@@ -2,7 +2,6 @@ package com.calendar.adapter.day.viewholder
 
 import android.content.Context
 import android.view.View
-import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -24,7 +23,7 @@ internal open class DayViewHolder(
 
     open fun bind(day: Day, position: Int) {
         this.itemView.visibility = dayVisibility(day.day)
-        textColor(this, day, position)
+        textColor(day, position)
         txtDay.text = day.day.toString()
         bgDay.setOnClickListener {
             properties.calendarType.onDayClickListener.invoke(this, day, properties, listener)
@@ -37,9 +36,9 @@ internal open class DayViewHolder(
         )
     }
 
-    private fun dayVisibility(day:Int) = if (day != -1) View.VISIBLE else View.INVISIBLE
+    private fun dayVisibility(day: Int) = if (day != -1) View.VISIBLE else View.INVISIBLE
 
-    private fun textColor(viewHolder: DayViewHolder, currentDay: Day, position: Int) {
+    private fun textColor(currentDay: Day, position: Int) {
         val color = ContextCompat.getColor(
             context,
             when {
@@ -59,7 +58,7 @@ internal open class DayViewHolder(
                 }
             }
         )
-        viewHolder.txtDay.setTextColor(color)
-        viewHolder.txtPrice.setTextColor(color)
+        txtDay.setTextColor(color)
+        txtPrice.setTextColor(color)
     }
 }
