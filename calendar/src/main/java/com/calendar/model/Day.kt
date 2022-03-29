@@ -130,5 +130,6 @@ data class Day constructor(
                 persianDate = intArrayOf(year, month, day)
             }
             RegionalType.Gregorian -> MyGregorianCalendar(year, month, day)
+            RegionalType.Unknown -> throw IllegalStateException("You must declare the regional")
         }
 }

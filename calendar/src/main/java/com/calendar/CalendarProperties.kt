@@ -28,7 +28,7 @@ class CalendarProperties {
     var justAvailableCustomDays: Boolean = false
 
     //for set custom days pricing and etc
-    var customDays: ArrayList<Day> = ArrayList()
+    var customDays: List<Day> = listOf()
 
     //for range selection
     var selectedCheckIn: Day? = null
@@ -51,6 +51,7 @@ class CalendarProperties {
             field = when (regionalType) {
                 RegionalType.Jalali -> MyJalaliCalendar()
                 RegionalType.Gregorian -> MyGregorianCalendar()
+                RegionalType.Unknown -> throw IllegalStateException("You must declare the regional")
             }
             field
         } else field
@@ -87,8 +88,8 @@ class CalendarProperties {
         calendarOrientation: Int,
         availabilityRule: BaseAvailabilityRule,
         justAvailableCustomDays: Boolean,
-        agendaDays: ArrayList<AgendaDays>,
-        customDays: ArrayList<Day>,
+        agendaDays: List<AgendaDays>,
+        customDays: List<Day>,
         selectedCheckIn: Day? = null,
         selectedCheckOut: Day? = null,
         selectedMultipleDay: ArrayList<Day> = arrayListOf(),

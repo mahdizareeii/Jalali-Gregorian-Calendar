@@ -46,7 +46,7 @@ data class Month(
                 calendar.generateDays().map {
                     if (it == -1) {
                         //shift days
-                        Day(-1, -1, -1, RegionalType.Gregorian)
+                        Day(-1, -1, -1, RegionalType.Unknown)
                     } else {
                         //for set day in calendar to operate time stamp
                         calendar.set(Calendar.DAY_OF_MONTH, it)
@@ -58,7 +58,7 @@ data class Month(
                             regionalType = when (calendar) {
                                 is MyJalaliCalendar -> RegionalType.Jalali
                                 is MyGregorianCalendar -> RegionalType.Gregorian
-                                else -> RegionalType.Gregorian
+                                else -> throw IllegalStateException("You must declare the regional")
                             }
                         )
 
