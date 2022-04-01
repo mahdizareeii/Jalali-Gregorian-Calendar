@@ -1,5 +1,6 @@
 package com.calendar.calendar
 
+import androidx.annotation.IntRange
 import com.calendar.model.Day
 import com.calendar.model.Month
 import com.calendar.utils.DateUtil
@@ -9,11 +10,22 @@ class MyJalaliCalendar() : BaseCalendar() {
 
     var persianDate: IntArray? = intArrayOf(0, 0, 0)
     var persianDateAsString: String? = null
+        get() = if (field == null)
+            if (persianDate == null) null
+            else {
+                field = persianDate?.joinToString("-")
+                field
+            }
+        else field
 
-    constructor(gregorianYear: Int, gregorianMonth: Int, gregorianDay: Int) : this() {
+    constructor(
+        gregorianYear: Int,
+        @IntRange(from = 1, to = 12) gregorianMonth: Int,
+        @IntRange(from = 1, to = 31) gregorianDay: Int
+    ) : this() {
         persianDate = DateUtil.gregorianToJalali(
             year = gregorianYear,
-            month = gregorianMonth - 1,
+            month = gregorianMonth,
             day = gregorianDay
         )
         persianDateAsString = persianDate?.joinToString("-")
@@ -70,7 +82,7 @@ class MyJalaliCalendar() : BaseCalendar() {
     override fun getDayOfWeek(): Int {
         val gregorian = DateUtil.jalaliToGregorian(
             persianDate?.getOrNull(0) ?: 0,
-            (persianDate?.getOrNull(1) ?: 0) + 1,
+            (persianDate?.getOrNull(1) ?: 0),
             persianDate?.getOrNull(2) ?: 0,
         )
 
@@ -85,15 +97,13 @@ class MyJalaliCalendar() : BaseCalendar() {
 
     override fun getDayOfWeekAsString(): String = dayOfWeeks[getDayOfWeek() - 1]
 
-    override fun getMonth(): Int = (persianDate?.getOrNull(1) ?: -1)
+    override fun getMonth(): Int = get(Calendar.MONTH) ?: -1
 
     override fun getMonthName(): String {
-        return nameOfMonths.getOrNull(
-            (persianDate?.getOrNull(1) ?: -1)
-        ) ?: "نا شناخته"
+        return nameOfMonths.getOrNull(getMonth() - 1) ?: "نا شناخته"
     }
 
-    override fun getYear(): Int = persianDate?.getOrNull(0) ?: -1
+    override fun getYear(): Int = get(Calendar.YEAR) ?: -1
 
     override fun getToday(): Day {
         val todayCalendar = Calendar.getInstance()
@@ -103,21 +113,22 @@ class MyJalaliCalendar() : BaseCalendar() {
             todayCalendar.get(Calendar.DAY_OF_MONTH)
         )
         return Day(
-            today?.getOrNull(0) ?: 0,
-            today?.getOrNull(1) ?: 0,
-            today?.getOrNull(2) ?: 0
+            year = today?.getOrNull(0) ?: 0,
+            month = today?.getOrNull(1) ?: 0,
+            day = today?.getOrNull(2) ?: 0,
+            regionalType = RegionalType.Jalali
         )
     }
 
     override fun getTime(): Date {
         val gregorian = DateUtil.jalaliToGregorian(
             persianDate?.getOrNull(0) ?: 0,
-            (persianDate?.getOrNull(1) ?: 0) + 1,
+            (persianDate?.getOrNull(1) ?: 0),
             persianDate?.getOrNull(2) ?: 0,
         )
         return Calendar.getInstance().apply {
             set(Calendar.YEAR, gregorian?.getOrNull(0) ?: 0)
-            set(Calendar.MONTH, (gregorian?.getOrNull(1) ?: 0) -1)
+            set(Calendar.MONTH, (gregorian?.getOrNull(1) ?: 0) - 1)
             set(Calendar.DAY_OF_MONTH, gregorian?.getOrNull(2) ?: 0)
         }.time
     }
@@ -142,14 +153,16 @@ class MyJalaliCalendar() : BaseCalendar() {
 
         return getMonthsBetweenDateRange(
             startDay = Day(
-                todayJalali?.getOrNull(0) ?: 0,
-                todayJalali?.getOrNull(1) ?: 0,
-                1
+                year = todayJalali?.getOrNull(0) ?: 0,
+                month = todayJalali?.getOrNull(1) ?: 0,
+                day = 1,
+                regionalType = RegionalType.Jalali
             ),
             endDay = Day(
-                nextJalali?.getOrNull(0) ?: 0,
-                nextJalali?.getOrNull(1) ?: 0,
-                1
+                year = nextJalali?.getOrNull(0) ?: 0,
+                month = nextJalali?.getOrNull(1) ?: 0,
+                day = 1,
+                regionalType = RegionalType.Jalali
             )
         )
     }
@@ -159,7 +172,7 @@ class MyJalaliCalendar() : BaseCalendar() {
 
         val countOfDays = getJalaliMonthCount(
             persianDate?.getOrNull(0) ?: 0,
-            (persianDate?.getOrNull(1) ?: 0) + 1
+            persianDate?.getOrNull(1) ?: 0
         )
 
         //shift days

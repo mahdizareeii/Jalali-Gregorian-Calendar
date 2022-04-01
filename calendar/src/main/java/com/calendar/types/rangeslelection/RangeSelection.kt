@@ -16,7 +16,6 @@ import com.calendar.CalendarProperties
 import com.calendar.R
 import com.calendar.adapter.day.DaysAdapterListener
 import com.calendar.adapter.day.viewholder.DayViewHolder
-import com.calendar.calendar.RegionalType
 import com.calendar.model.Day
 import com.calendar.model.DayStatus
 import com.calendar.types.CalendarType
@@ -111,6 +110,7 @@ class RangeSelection(
                 selectedCheckIn == currentDay -> {
                     selectedCheckIn = null
                     selectedCheckOut = null
+                    listener.onSelectsRemoved()
                 }
                 isCheckOutSelect() && currentDay == selectedCheckOut && currentDay.status != DayStatus.AVAILABLE -> {
                     return
@@ -146,16 +146,10 @@ class RangeSelection(
     }
 
     private fun getSelectedDays(property: CalendarProperties): Int {
-        return if (property.regionalType == RegionalType.Jalali)
-            DateUtil.diffDaysJalali(
-                property.selectedCheckIn ?: return 0,
-                property.selectedCheckOut ?: return 0
-            )[1].toInt()
-        else
-            DateUtil.diffDaysGregorian(
-                property.selectedCheckIn ?: return 0,
-                property.selectedCheckOut ?: return 0
-            )[1].toInt()
+        return DateUtil.diffDays(
+            property.selectedCheckIn ?: return 0,
+            property.selectedCheckOut ?: return 0
+        )[1].toInt()
     }
 
     private fun createToolTip(view: View, text: CharSequence) {

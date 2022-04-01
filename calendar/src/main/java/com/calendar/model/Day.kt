@@ -1,5 +1,9 @@
 package com.calendar.model
 
+import com.calendar.calendar.BaseCalendar
+import com.calendar.calendar.MyGregorianCalendar
+import com.calendar.calendar.MyJalaliCalendar
+import com.calendar.calendar.RegionalType
 import java.util.*
 
 /**
@@ -15,17 +19,38 @@ import java.util.*
 data class Day constructor(
     val year: Int,
     val month: Int,
-    val day: Int
+    val day: Int,
+    val regionalType: RegionalType
 ) {
 
     var price: Double? = null
     var discount: Double? = null
     var isHoliday: Boolean = false
     var status: DayStatus = DayStatus.AVAILABLE
-    var monthAsString: String = "-"
-    var dayOfWeek: Int = -1
-    var dayOfWeekAsString: String = ""
+
+    var monthAsString: String? = null
+        get() = if (field == null) {
+            field = getCalendar().getMonthName()
+            field
+        } else field
+
+    var dayOfWeek: Int? = null
+        get() = if (field == null) {
+            field = getCalendar().getDayOfWeek()
+            field
+        } else field
+
+    var dayOfWeekAsString: String? = null
+        get() = if (field == null) {
+            field = getCalendar().getDayOfWeekAsString()
+            field
+        } else field
+
     var time: Date? = null
+        get() = if (field == null) {
+            field = getCalendar().getTime()
+            field
+        } else field
 
     /**
      * @param price hold price of the date
@@ -36,10 +61,11 @@ data class Day constructor(
         year: Int,
         month: Int,
         day: Int,
+        regionalType: RegionalType,
         price: Double?,
         isHoliday: Boolean = false,
         status: DayStatus = DayStatus.AVAILABLE
-    ) : this(year, month, day) {
+    ) : this(year, month, day, regionalType) {
         this.price = price
         this.isHoliday = isHoliday
         this.status = status
@@ -97,4 +123,13 @@ data class Day constructor(
     )
 
     fun isEmptyDay() = year == -1 && month == -1 && day == -1
+
+    private fun getCalendar(): BaseCalendar =
+        when (regionalType) {
+            RegionalType.Jalali -> MyJalaliCalendar().apply {
+                persianDate = intArrayOf(year, month, day)
+            }
+            RegionalType.Gregorian -> MyGregorianCalendar(year, month, day)
+            RegionalType.Unknown -> throw IllegalStateException("You must declare the regional")
+        }
 }

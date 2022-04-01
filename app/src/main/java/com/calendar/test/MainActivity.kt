@@ -10,7 +10,7 @@ import com.calendar.availablity.RangePriceSelectionAvailabilityRule
 import com.calendar.calendar.RegionalType
 import com.calendar.model.Day
 import com.calendar.model.DayRange
-import com.calendar.model.DayStatus
+import com.calendar.model.agenda.AgendaDayRange
 import com.calendar.types.rangeslelection.RangeSelection
 import com.calendar.types.rangeslelection.RangeSelectionListener
 import java.util.*
@@ -23,15 +23,18 @@ class MainActivity : AppCompatActivity(), RangeSelectionListener {
 
         calendar.properties = CalendarProperties(
             regionalType = RegionalType.Jalali,
-            calendarType = RangeSelection(2,true,this),
+            calendarType = RangeSelection(2, true, this),
             calendarOrientation = VERTICAL,
             availabilityRule = RangePriceSelectionAvailabilityRule(
                 availableFromToday = true
             ),
-            customDays = arrayListOf(
-                Day(1400, 12, 28, 560000.0, status = DayStatus.UN_AVAILABLE)
-            ),
-            justAvailableCustomDays = false
+            agendaRangeDays = listOf(
+                AgendaDayRange(
+                    title = "تست 1",
+                    color = "#2d2d2d",
+                    agendaRangeList = agendaRangeList1(RegionalType.Jalali)
+                )
+            )
         )
         calendar.submitNextDates(Calendar.MONTH, 3)
     }
@@ -44,37 +47,40 @@ class MainActivity : AppCompatActivity(), RangeSelectionListener {
         Toast.makeText(this, day.toString(), Toast.LENGTH_SHORT).show()
     }
 
-    private fun agendaList(month: Int, year: Int) = arrayListOf<Day>().apply {
-        for (i in 1..29) {
-            add(
-                Day(year, month, i)
-            )
-        }
+    override fun onSelectsRemoved() {
+
     }
 
-    private fun agendaRangeList1() = arrayListOf(
+    private fun agendaList(month: Int, year: Int, regionalType: RegionalType) =
+        arrayListOf<Day>().apply {
+            for (i in 1..29) {
+                add(Day(year, month, i, regionalType))
+            }
+        }
+
+    private fun agendaRangeList1(regionalType: RegionalType) = listOf(
         DayRange(
-            startDate = Day(1400, 12, 5),
-            endDate = Day(1400, 12, 12)
+            startDate = Day(1400, 12, 5, regionalType),
+            endDate = Day(1400, 12, 12, regionalType)
         ),
         DayRange(
-            startDate = Day(1400, 12, 15),
-            endDate = Day(1400, 12, 18)
+            startDate = Day(1400, 12, 15, regionalType),
+            endDate = Day(1400, 12, 18, regionalType)
         )
     )
 
-    private fun agendaRangeList2() = arrayListOf(
+    private fun agendaRangeList2(regionalType: RegionalType) = listOf(
         DayRange(
-            startDate = Day(1400, 12, 25),
-            endDate = Day(1401, 1, 5)
+            startDate = Day(1400, 12, 25, regionalType),
+            endDate = Day(1401, 1, 5, regionalType)
         ),
         DayRange(
-            startDate = Day(1401, 2, 1),
-            endDate = Day(1401, 2, 6)
+            startDate = Day(1401, 2, 1, regionalType),
+            endDate = Day(1401, 2, 6, regionalType)
         ),
         DayRange(
-            startDate = Day(1401, 2, 10),
-            endDate = Day(1401, 2, 15)
+            startDate = Day(1401, 2, 10, regionalType),
+            endDate = Day(1401, 2, 15, regionalType)
         )
     )
 

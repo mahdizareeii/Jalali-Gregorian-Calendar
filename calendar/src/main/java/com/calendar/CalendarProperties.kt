@@ -3,6 +3,9 @@ package com.calendar
 import androidx.recyclerview.widget.RecyclerView
 import com.calendar.adapter.day.viewholder.DayViewHolderType
 import com.calendar.availablity.BaseAvailabilityRule
+import com.calendar.calendar.BaseCalendar
+import com.calendar.calendar.MyGregorianCalendar
+import com.calendar.calendar.MyJalaliCalendar
 import com.calendar.calendar.RegionalType
 import com.calendar.model.Day
 import com.calendar.model.Month
@@ -25,7 +28,7 @@ class CalendarProperties {
     var justAvailableCustomDays: Boolean = false
 
     //for set custom days pricing and etc
-    var customDays: ArrayList<Day> = ArrayList()
+    var customDays: List<Day> = listOf()
 
     //for range selection
     var selectedCheckIn: Day? = null
@@ -42,6 +45,16 @@ class CalendarProperties {
 
     //for AgendaRangeDaysViewHolder
     var agendaRangeDays: List<AgendaDayRange> = listOf()
+
+    var calendar: BaseCalendar? = null
+        get() = if (field == null) {
+            field = when (regionalType) {
+                RegionalType.Jalali -> MyJalaliCalendar()
+                RegionalType.Gregorian -> MyGregorianCalendar()
+                RegionalType.Unknown -> throw IllegalStateException("You must declare the regional")
+            }
+            field
+        } else field
 
     constructor(
         regionalType: RegionalType,
@@ -75,8 +88,8 @@ class CalendarProperties {
         calendarOrientation: Int,
         availabilityRule: BaseAvailabilityRule,
         justAvailableCustomDays: Boolean,
-        agendaDays: ArrayList<AgendaDays>,
-        customDays: ArrayList<Day>,
+        agendaDays: List<AgendaDays>,
+        customDays: List<Day>,
         selectedCheckIn: Day? = null,
         selectedCheckOut: Day? = null,
         selectedMultipleDay: ArrayList<Day> = arrayListOf(),
@@ -154,21 +167,20 @@ class CalendarProperties {
 
     internal fun isCheckOutSelect() = selectedCheckIn != null && selectedCheckOut != null
 
-    internal fun getToday(): Day = regionalType.calendar.getToday()
+    internal fun getToday(): Day = calendar?.getToday()!!
 
     internal fun findMonthInAgendaList(month: Month) = agendaDays.firstOrNull {
         it.agendaList.firstOrNull { day ->
-            day.year == month.getYear &&
-                    day.month == (month.getMonth + 1)
+            day.year == month.getYear && day.month == month.getMonth
         } != null
     }
 
     internal fun findMonthInAgendaRangeList(month: Month) = agendaRangeDays.firstOrNull {
         it.agendaRangeList.firstOrNull { range ->
             range.startDate.year == month.getYear &&
-                    range.startDate.month == (month.getMonth + 1) ||
+                    range.startDate.month == month.getMonth ||
                     range.endDate.year == month.getYear &&
-                    range.endDate.month == (month.getMonth + 1)
+                    range.endDate.month == month.getMonth
         } != null
     }
 
