@@ -171,17 +171,16 @@ class CalendarProperties {
 
     internal fun findMonthInAgendaList(month: Month) = agendaDays.firstOrNull {
         it.agendaList.firstOrNull { day ->
-            day.year == month.getYear &&
-                    day.month == (month.getMonth + 1)
+            day.year == month.getYear && day.month == month.getMonth
         } != null
     }
 
     internal fun findMonthInAgendaRangeList(month: Month) = agendaRangeDays.firstOrNull {
         it.agendaRangeList.firstOrNull { range ->
             range.startDate.year == month.getYear &&
-                    range.startDate.month == (month.getMonth + 1) ||
+                    range.startDate.month == month.getMonth ||
                     range.endDate.year == month.getYear &&
-                    range.endDate.month == (month.getMonth + 1)
+                    range.endDate.month == month.getMonth
         } != null
     }
 
