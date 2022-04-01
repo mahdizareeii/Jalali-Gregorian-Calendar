@@ -10,6 +10,8 @@ class RangePriceSelectionAvailabilityRule(
     availableFromToday: Boolean
 ) : BaseAvailabilityRule(availableFromToday) {
 
+    private var firstUnAvailableItem: Day? = null
+
     override fun isAvailable(
         currentDay: Day,
         properties: CalendarProperties
@@ -28,22 +30,27 @@ class RangePriceSelectionAvailabilityRule(
         ) >= minDaysInRangeSelection
         return when {
             properties.isCheckInSelect() -> {
-                if (!checkCurrentDayIsInCustomDays(currentDay, properties)) {
-                    checkBaseAvailability && DateUtil.diffDays(
-                        properties.customDays.lastOrNull(),
-                        currentDay
-                    )[1].toInt() == 1
-                } else {
-                    checkBaseAvailability
-                            && checkAvailabilityDaysAfterCurrentDay(currentDay, properties)
-                            && checkAvailabilityDaysBeforeCurrentDay(currentDay, properties)
+                when {
+                    //checkAvailability after current day
+                    firstUnAvailableItem == null && currentDay >= properties.selectedCheckIn -> {
+                        if (currentDay.status != DayStatus.AVAILABLE)
+                            firstUnAvailableItem = currentDay
+                        checkBaseAvailability
+                    }
+                    //return false when current item is bigger than firstUnAvailableItem
+                    firstUnAvailableItem != null && currentDay > firstUnAvailableItem -> false
+                    else -> currentDay >= properties.selectedCheckIn
                 }
             }
             properties.isCheckOutSelect() -> {
+                firstUnAvailableItem = null
                 if (currentDay.status != DayStatus.AVAILABLE && currentDay == properties.selectedCheckOut) true
                 else super.isAvailable(currentDay, properties)
             }
-            else -> super.isAvailable(currentDay, properties)
+            else -> {
+                firstUnAvailableItem = null
+                super.isAvailable(currentDay, properties)
+            }
         }
     }
 
@@ -66,22 +73,4 @@ class RangePriceSelectionAvailabilityRule(
         }
     }
 
-    private fun checkCurrentDayIsInCustomDays(
-        currentDay: Day,
-        properties: CalendarProperties
-    ) = properties.customDays.any { it == currentDay }
-
-    private fun checkAvailabilityDaysAfterCurrentDay(
-        currentDay: Day,
-        properties: CalendarProperties
-    ) = !properties.customDays.any {
-        it < currentDay && properties.selectedCheckIn!! < it && it.status != DayStatus.AVAILABLE
-    }
-
-    private fun checkAvailabilityDaysBeforeCurrentDay(
-        currentDay: Day,
-        properties: CalendarProperties
-    ) = !properties.customDays.any {
-        it >= currentDay && properties.selectedCheckIn!! > it && it.status != DayStatus.AVAILABLE
-    }
 }
