@@ -9,6 +9,24 @@ import java.util.concurrent.TimeUnit
 
 object DateUtil {
 
+    //custom function to determine the day of the week for a Gregorian date without using any platform-specific classes
+    fun getDayOfWeekFromGregorianDate(year: Int, month: Int, day: Int): Int {
+        // Zeller's Congruence algorithm to calculate the day of the week
+        var y = year
+        var m = month
+        if (m < 3) {
+            m += 12
+            y -= 1
+        }
+        val k = y % 100
+        val j = y / 100
+        val h = (day + ((m + 1) * 26) / 10 + k + k / 4 + j / 4 + 5 * j) % 7
+    
+        // Convert result to standard day of week format (0 for Saturday, 1 for Sunday, ..., 6 for Friday)
+        return (h + 5) % 7
+    }
+
+
     /**
      * @return IntArray of jalali date for example : intArrayOf(1450, 1, 1)
      */
